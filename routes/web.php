@@ -157,6 +157,7 @@ Route::post('maintenanceassetsbyid', 'Maintenance@assetsbyid');
 
 //File API
 Route::post('fileassetsbyid', 'FileData@getdataaset');
+Route::post('fileassetgallerybyid', 'FileData@getdataasetgallery');
 Route::post('filecomponentbyid', 'FileData@getdatacomponent');
 Route::post('savefile', 'FileData@save');
 Route::post('deletefile', 'FileData@delete');

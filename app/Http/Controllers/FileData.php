@@ -55,6 +55,29 @@ class FileData extends Controller
      * get data from database
      * @return object
      */
+    public function getdataasetgallery(Request $request){
+        $id            = $request->input( 'assetgalleryid' );
+
+        $data = DB::select("select file.* 
+        from file left join assets 
+        on file.assetgalleryid = assets.id
+        where file.assetgalleryid = '$id'
+        order by file.created_at desc"); 
+        return Datatables::of($data)
+        ->addColumn('filename',function($single){
+            return '<a href="'.url('/').'/upload/assets/'.$single->filename.'" target="_blank"><img src="'.url('/').'/upload/assets/'.$single->filename.'" class="img-thumbnail" style="max-width: 100px;"/></a>';
+        })
+        ->addColumn( 'action', function ( $accountsingle ) {
+            return '<a href="#" id="btndelete" customdata='.$accountsingle->id.' class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>';
+           
+        } )->rawColumns(['filename', 'action'])
+        ->make(true);       
+    }
+
+    /**
+     * get data from database
+     * @return object
+     */
     public function getdatacomponent(Request $request){
         $id            = $request->input( 'componentid' );
 
@@ -80,6 +103,7 @@ class FileData extends Controller
      * insert data  to database
      *
      * @param integer  $assetid
+     * @param integer  $assetgalleryid
      * @param integer  $componentid
      * @param integer  $name
      * @param string  $filename
@@ -87,6 +111,7 @@ class FileData extends Controller
      */
     public function save(Request $request){
         $assetid            = $request->input( 'assetid' );
+        $assetgalleryid     = $request->input( 'assetgalleryid' );
         $componentid        = $request->input( 'componentid' );
         $name               = $request->input( 'name' );
         $filename           = $request->file( 'filename' );
@@ -100,6 +125,7 @@ class FileData extends Controller
                 $filename  = date('mdYHis').uniqid().'_'.$request->file('filename')->getClientOriginalName();
                 $request->file('filename')->move(public_path("/upload/assets"), $filename);
                 $data       = array('assetid'=>$assetid, 
+                            'assetgalleryid'=>$assetgalleryid,
                             'componentid'=>$componentid,
                             'name'=>$name,
                             'filename'=>$filename,

@@ -52,6 +52,11 @@
                                             aria-selected="true"><?php echo trans('lang.details');?></a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" id="gallery-tab" data-toggle="tab" href="#gallery"
+                                            role="tab" aria-controls="gallery"
+                                            aria-selected="false"><?php echo trans('lang.gallery');?></a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#components"
                                             role="tab" aria-controls="components"
                                             aria-selected="false"><?php echo trans('lang.components');?></a>
@@ -231,6 +236,35 @@
 
                                          </div>
                                     </div>
+                                    <div class="tab-pane fade" id="gallery" role="tabpanel"
+                                        aria-labelledby="gallery-tab">
+                                        <div class="text-md-right text-left pt-2">
+                                            <button type="button" data-toggle="modal" data-target="#addgallery" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+                                        </div>
+                                        <div class="table-responsive  pt-4">
+                                            <table id="datagallery" class="table table-striped table-bordered"
+                                                cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th><?php echo trans('lang.file');?></th>
+                                                        <th><?php echo trans('lang.name');?></th>
+                                                        <th><?php echo trans('lang.action');?></th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th><?php echo trans('lang.file');?></th>
+                                                        <th><?php echo trans('lang.name');?></th>
+                                                        <th><?php echo trans('lang.action');?></th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                     <div class="tab-pane fade" id="maintenance" role="tabpanel"
                                         aria-labelledby="maintenance-tab">
                                         <div class="table-responsive  pt-4">
@@ -387,6 +421,38 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary"
                             id="save"><?php echo trans('lang.save');?></button>
+                        <button type="button" class="btn btn-default"
+                            data-dismiss="modal"><?php echo trans('lang.close');?></button>
+                            <span class="saving_data d-none"><?php echo trans('lang.saving_data');?></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="addgallery" class="modal fade" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#" id="galleryadd">
+                    <div class="modal-header">
+                       
+                        <h5 class="modal-title"><?php echo trans('lang.add_data');?></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label><?php echo trans('lang.name');?></label>
+                            <input name="name" type="text" id="namegallery" class=" form-control" required placeholder="<?php echo trans('lang.name');?>"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><?php echo trans('lang.file');?></label>
+                            <input name="filename" type="file" id="filenamegallery" class=" form-control" required accept="image/*,application/pdf, .xls,.xlsx,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                            <small class="d-block">File allowed are jpeg, png, jpg, pdf, doc, docx, xls, xlsx (max 2mb)</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"
+                            id="savegallery"><?php echo trans('lang.save');?></button>
                         <button type="button" class="btn btn-default"
                             data-dismiss="modal"><?php echo trans('lang.close');?></button>
                             <span class="saving_data d-none"><?php echo trans('lang.saving_data');?></span>
@@ -810,6 +876,33 @@
             }
         ]
     });
+    $('#datagallery').DataTable({
+        ajax: {
+        url: "{{ url('fileassetgallerybyid')}}",
+        type: "post",
+        data: function (d) {
+              d.assetgalleryid = id;
+            },
+        },
+        columns: [{
+                data: 'id',
+                orderable: false,
+                searchable: false, 
+                visible: false
+            },
+            {
+                data: 'filename',
+            },
+            {
+                data: 'name'
+            },
+            {
+                data: 'action'
+            }
+        ],
+        buttons: [
+        ]
+    });
 
 
     //add data
@@ -840,6 +933,40 @@
                         $("#messagesuccess").css({'display':"block"});
                         $('#add').modal('hide');
                         $('#save').prop("disabled",false);
+                        window.setTimeout(function(){location.reload()},2000);
+                    }
+                
+                }
+            });
+        }
+    });
+    $("#galleryadd").validate({
+        submitHandler: function(form) {
+            var form = new FormData();
+            var namegallery                = $("#namegallery").val();
+            var assetgalleryid             = id;
+            var filenamegallery            = $('#filenamegallery')[0].files[0];
+            
+            form.append('name', namegallery);
+            form.append('assetgalleryid', assetgalleryid);
+            form.append('filename', filenamegallery);
+            
+            $.ajax({
+                type: "POST",
+                url: "{{ url('savefile')}}",
+                data: form,
+                contentType: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                beforeSend: function () { 
+                    $('#savegallery').html($(".saving_data").html());
+                    $('#savegallery').prop("disabled",true);
+                },
+                success: function(data) {
+                    if(data.message=='success'){
+                        $("#messagesuccess").css({'display':"block"});
+                        $('#add').modal('hide');
+                        $('#savegallery').prop("disabled",false);
                         window.setTimeout(function(){location.reload()},2000);
                     }
                 

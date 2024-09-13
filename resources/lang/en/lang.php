@@ -262,6 +262,8 @@ return [
     'dfirst'=>      'First',
     'dlast'=>      'Last',
     'dnext'=>       'Next',
-	'dprevious'=>   'Previous'
+	'dprevious'=>   'Previous',
+
+    'gallery'=>     'Gallery',
 
 ];
