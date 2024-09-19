@@ -43,6 +43,7 @@
             <div class="logo">
                 <h1 class="text-center font-weight-bold" style="color: #0076A8">Inventory</h1>
                 {{-- <img class="logoimg" src="" style="width:200px" /> --}}
+                <h5 class="text-center">Hi {{ ucwords(Auth::user()->fullname) }}!</h5>
             </div>
             <ul class="nav">
 
@@ -62,7 +63,8 @@
                         </p>
                     </a>
                 </li>
-              
+            </ul>
+            <ul class="nav mt-5">
                 <li class="{{ Request::is( 'componentlist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'componentlist') }}">
                         <p><img width="22"
@@ -133,8 +135,8 @@
                         </p>
                     </a>
                 </li>
-
-
+            </ul>
+            <ul class="nav mt-5">
                 <li class="{{ Request::is( 'reports/allreports') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'reports/allreports') }}">
                         <p><img width="25"
@@ -142,40 +144,20 @@
                         </p>
                     </a>
                 </li>
+                <li class="{{ Request::is( 'userlist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'userlist') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-employee.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.usermenu');?>
+                        </p>
+                    </a>
+                </li>
 
-
-                <li>
-                    <a data-toggle="collapse" href="#settings"
-                        class="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? '' : 'collapsed' }}"
-                        aria-expanded="{{Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? 'true' : 'false' }}">
-                        <i class="ti-settings"></i>
+                <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'settinglist') }}">
                         <p><img width="25"
                                 src="<?php echo asset('images/icon-setting.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.settingmenu');?>
                         </p>
                     </a>
-                    <div class="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? 'collapse in' : 'collapse' }}"
-                        id="settings"
-                        aria-expanded="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? 'true' : 'false' }}"
-                        style="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? '' : 'height: 0px;' }}">
-                        <ul class="nav">
-                            
-                            
-                            <li class="{{ Request::is( 'userlist') ? 'active' : '' }}">
-                                <a href="{{ URL::to( 'userlist') }}">
-                                    <span class="sidebar-mini"><i class="fa fa-angle-right"></i></span>
-                                    <span class="sidebar-normal"><?php echo trans('lang.usermenu');?></span>
-                                </a>
-                            </li>
-                         
-                            <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
-                                <a href="{{ URL::to( 'settinglist') }}">
-                                    <span class="sidebar-mini"><i class="fa fa-angle-right"></i></span>
-                                    <span class="sidebar-normal"><?php echo trans('lang.applicationmenu');?></span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
                 </li>
             </ul>
         </div>
@@ -284,40 +266,19 @@
                                     </a>
                                 </li>
 
+                                <li class="{{ Request::is( 'userlist') ? 'active' : '' }}">
+                                    <a href="{{ URL::to( 'userlist') }}">
+                                        <p><?php echo trans('lang.usermenu');?>
+                                        </p>
+                                    </a>
+                                </li>
 
-                                <li>
-                                    <a data-toggle="collapse" href="#settingsmob"
-                                        class="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? '' : 'collapsed' }}"
-                                        aria-expanded="{{Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? 'true' : 'false' }}">
-                                        <i class="ti-settings"></i>
+                                <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
+                                    <a href="{{ URL::to( 'settinglist') }}">
                                         <p><?php echo trans('lang.settingmenu');?>
                                         </p>
                                     </a>
-                                    <div class="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? 'collapse in' : 'collapse' }}"
-                                        id="settingsmob"
-                                        aria-expanded="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? 'true' : 'false' }}"
-                                        style="{{ Request::is( 'settings/profile') || Request::is( 'settings/allusers') || Request::is( 'settings/application') ? '' : 'height: 0px;' }}">
-                                        <ul class="nav">
-                                            
-                                            
-                                            <li class="{{ Request::is( 'userlist') ? 'active' : '' }}">
-                                                <a href="{{ URL::to( 'userlist') }}">
-                                                    <span class="sidebar-mini"><i class="fa fa-angle-right"></i></span>
-                                                    <span class="sidebar-normal"><?php echo trans('lang.usermenu');?></span>
-                                                </a>
-                                            </li>
-                                         
-                                            <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
-                                                <a href="{{ URL::to( 'settinglist') }}">
-                                                    <span class="sidebar-mini"><i class="fa fa-angle-right"></i></span>
-                                                    <span class="sidebar-normal"><?php echo trans('lang.applicationmenu');?></span>
-                                                </a>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                </li>
-                               
+                                </li>                               
                             </ul>
                     </div>
                         <!--end responsive-->

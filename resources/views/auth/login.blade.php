@@ -40,12 +40,12 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>E-Mail</label>
-                        <input name="email" type="email" id="email" class="form-control" value="admin@example.com" required placeholder="<?php echo trans('lang.email');?>"/>
+                        <input name="email" type="email" id="email" class="form-control" required placeholder="<?php echo trans('lang.email');?>"/>
                     </div>
                     
                     <div class="form-group">
                         <label><?php echo trans('lang.password');?></label>
-                        <input name="password" type="password" id="password" class="form-control" value="123456" required placeholder="<?php echo trans('lang.password');?>"/>
+                        <input name="password" type="password" id="password" class="form-control" required placeholder="<?php echo trans('lang.password');?>"/>
                     </div>
                     
                     <div class="form-group">
