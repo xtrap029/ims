@@ -29,47 +29,37 @@
    
 </head>
 
-<body class="login-background">
-<div class="container">
-    <div class="row d-flex justify-content-center ">
-        <div class="col-md-5 margin-15" >
-            <div class="panel panel-default loginpage">
-               <div class="header">
-                        <div class="row">
-                            <div class="col-lg-12">
-                            <h3 class="title text-center"><?php echo trans('lang.login');?></h3>
-                            <p id="messageerror" class="display-none"> </p>    
-                        </div>
-                        </div>
-                </div>
-                <div class="panel-body">
-                    <form class="form-horizontal" name="form-login" id="form-login" method="POST">
-                        {{ csrf_field() }}
-
-                        <div class="form-group">
-                            <label><?php echo trans('lang.email');?></label>
-                            <input name="email" type="email" id="email" class="form-control" value="admin@example.com" required placeholder="<?php echo trans('lang.email');?>"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label><?php echo trans('lang.password');?></label>
-                            <input name="password" type="password" id="password" class="form-control" value="123456" required placeholder="<?php echo trans('lang.password');?>"/>
-                        </div>
-                        
-                        <div class="form-group">
-                            <button id="login" type="submit" class="btn-block btn btn-fill btn-primary text-center">
-                                <?php echo trans('lang.login');?> 
-                            </button>
-                            <span class="logged d-none"><?php echo trans('lang.please_wait');?> </span>
-                             <span class="login-message d-none"><?php echo trans('lang.login');?> </span>
-                        </div>
-                    </form>
-                </div>
+<body>
+    <div class="row">
+        <div class="col-md-8 vh-100 banner-cover d-none d-md-block" style="background-image: url('/images/login-bg.jpg');">1</div>
+        <div class="col-md-4 login-background vh-100">
+            <div class="p-5 m-md-5">
+                <img src="/images/logo-tecc.png" class="m-auto d-block" style="width: 40%" alt="">
+                <h2 class="title text-center pt-5">Welcome to Inventory!</h2>
+                <form class="form-horizontal p-md-3 mt-5" name="form-login" id="form-login" method="POST">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label>E-Mail</label>
+                        <input name="email" type="email" id="email" class="form-control" value="admin@example.com" required placeholder="<?php echo trans('lang.email');?>"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><?php echo trans('lang.password');?></label>
+                        <input name="password" type="password" id="password" class="form-control" value="123456" required placeholder="<?php echo trans('lang.password');?>"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button id="login" type="submit" class="btn-block btn btn-fill btn-primary text-center">
+                            <?php echo trans('lang.login');?> 
+                        </button>
+                        <span class="logged d-none"><?php echo trans('lang.please_wait');?> </span>
+                        <span class="login-message d-none"><?php echo trans('lang.login');?> </span>
+                    </div>
+                    <p id="messageerror" class="display-none"> </p>  
+                </form>
             </div>
         </div>
     </div>
-</div>
-
 
 <script>
 

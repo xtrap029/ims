@@ -41,8 +41,8 @@
     <div class="sidebar">
         <div class="sidebar-wrapper">
             <div class="logo">
-                <img class="logoimg" src="" style="width:200px" />
-                </a>
+                <h1 class="text-center font-weight-bold" style="color: #0076A8">Inventory</h1>
+                {{-- <img class="logoimg" src="" style="width:200px" /> --}}
             </div>
             <ul class="nav">
 

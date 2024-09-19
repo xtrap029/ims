@@ -4487,3 +4487,10 @@
     padding-right: 0;
   }
 }
+
+/* custom */
+.banner-cover {
+  background-size: cover;
+  background-position: center center;
+  height: auto;
+}
