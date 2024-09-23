@@ -195,7 +195,7 @@ class Asset extends Controller
             $res['assetcost']= $setting->currency.$data->cost;
             $res['assetwarranty']= $data->warranty.' '.trans('lang.month').' - ('.$nextexpired.')';
             $res['assetstatus']= $status;
-            $res['assetbarcode'] = '<img src="data:image/png;base64,' . DNS2D::getBarcodePNG($data->assettag, 'QRCODE') . '" alt="barcode" width="70"  />';
+            $res['assetbarcode'] = '<img src="data:image/png;base64,' . DNS2D::getBarcodePNG($data->assettag, 'QRCODE') . '" alt="barcode" width="80"  />';
 
             $res['assetimage']  = url('/').'/upload/assets/'.$data->picture;
         } else{

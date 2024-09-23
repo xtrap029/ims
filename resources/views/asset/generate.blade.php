@@ -13,6 +13,8 @@
 <style type="text/css">
 	table{
 		font-family: Arial, Serif;
+		border: 1px solid black;
+		padding: 5px;
 	}
 
 	p{
@@ -26,27 +28,27 @@
 		font-weight: bold;
 		margin-bottom: 5px;
 	}
-	.padding-right{
-		padding-right: 10px;
+	.padding{
+		padding: 7px;
 	}
 </style>
 <body>
 
 
-<table width="200" align="center" border="1" cellspacing="0" cellpadding="0">
+<table width="300" align="center" cellspacing="0" cellpadding="0">
 <input type="hidden" value="{{ $id }}" name="id" id="id" />
 
 <tr>
-	<td align="left" class="padding-right" >
-     
-     <p class="assetname"></p> 
-     <p class="assettag"></p>      
-     <p class="assetserial"></p>
-     <p class="assettype2"></p>                                 
+	<td width="70" align="right" class="padding">
+		<div class="assetbarcode"></div>       
 	</td>
-	<td width="70" align="right">
-	<div class="assetbarcode"></div>       
+	<td align="left" class="padding" >
+	 <p class="assetname"></p> 
+	 <p class="assettag"></p>      
+	 <p class="assetserial"></p>
+	 <p class="assettype2"></p>                                 
 	</td>
+	<td align="center" class="padding"><img src="/images/logo-tecc-flip.png" height="70px"></td>
 </tr>
 
 
