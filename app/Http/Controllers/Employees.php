@@ -29,6 +29,14 @@ class Employees extends Controller
     }
 
     /**
+     * get  detail page
+     * @return object
+     */
+    public function detail($id){
+        return view('employee.detail', compact('id'));
+    }
+
+    /**
 	 * get data from database
 	 * @return object
 	 */
@@ -39,8 +47,17 @@ class Employees extends Controller
         return Datatables::of($data)
        
 		->addColumn( 'action', function ( $accountsingle ) {
-            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
-                    <a href="#" id="btndelete" customdata='.$accountsingle->id.' class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>';
+            return '
+            <div class="btn-group">
+                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu actionmenu">
+                <a class="dropdown-item" href="'.url('/').'/employeeslist/detail/'.$accountsingle->id.'"id="btndetail" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>
+                <a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
+                <a class="dropdown-item" href="#" id="btndelete" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>
+                </div>
+            </div>';
         } )->rawColumns(['gender','picture', 'action'])
         ->make(true);		
     }
@@ -69,6 +86,7 @@ class Employees extends Controller
         $id            = $request->input( 'id' );
 
         $data = DB::table('employees')->where('id', $id)->first();
+        $data->departmentname = DB::table('department')->find($data->departmentid)->name;
         
         if ( $data ) {
 			$res['success'] = 'success';

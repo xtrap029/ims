@@ -78,6 +78,29 @@ class FileData extends Controller
      * get data from database
      * @return object
      */
+    public function getdataemployee(Request $request){
+        $id            = $request->input( 'employeeid' );
+
+        $data = DB::select("select file.* 
+        from file left join employees 
+        on file.employeeid = employees.id
+        where file.employeeid = '$id'
+        order by file.created_at desc"); 
+        return Datatables::of($data)
+        ->addColumn('filename',function($single){
+            return '<a target="_blank" href="'.url('/').'/upload/assets/'.$single->filename.'"/>'.$single->filename.'</a>';
+        })
+        ->addColumn( 'action', function ( $accountsingle ) {
+            return '<a href="#" id="btndelete" customdata='.$accountsingle->id.' class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>';
+           
+        } )->rawColumns(['filename', 'action'])
+        ->make(true);       
+    }
+
+    /**
+     * get data from database
+     * @return object
+     */
     public function getdatacomponent(Request $request){
         $id            = $request->input( 'componentid' );
 
@@ -104,6 +127,7 @@ class FileData extends Controller
      *
      * @param integer  $assetid
      * @param integer  $assetgalleryid
+     * @param integer  $employeeid
      * @param integer  $componentid
      * @param integer  $name
      * @param string  $filename
@@ -112,6 +136,7 @@ class FileData extends Controller
     public function save(Request $request){
         $assetid            = $request->input( 'assetid' );
         $assetgalleryid     = $request->input( 'assetgalleryid' );
+        $employeeid         = $request->input( 'employeeid' );
         $componentid        = $request->input( 'componentid' );
         $name               = $request->input( 'name' );
         $filename           = $request->file( 'filename' );
@@ -126,6 +151,7 @@ class FileData extends Controller
                 $request->file('filename')->move(public_path("/upload/assets"), $filename);
                 $data       = array('assetid'=>$assetid, 
                             'assetgalleryid'=>$assetgalleryid,
+                            'employeeid'=>$employeeid,
                             'componentid'=>$componentid,
                             'name'=>$name,
                             'filename'=>$filename,

@@ -18,6 +18,7 @@ Route::get('/departmentlist','Department@index');
 Route::get('/assettypelist','AssetType@index');
 Route::get('/locationlist','Location@index');
 Route::get('/employeeslist','Employees@index');
+Route::get('/employeeslist/detail/{id}','Employees@detail');
 Route::get('/supplierlist','Supplier@index');
 Route::get('/userlist','User@index');
 Route::get('/settinglist','Settings@index');
@@ -158,6 +159,7 @@ Route::post('maintenanceassetsbyid', 'Maintenance@assetsbyid');
 //File API
 Route::post('fileassetsbyid', 'FileData@getdataaset');
 Route::post('fileassetgallerybyid', 'FileData@getdataasetgallery');
+Route::post('fileemployeebyid', 'FileData@getdataemployee');
 Route::post('filecomponentbyid', 'FileData@getdatacomponent');
 Route::post('savefile', 'FileData@save');
 Route::post('deletefile', 'FileData@delete');

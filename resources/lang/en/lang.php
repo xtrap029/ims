@@ -171,7 +171,9 @@ return [
     'backtocomponent'  => 'Back to Component',
     'component_history_list' => 'Component history',
     
-
+    //employee detail
+    'employeedetail' =>'Employee detail',
+    'backtoemployee' =>'Back to employees',
 
     //asset detail
     'assetdetail' =>'Asset detail',
