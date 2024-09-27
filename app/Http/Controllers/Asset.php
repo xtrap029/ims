@@ -178,6 +178,44 @@ class Asset extends Controller
     }
 
     /**
+     * get single data by employee id for onhand
+     * @param integer $id
+     * @return object
+     */
+
+     public function onhandassetbyemployee( Request $request ) {
+        $id            = $request->input( 'employeeid' );
+
+      $data = DB::select("select asset_history.*, assets.name as assetname, assets.assettag as assettag, assets.serial as serial, count(asset_history.created_at)
+
+        from asset_history left join assets  
+        on asset_history.assetid = assets.id
+        where asset_history.employeeid = '$id'
+        group by asset_history.assetid
+        order by asset_history.created_at desc"); 
+        return Datatables::of($data)
+        
+        ->addColumn('status',function($single){
+            if($single->status=='1'){
+                $status = trans('lang.checkout');
+            }
+             if($single->status=='2'){
+                $status = trans('lang.checkin');
+            }
+            return $status;
+        })
+
+         ->addColumn('date',function($single){
+
+            $setting = DB::table('settings')->where('id', '1')->first();
+            return date($setting->formatdate, strtotime($single->date));
+        })
+        ->rawColumns(['status','date'])
+        ->make(true);
+        
+    }
+
+    /**
      * get single data 
      * @param integer $id
      * @return object

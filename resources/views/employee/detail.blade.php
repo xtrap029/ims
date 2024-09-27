@@ -43,6 +43,11 @@
                                             aria-selected="false"><?php echo trans('lang.file');?></a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" id="onhand-tab" data-toggle="tab" href="#onhand"
+                                            role="tab" aria-controls="onhand"
+                                            aria-selected="false"><?php echo trans('lang.onhand');?></a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" id="history-tab" data-toggle="tab" href="#history"
                                             role="tab" aria-controls="history"
                                             aria-selected="false"><?php echo trans('lang.history');?></a>
@@ -127,6 +132,34 @@
                                                         <th><?php echo trans('lang.name');?></th>
                                                         <th><?php echo trans('lang.file');?></th>
                                                         <th><?php echo trans('lang.action');?></th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="onhand" role="tabpanel"
+                                        aria-labelledby="onhand-tab">
+                                        <div class="table-responsive  pt-4">
+                                            <table id="dataonhand" class="table table-striped table-bordered"
+                                                cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th><?php echo trans('lang.date');?></th>
+                                                        <th><?php echo trans('lang.assetname');?></th>
+                                                        <th><?php echo trans('lang.assettag');?></th>
+                                                        <th><?php echo trans('lang.serial');?></th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th><?php echo trans('lang.date');?></th>
+                                                        <th><?php echo trans('lang.assetname');?></th>
+                                                        <th><?php echo trans('lang.assettag');?></th>
+                                                        <th><?php echo trans('lang.serial');?></th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
@@ -327,6 +360,84 @@
         ]
     });
 
+    //onhand data
+    $('#dataonhand').DataTable({
+        ajax: {
+        url: "{{ url('onhandassetbyemployee')}}",
+        type: "post",
+        data: function (d) {
+              d.employeeid = id;
+            }
+        },
+        
+        columns: [{
+            data: 'id',
+                orderable: false,
+                searchable: false,
+                visible: false
+            },            
+            {
+                data: 'date'
+            },
+           
+            {
+                data: 'assetname'
+            },
+            {
+                data: 'assettag'
+            },
+            {
+                data: 'serial'
+            },
+            
+           
+        ],
+       
+        buttons: [{
+                extend: 'copy',
+                text: 'Copy <i class="fa fa-files-o"></i>',
+                className: 'btn btn-sm btn-fill btn-info ',
+                title: '<?php echo trans('lang.history_list ');?>',
+                exportOptions: {
+                    columns: [1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'csv',
+                text: 'CSV <i class="fa fa-file-excel-o"></i>',
+                className: 'btn btn-sm btn-fill btn-info ',
+                title: '<?php echo trans('lang.history_list');?>',
+                exportOptions: {
+                    columns: [1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'PDF <i class="fa fa-file-pdf-o"></i>',
+                className: 'btn btn-sm btn-fill btn-info ',
+                title: '<?php echo trans('lang.history_list');?>',
+                orientation: 'landscape',
+                exportOptions: {
+                    columns: [1, 2, 3, 4]
+                },
+                customize: function(doc) {
+                    doc.styles.tableHeader.alignment = 'left';
+                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1)
+                        .join('*').split('');
+                }
+            },
+            {
+                extend: 'print',
+                title: '<?php echo trans('lang.history_list');?>',
+                className: 'btn btn-sm btn-fill btn-info ',
+                text: 'Print <i class="fa fa-print"></i>',
+                exportOptions: {
+                    columns: [1, 2, 3, 4]
+                }
+            }
+        ]
+    });
+
     //history data
     $('#datahistory').DataTable({
         ajax: {
@@ -342,8 +453,7 @@
                 orderable: false,
                 searchable: false,
                 visible: false
-            },
-            
+            },            
             {
                 data: 'date'
             },

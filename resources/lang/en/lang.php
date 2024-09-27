@@ -181,6 +181,7 @@ return [
     'components' =>'Components',
     'maintenances' =>'Maintenances',
     'history' =>'History',
+    'onhand' =>'On Hand',
     'backtoasset' =>'Back to Assets',
     'generatelabel' =>'Generate label',
 
