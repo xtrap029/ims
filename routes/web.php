@@ -128,6 +128,7 @@ Route::post('assetbyid', 'Asset@byid');
 Route::post('savecheckout', 'Asset@savecheckout');
 Route::post('savecheckin', 'Asset@savecheckin');
 Route::post('historyassetbyid', 'Asset@historyassetbyid');
+Route::post('historyassetbyemployee', 'Asset@historyassetbyemployee');
 Route::get('asset/generateproductcode', 'Asset@generateproductcode');
 Route::get('assetnotbyid', 'Asset@isnotbyid');
 
