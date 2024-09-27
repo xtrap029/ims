@@ -7,7 +7,7 @@ return [
     'componentmenu' => 'Components',
     'maintenancemenu' => 'Maintenances',
     'depreciationmenu' => 'Depreciations',
-    'employee' => 'Employees',
+    'employee' => 'Employee',
     'locationmenu' => 'Locations',
     'assettypemenu' => 'Asset Types',
     'brandmenu' => 'Brands',

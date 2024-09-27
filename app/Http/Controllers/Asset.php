@@ -182,6 +182,12 @@ class Asset extends Controller
             //get date format setting
             $setting = DB::table('settings')->where('id', '1')->first();
 
+            $assetemployee = DB::table('asset_history')
+                ->select('employees.id as id', 'employees.fullname as fullname')
+                ->leftJoin('employees', 'employees.id', '=', 'asset_history.employeeid')
+                ->where('asset_history.assetid', $id)
+                ->where('asset_history.status', 1)
+                ->first();
 
             //for warranty
             $prchasedate = strtotime($data->purchasedate);
@@ -189,6 +195,7 @@ class Asset extends Controller
 
             $res['success'] = 'success';
             $res['message']= $data;
+            $res['assetemployee']= $assetemployee;
             $res['assetcreated_at']= date($setting->formatdate, strtotime($data->assetcreated_at));
             $res['assetupdated_at']= date($setting->formatdate, strtotime($data->updated_at));
             $res['assetpurchasedate']= date($setting->formatdate, strtotime($data->purchasedate));

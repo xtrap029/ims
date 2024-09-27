@@ -391,6 +391,10 @@
                                 <label><?php echo trans('lang.asset');?></label>
                                 <input name="asset" type="text" readonly id="checkinname" class=" form-control" required placeholder="<?php echo trans('lang.asset');?>"/>
                             </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.employee');?></label>
+                                <input type="text" disabled id="checkinemployee" class=" form-control"/>
+                            </div>
                             
                         </div>
                        
@@ -406,7 +410,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                    <input type="hidden" name="employeeid" id="checkinemployeeid" value="0" />
+                    {{-- <input type="hidden" name="employeeid" id="checkinemployeeid" value="0" /> --}}
+                    <input type="hidden" name="employeeid" id="checkinemployeeid" />
                     <input type="hidden" name="assetid" id="checkinassetid"/>
                         <button type="submit" class="btn btn-primary"
                             id="savecheckin"><?php echo trans('lang.save');?></button>
@@ -847,7 +852,6 @@ $("#formcheckout").validate({
             data: $("#formcheckout").serialize(),
             dataType: "JSON",
             success: function(data) {
-                console.log(data);
 				$("#checkoutsuccess").css({'display':"block"});
 				$('#checkout').modal('hide');
 				window.setTimeout(function(){location.reload()},2000)
@@ -866,7 +870,6 @@ $("#formcheckin").validate({
             data: $("#formcheckin").serialize(),
             dataType: "JSON",
             success: function(data) {
-                console.log(data);
                 $("#checkinsuccess").css({'display':"block"});
                 $('#checkin').modal('hide');
                 window.setTimeout(function(){location.reload()},2000)
@@ -905,6 +908,8 @@ $('#checkin').on('show.bs.modal', function(e) {
             $("#checkinassetid").val(id);
             $("#checkinname").val(data.message.name);
             $("#checkinassettag").val(data.message.assettag);
+            $("#checkinemployeeid").val(data.assetemployee.id);
+            $("#checkinemployee").val(data.assetemployee.fullname);
         }   
     });
 });
