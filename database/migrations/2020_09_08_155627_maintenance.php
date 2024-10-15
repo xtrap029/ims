@@ -20,6 +20,8 @@ class Maintenance extends Migration
             $table->date('startdate');
             $table->date('enddate');
             $table->string('type',255);
+            $table->string('calibrationno',255)->nullable();
+            $table->string('remarks',255)->nullable();
             $table->timestamps();
         });
     }

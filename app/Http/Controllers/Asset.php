@@ -110,10 +110,12 @@ class Asset extends Controller
     public function historyassetbyid( Request $request ) {
         $id            = $request->input( 'assetid' );
 
-      $data = DB::select("select asset_history.*, assets.name as assetname,  IFNULL(employees.fullname, '-') as employeename
+      $data = DB::select("select asset_history.*, assets.name as assetname,  IFNULL(employees.fullname, '-') as employeename, location.name as locationname
 
         from asset_history left join assets  
         on asset_history.assetid = assets.id
+        left join location 
+        on assets.locationid = location.id
         left join employees 
         on asset_history.employeeid = employees.id
         where asset_history.assetid = '$id'

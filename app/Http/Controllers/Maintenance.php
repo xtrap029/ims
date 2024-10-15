@@ -131,6 +131,8 @@ class Maintenance extends Controller
         $assetid        = $request->input( 'assetid' );
         $type           = $request->input( 'type' );
         $supplierid     = $request->input( 'supplierid' );
+        $calibrationno = $request->input( 'calibrationno' );
+        $remarks        = $request->input( 'remarks' );
         $startdate      = $request->input( 'startdate' );
         $enddate        = $request->input( 'enddate' );
 
@@ -139,6 +141,8 @@ class Maintenance extends Controller
         $data           = array('assetid'=>$assetid, 
                                 'supplierid'=>$supplierid,
                                 'type'=>$type,
+                                'calibrationno'=>$calibrationno,
+                                'remarks'=>$remarks,
                                 'startdate'=>$startdate,
                                 'enddate'=>$enddate,
                                 'created_at'=>$created_at, 
@@ -168,8 +172,10 @@ class Maintenance extends Controller
 	 */
     public function update(Request $request){
         $id             = $request->input( 'id' );
-        $assetid           = $request->input( 'assetid' );
+        $assetid        = $request->input( 'assetid' );
         $type           = $request->input( 'type' );
+        $calibrationno = $request->input( 'calibrationno' );
+        $remarks           = $request->input( 'remarks' );
         $supplierid     = $request->input( 'supplierid' );
         $startdate      = $request->input( 'startdate' );
         $enddate        = $request->input( 'enddate' );
@@ -179,6 +185,8 @@ class Maintenance extends Controller
 			[
 			'assetid'       => $assetid,
             'type'          => $type,
+            'calibrationno'=> $calibrationno,
+            'remarks'       => $remarks,
             'supplierid'    => $supplierid,
             'startdate'     => $startdate,
             'enddate'       => $enddate,

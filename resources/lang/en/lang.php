@@ -101,6 +101,7 @@ return [
     
 
     'status' =>'Status',
+    'deploymentstatus' =>'Deployment Status',
     'overall' =>'Overall',
     'overall ' =>'Overall',
     'employee_list' =>'Employee List',
@@ -133,6 +134,7 @@ return [
     'brand' =>'Brand',
     'quantity' =>'Quantity',
     'supplier' =>'Supplier',
+    'remarks' =>'Remarks',
     'assettype' =>'Asset type',
     'cost' =>'Cost',
     'purchasedate' =>'Purchase date',
@@ -145,7 +147,7 @@ return [
     'broken' =>'Broken',
     'lost' =>'Lost',
     'repair' =>'Repair',
-    'outofrepair' =>'Out of repair',
+    'outofrepair' =>'Out for repair',
     'serial' =>'Serial',
     'location' =>'Location',
     'updatedat' =>'Updated at',
@@ -195,6 +197,7 @@ return [
     'Upgrade' =>'Upgrade',
     'Testing' =>'Testing',
     'Calibration' =>'Calibration',
+    'CalibrationNo' =>'Calibration No.',
     'Softwaresupport' =>'Software support',
     'Hardwaresupport' =>'Hardware support',
     'completionday' =>'Completion day(s)',

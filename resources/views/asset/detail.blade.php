@@ -100,7 +100,7 @@
                                                     <tr>
                                                         <td bgcolor="#f2f3f4" width="200">
                                                             <p class="mb-0 font-bold">
-                                                                <?php echo trans('lang.status');?>:</p>
+                                                                <?php echo trans('lang.deploymentstatus');?>:</p>
                                                         </td>
                                                         <td>
                                                             <p class="mb-0 assetstatus"></p>
@@ -307,6 +307,7 @@
                                                         <th><?php echo trans('lang.date');?></th>
                                                         <th><?php echo trans('lang.assetname');?></th>
                                                         <th><?php echo trans('lang.employee');?></th>
+                                                        <th><?php echo trans('lang.location');?></th>
                                                         <th><?php echo trans('lang.action');?></th>
                                                     </tr>
                                                 </thead>
@@ -316,6 +317,7 @@
                                                         <th><?php echo trans('lang.date');?></th>
                                                         <th><?php echo trans('lang.assetname');?></th>
                                                         <th><?php echo trans('lang.employee');?></th>
+                                                        <th><?php echo trans('lang.location');?></th>
                                                         <th><?php echo trans('lang.action');?></th>
                                                     </tr>
                                                 </tfoot>
@@ -750,6 +752,9 @@
             },
             {
                 data: 'employeename'
+            },
+            {
+                data: 'locationname'
             },
             {
                 data: 'status'

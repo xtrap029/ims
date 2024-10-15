@@ -28,6 +28,8 @@
                                         <th><?php echo trans('lang.asset');?></th>
                                         <th><?php echo trans('lang.supplier');?></th>
                                         <th><?php echo trans('lang.type');?></th>
+                                        <th><?php echo trans('lang.CalibrationNo');?></th>
+                                        <th><?php echo trans('lang.remarks');?></th>
                                         <th><?php echo trans('lang.startdate');?></th>
                                         <th><?php echo trans('lang.enddate');?></th>
                                         <th><?php echo trans('lang.action');?></th>
@@ -40,6 +42,8 @@
                                         <th><?php echo trans('lang.asset');?></th>
                                         <th><?php echo trans('lang.supplier');?></th>
                                         <th><?php echo trans('lang.type');?></th>
+                                        <th><?php echo trans('lang.CalibrationNo');?></th>
+                                        <th><?php echo trans('lang.remarks');?></th>
                                         <th><?php echo trans('lang.startdate');?></th>
                                         <th><?php echo trans('lang.enddate');?></th>
                                         <th><?php echo trans('lang.action');?></th>
@@ -90,6 +94,14 @@
                                     <option value="<?php echo trans('lang.Softwaresupport');?>"><?php echo trans('lang.Softwaresupport');?></option>
                                     <option value="<?php echo trans('lang.Hardwaresupport');?>"><?php echo trans('lang.Hardwaresupport');?></option>
                                 </select>
+                        </div>
+                        <div class="form-group">
+                            <label><?php echo trans('lang.CalibrationNo');?></label>
+                            <input name="calibrationno" type="text" id="calibrationno" class=" form-control" placeholder="<?php echo trans('lang.CalibrationNo');?>"/>
+                        </div>
+                        <div class="form-group">
+                            <label><?php echo trans('lang.remarks');?></label>
+                            <input name="remarks" type="text" id="remarks" class=" form-control" placeholder="<?php echo trans('lang.remarks');?>"/>
                         </div>
                         <div class="form-group mb-0" >
                                     <label for="startdate" class="control-label"><?php echo trans('lang.startdate');?></label>     
@@ -155,6 +167,14 @@
                                     <option value="<?php echo trans('lang.Softwaresupport');?>"><?php echo trans('lang.Softwaresupport');?></option>
                                     <option value="<?php echo trans('lang.Hardwaresupport');?>"><?php echo trans('lang.Hardwaresupport');?></option>
                                 </select>
+                        </div>
+                        <div class="form-group">
+                            <label><?php echo trans('lang.CalibrationNo');?></label>
+                            <input name="calibrationno" type="text" id="editcalibrationno" class=" form-control" placeholder="<?php echo trans('lang.calibrationno');?>"/>
+                        </div>
+                        <div class="form-group">
+                            <label><?php echo trans('lang.remarks');?></label>
+                            <input name="remarks" type="text" id="editremarks" class=" form-control" required placeholder="<?php echo trans('lang.remarks');?>"/>
                         </div>
                         <div class="form-group mb-0" >
                                     <label for="editstartdate" class="control-label"><?php echo trans('lang.startdate');?></label>     
@@ -277,6 +297,12 @@ $.ajax({
             },
             {
                 data: 'type'
+            },
+            {
+                data: 'calibrationno'
+            },
+            {
+                data: 'remarks'
             },
             {
                 data: 'startdate'
@@ -404,6 +430,8 @@ $('#edit').on('show.bs.modal', function(e) {
             $("#editassetid").val(data.message.assetid);
             $("#editsupplierid").val(data.message.supplierid);
 			$("#edittype").val(data.message.type);
+			$("#editcalibrationno").val(data.message.calibrationno);
+			$("#editremarks").val(data.message.remarks);
             $("#editstartdate").val(data.message.startdate);
             $("#editenddate").val(data.message.enddate);
 		}   
