@@ -65,7 +65,7 @@
                 </li>
             </ul>
             <ul class="nav mt-5">
-                <li class="{{ Request::is( 'componentlist') ? 'active' : '' }}">
+                <li class="{{ Request::is( 'componentlist') ? 'active' : '' }} d-none">
                     <a href="{{ URL::to( 'componentlist') }}">
                         <p><img width="22"
                                 src="<?php echo asset('images/icon-component.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.componentmenu');?>
@@ -196,7 +196,7 @@
                                     </a>
                                 </li>
                               
-                                <li class="{{ Request::is( 'componentlist') ? 'active' : '' }}">
+                                <li class="{{ Request::is( 'componentlist') ? 'active' : '' }} d-none">
                                     <a href="{{ URL::to( 'componentlist') }}">
                                         <p><?php echo trans('lang.componentmenu');?>
                                         </p>

@@ -18,7 +18,7 @@
 								<hr>
 									
 								@endif	
-								@if(Auth::check())
+								@if(Auth::check() && 1==2)
 									
 								<p class="text-primary"><i class="ti-angle-right"></i><a href="{{ URL::to( 'reports/componentactivity') }}"><?php echo trans('lang.componentactivity');?></a> </p>
 								<hr>

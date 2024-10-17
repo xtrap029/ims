@@ -6,7 +6,7 @@
        
        
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="card background-blue color-white">
                     <div class="content">
                         <div class="row">
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-6 d-none">
                 <div class="card background-yellow color-white">
                     <div class="content">
                         <div class="row">
@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="card background-green color-white">
                     <div class="content">
                         <div class="row">
@@ -88,7 +88,7 @@
             </div>
 
 
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="card background-red color-white">
                     <div class="content">
                         <div class="row">
@@ -142,7 +142,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="header">
                         <h5 class="title text-center"><?php echo trans('lang.recentassetactivity');?><h5>
@@ -177,7 +177,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 d-none">
                 <div class="card">
                     <div class="header">
                         <h5 class="title text-center"><?php echo trans('lang.recentcomponentactivity');?><h5>
