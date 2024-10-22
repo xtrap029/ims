@@ -8,7 +8,7 @@ use App\Http\Controllers\TraitSettings;
 use DB;
 use App;
 use Auth;
-
+use Carbon\Carbon;
 
 class Settings extends Controller
 {
@@ -118,6 +118,19 @@ class Settings extends Controller
         return response( $res );
 
 
+	}
+
+	public function exportdatabase() {
+		$filename = Carbon::now()->format('Y-m-d') . "-" . substr(md5(mt_rand()), 0, 7) . ".gz";
+
+        $command = "mysqldump --user=" . env('DB_USERNAME') ." --password='" . env('DB_PASSWORD') . "' --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  | gzip > " . public_path("upload/temp/") . $filename;
+  
+        $returnVar = NULL;
+        $output  = NULL;
+  
+        exec($command, $output, $returnVar);
+
+		return response()->download(public_path("upload/temp/") . $filename)->deleteFileAfterSend(true);
 	}
 
 }

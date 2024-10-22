@@ -117,6 +117,7 @@ Route::post('userbyid', 'User@byid');
 //Settings API
 Route::get('settings', 'Settings@getdata');
 Route::post('updatesettings', 'Settings@update');
+Route::get('exportdatabase', 'Settings@exportdatabase');
 
 //Asset API
 Route::get('asset', 'Asset@getdata');

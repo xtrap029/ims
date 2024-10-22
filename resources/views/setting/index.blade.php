@@ -100,6 +100,28 @@
                 </div>
             </div>
         </div>
+
+		<div class="row pt-3">
+            <div class="col-md-6">
+                <h3 class=""><?php echo trans('lang.database_setting');?></h3>
+            </div>
+        </div>
+		<div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body ">
+                        <div class="row">
+							<div class="col-md-6">
+								<label><?php echo trans('lang.database');?></label>
+								<div>
+									<a href="{{ url('exportdatabase')}}" target="_blank" class="btn btn-fill btn-primary"><?php echo trans('lang.export');?></a>
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

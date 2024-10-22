@@ -74,6 +74,9 @@ return [
     'logo' => 'Logo',
     'app_setting' => 'Application setting',
     'language' => 'Language',
+    'database_setting' => 'Database setting',
+    'database' => 'Database',
+    'export' => 'Export',
 
     //email settings
     'email_setting'=> 'Email setting',
