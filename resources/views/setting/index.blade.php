@@ -83,9 +83,13 @@
                                     <label><?php echo trans('lang.logo');?></label>
                                     <input name="logo" type="file" id="logo" class="form-control"
                                         placeholder="<?php echo trans('lang.logo');?>" />
+									<img id="logoimg" class="w-25 mt-3" src="" />
                                 </div>
                                 <div class="col-md-6">
-                                    <img id="logoimg" src="" />
+                                    <label><?php echo trans('lang.login_banner');?></label>
+                                    <input name="loginbanner" type="file" id="loginbanner" class="form-control"
+                                        placeholder="<?php echo trans('lang.login_banner');?>" />
+									<img id="loginbannerimg" class="w-25 mt-3" src="" />
                                 </div>
                             </div>
                             <div class="row">
@@ -151,6 +155,7 @@
 			var currency 	= $("#currency").val();
             var formatdate 	= $("#formatdate").val();
             var logo 		= $('#logo')[0].files[0];
+            var loginbanner = $('#loginbanner')[0].files[0];
 
 
             form.append('company', company);
@@ -162,6 +167,7 @@
 			form.append('currency', currency);
             form.append('formatdate', formatdate);
             form.append('logo', logo);
+            form.append('loginbanner', loginbanner);
 
             $.ajax({
                 method: "POST",
@@ -201,6 +207,7 @@
 			$("#currency").val(data.data.currency);
             $("#language").val(data.data.language);
             $("#logoimg").attr("src", data.logo);
+            $("#loginbannerimg").attr("src", data.loginbanner);
         }
     });
 

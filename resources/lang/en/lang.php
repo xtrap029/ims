@@ -72,6 +72,7 @@ return [
     //settings
     'formatdate'=> 'Format date',
     'logo' => 'Logo',
+    'login_banner' => 'Login Banner',
     'app_setting' => 'Application setting',
     'language' => 'Language',
     'database_setting' => 'Database setting',

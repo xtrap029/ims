@@ -13,6 +13,7 @@ use Auth;
 use DB;
 use Validator;
 use App\User;
+use App\SettingModel;
 
 class LoginController extends Controller
 {
@@ -103,6 +104,7 @@ class LoginController extends Controller
 	
 	public function showLoginForm()
    {
-       return view('auth.login');
+        $settings = DB::table('settings')->where('id', '1')->first();
+       return view('auth.login')->with('settings', $settings);
    }
 }

@@ -31,10 +31,10 @@
 
 <body>
     <div class="row">
-        <div class="col-md-8 vh-100 banner-cover d-none d-md-block" style="background-image: url('/images/login-bg.jpg');">1</div>
+        <div class="col-md-8 vh-100 banner-cover d-none d-md-block" style="background-image: url('{{ "/upload/".$settings->loginbanner }}');">1</div>
         <div class="col-md-4 login-background vh-100">
             <div class="p-5 m-md-5">
-                <img src="/images/logo-tecc.png" class="m-auto d-block" style="width: 40%" alt="">
+                <img src="{{ "/upload/".$settings->logo }}" class="m-auto d-block" style="width: 40%" alt="">
                 <h2 class="title text-center pt-5">Welcome to Inventory!</h2>
                 <form class="form-horizontal p-md-3 mt-5" name="form-login" id="form-login" method="POST">
                     {{ csrf_field() }}

@@ -39,6 +39,7 @@ class Settings extends Controller
 			$res['success'] = true;
 			$res['data']  = $data;
 			$res['logo']  = url('/').'/upload/'.$data->logo;
+			$res['loginbanner']  = url('/').'/upload/'.$data->loginbanner;
 			$res['message'] = 'success';
 			return response($res);
 		}
@@ -64,34 +65,43 @@ class Settings extends Controller
 		$email       = $request->input('email');
 		$phonenumber = $request->input('phonenumber');
         $country    = $request->input('country');
-        $logoname2  = $request->file('logo');
 		$currency   = $request->input('currency');
 		$language   = $request->input('language');
 		$formatdate = $request->input('formatdate');
-		
 
-		$message = ['logo.mimes'=>trans('lang.type_image')];
-
-		if ($request->hasFile('logo')) {
-			$this->validate($request, [
-				'logo' => 'image|mimes:jpeg,png,jpg|max:2048'
-				],$message);
-			$logoname  = $request->file('logo')->getClientOriginalName();
-			$request->file('logo')->move(public_path("/upload"), $logoname);
-			$update = DB::table('settings')->where('id', '1')
-			->update(
-				[
+		if ($request->hasFile('logo') || $request->hasFile('loginbanner')) {
+			$savedata = [
 				'company'       =>$company,
 				'address'       =>$address,
 				'email'         =>$email,
 				'phonenumber'   =>$phonenumber,
 				'country'   	=>$country,
-                'currency'      =>$currency,
-                'language'      =>$language,
-				'formatdate'    =>$formatdate,
-				'logo'          =>$logoname
-				]
-			);
+				'currency'      =>$currency,
+				'language'      =>$language,
+				'formatdate'    =>$formatdate
+			];
+
+			if ($request->hasFile('logo')) {
+				$this->validate($request, [
+					'logo' => 'mimes:jpeg,png,jpg|max:2048'
+				]);
+				$logoname  = $request->file('logo')->getClientOriginalName();
+				$request->file('logo')->move(public_path("/upload"), $logoname);
+
+				$savedata['logo'] = $logoname;
+			}
+
+			if ($request->hasFile('loginbanner')) {
+				$this->validate($request, [
+					'loginbanner' => 'mimes:jpeg,png,jpg|max:2048'
+					]);
+				$loginbanner  = $request->file('loginbanner')->getClientOriginalName();
+				$request->file('loginbanner')->move(public_path("/upload"), $loginbanner);
+
+				$savedata['loginbanner'] = $loginbanner;
+			}
+
+			$update = DB::table('settings')->where('id', '1')->update($savedata);
 		} else{
 
 			$update = DB::table('settings')->where('id', '1')->update(

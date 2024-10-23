@@ -21,6 +21,7 @@ class Settings extends Migration
             $table->char('phonenumber',30);
             $table->char('country',100);
             $table->text('logo');
+            $table->text('loginbanner');
             $table->char('formatdate',10);
             $table->timestamps();
         });
