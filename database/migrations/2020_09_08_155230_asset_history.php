@@ -17,6 +17,7 @@ class AssetHistory extends Migration
             $table->bigIncrements('id');
             $table->integer('assetid');
             $table->integer('employeeid');
+            $table->integer('userid')->nullable();
             $table->date('date');
             $table->string('status',50);
             $table->timestamps();

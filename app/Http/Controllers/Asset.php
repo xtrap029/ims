@@ -110,14 +110,20 @@ class Asset extends Controller
     public function historyassetbyid( Request $request ) {
         $id            = $request->input( 'assetid' );
 
-      $data = DB::select("select asset_history.*, assets.name as assetname,  IFNULL(employees.fullname, '-') as employeename, location.name as locationname
-
+      $data = DB::select("
+        select asset_history.*, 
+            assets.name as assetname, 
+            IFNULL(employees.fullname, '-') as employeename,
+            IFNULL(users.fullname, '-') as username,
+            location.name as locationname
         from asset_history left join assets  
         on asset_history.assetid = assets.id
         left join location 
         on assets.locationid = location.id
         left join employees 
         on asset_history.employeeid = employees.id
+        left join users
+        on asset_history.userid = users.id
         where asset_history.assetid = '$id'
         order by asset_history.created_at desc"); 
         return Datatables::of($data)
@@ -527,12 +533,21 @@ class Asset extends Controller
     public function savecheckout(Request $request){
         $assetid        = $request->input( 'assetid' );
         $employeeid     = $request->input( 'employeeid' );
+        $userid         = Auth::user()->id;
         $date           = $request->input( 'checkoutdate' );
         $status         = '1'; //checkout = 1
         $checkstatus    = '2'; 
         $created_at     = date("Y-m-d H:i:s");
         $updated_at     = date("Y-m-d H:i:s");
-        $data           = array('assetid'=>$assetid, 'status'=>$status,'employeeid'=>$employeeid,'date'=>$date,'created_at'=>$created_at, 'updated_at'=>$updated_at);
+        $data           = array(
+            'assetid'=>$assetid,
+            'status'=>$status,
+            'employeeid'=>$employeeid,
+            'userid'=>$userid,
+            'date'=>$date,
+            'created_at'=>$created_at,
+            'updated_at'=>$updated_at
+        );
         $insert         = DB::table( 'asset_history' )->insert( $data );
 
         if ( $insert ) {
@@ -566,12 +581,21 @@ class Asset extends Controller
     public function savecheckin(Request $request){
         $assetid        = $request->input( 'assetid' );
         $employeeid     = $request->input( 'employeeid' );
+        $userid         = Auth::user()->id;
         $date           = $request->input( 'checkindate' );
         $status         = '2'; //checkout = 1
         $checkstatus    = '0'; 
         $created_at     = date("Y-m-d H:i:s");
         $updated_at     = date("Y-m-d H:i:s");
-        $data           = array('assetid'=>$assetid, 'status'=>$status,'employeeid'=>$employeeid,'date'=>$date,'created_at'=>$created_at, 'updated_at'=>$updated_at);
+        $data           = array(
+            'assetid'=>$assetid,
+            'status'=>$status,
+            'employeeid'=>$employeeid,
+            'userid'=>$userid,
+            'date'=>$date,
+            'created_at'=>$created_at,
+            'updated_at'=>$updated_at
+        );
         $insert         = DB::table( 'asset_history' )->insert( $data );
 
         if ( $insert ) {

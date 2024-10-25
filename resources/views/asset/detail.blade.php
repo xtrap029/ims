@@ -308,6 +308,7 @@
                                                         <th><?php echo trans('lang.assetname');?></th>
                                                         <th><?php echo trans('lang.employee');?></th>
                                                         <th><?php echo trans('lang.location');?></th>
+                                                        <th><?php echo trans('lang.createdby');?></th>
                                                         <th><?php echo trans('lang.action');?></th>
                                                     </tr>
                                                 </thead>
@@ -318,6 +319,7 @@
                                                         <th><?php echo trans('lang.assetname');?></th>
                                                         <th><?php echo trans('lang.employee');?></th>
                                                         <th><?php echo trans('lang.location');?></th>
+                                                        <th><?php echo trans('lang.createdby');?></th>
                                                         <th><?php echo trans('lang.action');?></th>
                                                     </tr>
                                                 </tfoot>
@@ -755,6 +757,9 @@
             },
             {
                 data: 'locationname'
+            },
+            {
+                data: 'username'
             },
             {
                 data: 'status'

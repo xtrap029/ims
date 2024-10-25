@@ -156,6 +156,7 @@ return [
     'location' =>'Location',
     'updatedat' =>'Updated at',
     'createdat' =>'Created at',
+    'createdby' =>'Created by',
     'checkindate' =>'Check in date',
     'file_list' =>'File list',
     
