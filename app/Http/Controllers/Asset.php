@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\AssetModel;
+use App\AssetsModel;
+use App\ActivityLogModel;
+use Spatie\Activitylog\Contracts\Activity;
 use Illuminate\Support\Facades\File; 
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\TraitSettings;
@@ -181,6 +183,36 @@ class Asset extends Controller
             return date($setting->formatdate, strtotime($single->date));
         })
         ->rawColumns(['status','date'])
+        ->make(true);
+        
+    }
+
+    public function activityassetbyid( Request $request ) {
+        $id            = $request->input( 'assetid' );
+
+        $data = ActivityLogModel::where('activity_log.subject_id', $id)
+            ->leftJoin('users', 'activity_log.causer_id', '=', 'users.id')
+            ->select('activity_log.description as description',
+                'activity_log.id as id',
+                'users.fullname as user',
+                'activity_log.properties as properties',
+                'activity_log.created_at as date')
+            ->orderBy('activity_log.id', 'desc')
+            ->get();
+            
+        return Datatables::of($data)
+        ->addColumn('properties',function($single){
+            $row = "";
+
+            $row = $row."<table class='table-sm'>";
+            foreach (json_decode($single->properties) as $key => $value) {
+                $row = $row."<tr><td style='width: 100px; max-width: 100px'>".htmlspecialchars($key) . "</td><td style='width: 500px; max-width: 500px'><b>" . htmlspecialchars($value) . "</b></td></tr>";
+            }
+            $row = $row."</table>";
+            
+            return $row;
+        })
+        ->rawColumns(['properties'])
         ->make(true);
         
     }
@@ -370,6 +402,7 @@ class Asset extends Controller
                 $this->validate($request, ['picture' => 'mimes:jpeg,png,jpg|max:2048'],$message);
                 $picturename  = date('mdYHis').uniqid().$request->file('picture')->getClientOriginalName();
                 $request->file('picture')->move(public_path("/upload/assets"), $picturename);
+
                 $data       = array('name'=>$name, 
                             'locationid'=>$locationid,
                             'supplierid'=>$supplierid,
@@ -387,7 +420,7 @@ class Asset extends Controller
                             'description'=>$description,
                             'created_at'=>$created_at,
                             'updated_at'=>$updated_at);
-                $insert     = DB::table( 'assets' )->insert( $data ); 
+                $insert     = AssetsModel::create( $data ); 
 
             }else{
                 $data       = array('name'=>$name, 
@@ -408,13 +441,19 @@ class Asset extends Controller
                                 'created_at'=>$created_at,
                                 'updated_at'=>$updated_at);
 
-                $insert     = DB::table( 'assets' )->insert( $data );
+                $insert     = AssetsModel::create( $data ); 
 
             }
 
             if ( $insert ) {
                 $res['message'] = 'success';
                 
+                activity()
+                    ->useLog('assets')   
+                    ->causedBy(Auth::user()->id)
+                    ->performedOn(AssetsModel::find($insert->id))
+                    ->withProperties($data)
+                    ->log('created');
             } else{
                 $res['message'] = 'failed';
             }
@@ -464,35 +503,33 @@ class Asset extends Controller
         }
         else{ 
 
-        if($request->hasFile('picture')) {
-            $this->validate($request, ['picture' => 'mimes:jpeg,png,jpg|max:2048'],$message);
-            $picturename  = date('mdYHis').uniqid().$request->file('picture')->getClientOriginalName();
-            $request->file('picture')->move(public_path("/upload/assets"), $picturename);
+            if($request->hasFile('picture')) {
+                $this->validate($request, ['picture' => 'mimes:jpeg,png,jpg|max:2048'],$message);
+                $picturename  = date('mdYHis').uniqid().$request->file('picture')->getClientOriginalName();
+                $request->file('picture')->move(public_path("/upload/assets"), $picturename);
 
-            $update = DB::table( 'assets' )->where( 'id', $id )
-            ->update(
-                [
-                'name'                => $name,
-                'locationid'          => $locationid,    
-                'supplierid'          => $supplierid,
-                'brandid'             => $brandid,
-                'typeid'              => $typeid,
-                'assettag'            => $assettag,
-                'serial'              => $serial,
-                'quantity'            => $quantity,
-                'purchasedate'        => $purchasedate,
-                'cost'                => $cost,
-                'warranty'            => $warranty,
-                'status'              => $status,
-                'description'         => $description,
-                'picture'             => $picturename,
-                'updated_at'          => $updated_at
-                ]
-            );
-        }else{
-            $update = DB::table( 'assets' )->where( 'id', $id )
-            ->update(
-                [
+                $updatearr = [
+                    'name'                => $name,
+                    'locationid'          => $locationid,    
+                    'supplierid'          => $supplierid,
+                    'brandid'             => $brandid,
+                    'typeid'              => $typeid,
+                    'assettag'            => $assettag,
+                    'serial'              => $serial,
+                    'quantity'            => $quantity,
+                    'purchasedate'        => $purchasedate,
+                    'cost'                => $cost,
+                    'warranty'            => $warranty,
+                    'status'              => $status,
+                    'description'         => $description,
+                    'picture'             => $picturename,
+                    'updated_at'          => $updated_at
+                ];
+
+                $update = DB::table( 'assets' )->where( 'id', $id )
+                ->update($updatearr);
+            }else{
+                $updatearr = [
                     'name'                => $name,
                     'locationid'          => $locationid,
                     'supplierid'          => $supplierid,
@@ -507,12 +544,21 @@ class Asset extends Controller
                     'status'              => $status,
                     'description'         => $description,
                     'updated_at'          => $updated_at
-                ]
-            );
-        }
+                ];
+
+                $update = DB::table( 'assets' )->where( 'id', $id )
+                ->update($updatearr);
+            }
 
             if ( $update ) {
                 $res['message'] = 'success';
+
+                activity()
+                    ->useLog('assets')   
+                    ->causedBy(Auth::user()->id)
+                    ->performedOn(AssetsModel::find($id))
+                    ->withProperties($updatearr)
+                    ->log('edited');
                 
             } else{
                 $res['message'] = 'failed';

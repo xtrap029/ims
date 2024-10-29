@@ -188,6 +188,8 @@ return [
     'components' =>'Components',
     'maintenances' =>'Maintenances',
     'history' =>'History',
+    'activitylog' =>'Activity Log',
+    'changes' =>'Changes',
     'onhand' =>'On Hand',
     'backtoasset' =>'Back to Assets',
     'generatelabel' =>'Generate label',

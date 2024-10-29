@@ -81,6 +81,11 @@
                                             role="tab" aria-controls="depreciate"
                                             aria-selected="false"><?php echo trans('lang.depreciation');?></a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="activity-tab" data-toggle="tab" href="#activity"
+                                            role="tab" aria-controls="activity"
+                                            aria-selected="false"><?php echo trans('lang.activitylog');?></a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="details" role="tabpanel"
@@ -387,6 +392,32 @@
                                                     </tr>
                                                 </tfoot>
                                                 <tbody id="calculator-list">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="activity" role="tabpanel"
+                                        aria-labelledby="activity-tab">
+                                        <div class="table-responsive  pt-4">
+                                            <table id="dataactivity" class="table table-striped table-bordered"
+                                                cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th><?php echo trans('lang.description');?></th>
+                                                        <th><?php echo trans('lang.user');?></th>
+                                                        <th><?php echo trans('lang.changes');?></th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th><?php echo trans('lang.description');?></th>
+                                                        <th><?php echo trans('lang.user');?></th>
+                                                        <th><?php echo trans('lang.changes');?></th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -813,6 +844,35 @@
         ]
     });
 
+    //activity log data
+    $('#dataactivity').DataTable({
+        ajax: {
+        url: "{{ url('activityassetbyid')}}",
+        type: "post",
+        data: function (d) {
+              d.assetid = id;
+            }
+        },
+        
+        columns: [{
+            data: 'id',
+                orderable: false,
+                searchable: false,
+                visible: false
+            },
+            {
+                data: 'description'
+            },
+            {
+                data: 'user'
+            },
+            {
+                data: 'properties'
+            }
+        ],
+        buttons: []
+    });
+
 
     //File data
     $('#datafile').DataTable({
@@ -884,7 +944,7 @@
                     columns: [1, 2, 3]
                 }
             }
-        ]
+        ],
     });
     $('#datagallery').DataTable({
         ajax: {
