@@ -447,13 +447,16 @@ class Asset extends Controller
 
             if ( $insert ) {
                 $res['message'] = 'success';
-                
-                activity()
-                    ->useLog('assets')   
-                    ->causedBy(Auth::user()->id)
-                    ->performedOn(AssetsModel::find($insert->id))
-                    ->withProperties($data)
-                    ->log('created');
+
+                ActivityLogModel::create([
+                    'log_name' => 'assets',
+                    'description' => 'created',
+                    'subject_id' => $insert->id,
+                    'causer_id' => Auth::user()->id,
+                    'properties' => json_encode((object) $data),
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s"),
+                ]);
             } else{
                 $res['message'] = 'failed';
             }
@@ -553,12 +556,15 @@ class Asset extends Controller
             if ( $update ) {
                 $res['message'] = 'success';
 
-                activity()
-                    ->useLog('assets')   
-                    ->causedBy(Auth::user()->id)
-                    ->performedOn(AssetsModel::find($id))
-                    ->withProperties($updatearr)
-                    ->log('edited');
+                ActivityLogModel::create([
+                    'log_name' => 'assets',
+                    'description' => 'edited',
+                    'subject_id' => $id,
+                    'causer_id' => Auth::user()->id,
+                    'properties' => json_encode((object) $updatearr),
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s"),
+                ]);
                 
             } else{
                 $res['message'] = 'failed';
