@@ -2,21 +2,29 @@
 @section('content')
 
 <section class="">
-    <div class="content p-4">
-        <div class="row pt-3">
-            <div class="col-md-8">
-                <h3 class=""><?php echo trans('lang.assetdetail');?></h3>
+    <div class="content bg-dark">
+        <div class="row px-4 pt-3 pb-2">
+            <div class="col-md-8 px-4">
+                <p class="title-detail font-bold mb-2">
+                    <span class="assetname d-block text-white" style="margin-bottom: -10px;"></span>
+                    <span class="assettag text-help font-weight-normal" style="font-size: 17px;"></span>
+                    <a href="#_" class="text-white vlign--top jsCopy" data-toggle="tooltip" data-placement="top" title="Copy to clipboard"><i class="fa fa-copy w-auto" style="font-size: 15px;"></i></a>
+                </p>
+                <p class="assetdetail">
+                    <label class="badge badge-pill badge-success p-2 assettype"></label>
+                    <label class="badge badge-pill badge-secondary p-2 text-white assetstatus"></label>
+                </p>
             </div>
-            <div class="col-md-4 text-md-right">
-                                  <a target="_blank" href="{{url('assetlist/generatelabel', $id)}}" id="btndetail" class="btn btn-sm btn-fill btn-primary"><i
-                                        class="ti-info"></i> <?php echo trans('lang.generatelabel');?></a>
-                                <a href="{{ url('assetlist') }}" id="btndetail"  class="btn btn-sm btn-fill btn-warning"><i
-                                        class="ti-info"></i> <?php echo trans('lang.backtoasset');?></a>
-                           
-            </div>
-
+            <div class="col-md-4 text-md-right px-4">
+                <div>
+                    <a target="_blank" href="{{url('assetlist/generatelabel', $id)}}" id="btndetail" class="d-inline-block">
+                        <div class="assetbarcode bg-white p-1 rounded"></div>
+                    </a>
+                </div>  
+            </div>    
         </div>
-
+    </div>
+    <div class="content p-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -24,17 +32,12 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <input type="hidden" value="{{ $id }}" name="id" id="id" />
-                                <p class="title-detail font-bold"> <span class="assetname"></span> (<span
-                                        class="assettag"></span>)</p>
-                                <p class="assetdetail"><span class="assettype"></span>&bull;<span
-                                        class="assetstatus"></span></p>
+                                
                                       
                             </div>
                            
                                 <div class="col-md-3  ">
-                                    <div class="border p-2 barcode-inner">
-                                        <div class="assetbarcode"></div>
-                                    </div>
+                                    
                             </div>
                                     
                             <div class="col-md-12">
@@ -93,24 +96,6 @@
                                         <div class="row">
                                             <div class="col-md-9 pt-3">
                                                 <table class="table table-hover" cellpadding="0" cellspacing="0">
-                                                    <tr>
-                                                        <td bgcolor="#f2f3f4" width="200">
-                                                            <p class="mb-0 font-bold"><?php echo trans('lang.type');?>:
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 assettype2"></p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td bgcolor="#f2f3f4" width="200">
-                                                            <p class="mb-0 font-bold">
-                                                                <?php echo trans('lang.deploymentstatus');?>:</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 assetstatus"></p>
-                                                        </td>
-                                                    </tr>
                                                     <tr>
                                                         <td bgcolor="#f2f3f4" width="200">
                                                             <p class="mb-0 font-bold">
@@ -1071,7 +1056,28 @@
         $("#iddelete").val(id);
     });
 
+    // $('[data-toggle="tooltip"]').tooltip()
 
+    $('.jsCopy').click(function() {
+        selectText($(".assettag"));
+        
+        // $(this).attr('data-original-title', "Copied")
+        //     .tooltip('show')
+    })
+
+    // $('.jsCopy').mouseleave(function() {
+    //     $(this).attr("data-original-title","Copy to clipboard")
+    // })
+
+    function selectText(element) {
+        const range = document.createRange();
+        range.selectNodeContents(element[0]);  // jQuery returns an array-like object, so we need [0] to access the DOM element
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand("copy")
+        document.getSelection().removeAllRanges()
+    }
 })(jQuery);
 </script>
 @endsection

@@ -23,7 +23,7 @@ Route::get('/supplierlist','Supplier@index');
 Route::get('/userlist','User@index');
 Route::get('/settinglist','Settings@index');
 Route::get('/assetlist','Asset@index');
-Route::get('/assetlist/detail/{id}','Asset@detail');
+Route::get('/assetlist/detail/{id}','Asset@detail')->name('assetDetail');
 Route::get('/assetlist/generatelabel/{id}', 'Asset@generatelabel');
 Route::get('/componentlist','Component@index');
 Route::get('/componentlist/detail/{componentid}','Component@detail');
@@ -32,14 +32,14 @@ Route::get('/depreciationlist','Depreciation@index');
 
 
 //report
-Route::get('/reports/assetactivity','Reports@assetactivity');
-Route::get('/reports/componentactivity','Reports@componentactivity');
-Route::get('/reports/maintenance','Reports@maintenance');
-Route::get('/reports/bytype','Reports@bytype');
-Route::get('/reports/bystatus','Reports@bystatus');
-Route::get('/reports/bylocation','Reports@bylocation');
-Route::get('/reports/bysupplier','Reports@bysupplier');
-Route::get('/reports/allreports','Reports@allreports');
+Route::get('/reports/assetactivity','Reports@assetactivity')->name('report');
+Route::get('/reports/componentactivity','Reports@componentactivity')->name('report');
+Route::get('/reports/maintenance','Reports@maintenance')->name('report');
+Route::get('/reports/bytype','Reports@bytype')->name('report');
+Route::get('/reports/bystatus','Reports@bystatus')->name('report');
+Route::get('/reports/bylocation','Reports@bylocation')->name('report');
+Route::get('/reports/bysupplier','Reports@bysupplier')->name('report');
+Route::get('/reports/allreports','Reports@allreports')->name('report');
 
 Route::get('logout', 'Auth\LoginController@logout');
 

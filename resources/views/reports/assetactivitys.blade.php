@@ -7,6 +7,10 @@
             <div class="col-md-6">
                 <h3 class=""><?php echo trans('lang.assetactivity');?></h3>
             </div>
+            <div class="col-md-6 text-md-right">
+                <a href="{{ url('reports/allreports') }}" id="btndetail"  class="btn btn-sm btn-fill btn-warning"><i
+                        class="ti-info"></i> <?php echo trans('lang.backtoreports');?></a>
+            </div>
         </div>
        
         <div class="row">

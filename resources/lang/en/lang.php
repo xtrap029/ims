@@ -256,6 +256,7 @@ return [
     'reportbystatus' => 'Report by status', 
     'reportbysupplier' => 'Report by supplier', 
     'reportbylocation' => 'Report by location', 
+    'backtoreports'  => 'Back to Reports',
 
     //datatables
 	'demptyTable'=>     'No data available in table',

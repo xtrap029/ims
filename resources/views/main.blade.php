@@ -56,7 +56,7 @@
                 </li>
 
               
-                <li class="{{ Request::is( 'assetlist') ? 'active' : '' }}">
+                <li class="{{ Request::is( 'assetlist') || Route::currentRouteName() == 'assetDetail' ? 'active' : '' }}">
                     <a href="{{ URL::to( 'assetlist') }}">
                         <p><img width="22"
                                 src="<?php echo asset('images/icon-asset.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assetmenu');?>
@@ -137,7 +137,7 @@
                 </li>
             </ul>
             <ul class="nav mt-5">
-                <li class="{{ Request::is( 'reports/allreports') ? 'active' : '' }}">
+                <li class="{{ Request::is( 'reports/allreports') || Route::currentRouteName() == 'report' ? 'active' : '' }}">
                     <a href="{{ URL::to( 'reports/allreports') }}">
                         <p><img width="25"
                                 src="<?php echo asset('images/icon-report.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.reportmenu');?>
@@ -165,15 +165,20 @@
 
 
     <div class="main-panel">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light pl-4 pr-4">
+        <nav class="navbar navbar-expand-lg {{ Route::currentRouteName() == "assetDetail" ? "navbar-dark bg-dark" : "navbar-light bg-light" }} pl-4 pr-4">
 
            
                 <div class="col-md-6 ">
                 <!-- <a class="navbar-brand company" href="#"></a> -->
-                <button class="navbar-toggler nav-toggler-mobile" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
-                    aria-expanded="false" aria-label="">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                    <button class="navbar-toggler nav-toggler-mobile" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
+                        aria-expanded="false" aria-label="">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    @if (Route::currentRouteName() == 'assetDetail')
+                        <a href="{{ url('assetlist') }}" id="btndetail"  class="sidebar-mini text-white">
+                            <i class="fa fa-chevron-left w-auto mr-1"></i> Back
+                        </a>
+                    @endif
 
                 </div>
                 <div class="col-md-6 ">
@@ -280,25 +285,23 @@
                                     </a>
                                 </li>                               
                             </ul>
+                            
                     </div>
                         <!--end responsive-->
                     <ul class="topmenu float-md-right float-sm-left">
-                        <!--<li>
-                            <span class="sidebar-mini"><i class="fa fa-user"></i></span>
-                            <span class="sidebar-normal"><?php echo trans('lang.welcome');?>, {{ Auth::user()->fullname }} &nbsp;&nbsp;&nbsp;</span>  
-                        </li>-->
                         <li>
-                        <a href="{{ URL::to( 'logout') }}">
-                                    <span class="sidebar-mini"><i class="fa fa-sign-out" style="font-size:24px; color: rgba(0, 0, 0, 0.5);"></i></span>
-                                    <!-- <span class="sidebar-normal"><?php echo trans('lang.logout');?></span>-->
-                                </a>
+                            <a href="{{ URL::to( 'logout') }}">
+                                <span class="sidebar-mini">
+                                    <i class="fa fa-sign-out" style="font-size:24px; color: {{ Route::currentRouteName() == 'assetDetail' ? 'white' : 'rgba(0, 0, 0, 0.5)' }};"></i>
+                                </span>
+                            </a>
                         </li>
                     </ul>
                 </div>           
         </nav>
 
         @yield('content')
-        <footer class="footer">
+        <footer class="footer border-0">
             <div class="container-fluid">
 
                 <div class="copyright pull-right">
