@@ -2,7 +2,7 @@
 @section('content')
 
 <section class="">
-    <div class="content bg-dark">
+    <div class="content bg-dark d-none d-md-block">
         <div class="row px-4 pt-3 pb-2">
             <div class="col-md-8 px-4">
                 <p class="title-detail font-bold mb-2">
@@ -24,6 +24,29 @@
             </div>    
         </div>
     </div>
+    <div class="content bg-dark d-md-none">
+        <div class="row p-4">
+            <div class="px-4">
+                <p class="title-detail font-bold mb-2">
+                    <span class="assetname d-block text-white"></span>
+                </p>
+            </div>
+            <div class="px-4 mt-2 row">
+                <div class="col-5">
+                    <a target="_blank" href="{{url('assetlist/generatelabel', $id)}}" id="btndetail" class="d-inline-block">
+                        <div class="assetbarcodemobile bg-white p-1 rounded"></div>
+                    </a>
+                </div>
+                <p class="assetdetail col-7">
+                    <span class="assettag text-help font-weight-normal" style="font-size: 20px;"></span>
+                    <a href="#_" class="text-white vlign--top jsCopy" data-toggle="tooltip" data-placement="top" title="Copy to clipboard"><i class="fa fa-copy w-auto" style="font-size: 18px;"></i></a>
+                    <label class="badge badge-pill badge-success p-2 assettype mt-3"></label>
+                    <br>
+                    <label class="badge badge-pill badge-secondary p-2 text-white assetstatus"></label>
+                </p>
+            </div>    
+        </div>
+    </div>
     <div class="content p-4">
         <div class="row">
             <div class="col-md-12">
@@ -32,14 +55,8 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <input type="hidden" value="{{ $id }}" name="id" id="id" />
-                                
-                                      
-                            </div>
-                           
-                                <div class="col-md-3  ">
-                                    
-                            </div>
-                                    
+                            </div>                        
+                            <div class="col-md-3"></div>                                    
                             <div class="col-md-12">
                                 <div id="messagesuccess"  class="display-none alert alert-success"><?php echo trans('lang.data_added');?></div>
 					            <div id="messagedelete"  class="display-none alert alert-success"><?php echo trans('lang.data_deleted');?></div>  
@@ -538,6 +555,7 @@
             $(".assetserial").html(data.message.serial);
             $(".assetlocation").html(data.message.location);
             $(".assetbarcode").html(data.assetbarcode);
+            $(".assetbarcodemobile").html(data.assetbarcodemobile);
 
 
             $(".assetimage").attr("src", data.assetimage);

@@ -13,6 +13,7 @@ return [
     'brandmenu' => 'Brands',
     'suppliermenu' => 'Suppliers',
     'usermenu' => 'Users',
+    'rolemanagementmenu' => 'Role Management',
     'reportmenu' => 'Reports',
     'settingmenu' => 'Settings',
     'usermenu' => 'Users',

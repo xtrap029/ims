@@ -151,6 +151,13 @@
                         </p>
                     </a>
                 </li>
+                <li class="{{ Request::is( 'rolemanagement') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'rolemanagement') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-visitor.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.rolemanagementmenu');?>
+                        </p>
+                    </a>
+                </li>
 
                 <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'settinglist') }}">
@@ -169,21 +176,29 @@
 
            
                 <div class="col-md-6 ">
+                    <div class="pull-left font-weight-bold d-md-none" style="color: #0076A8; font-size: 30px;">
+                        Inventory
+                    </div>
                 <!-- <a class="navbar-brand company" href="#"></a> -->
                     <button class="navbar-toggler nav-toggler-mobile" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
                         aria-expanded="false" aria-label="">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     @if (Route::currentRouteName() == 'assetDetail')
-                        <a href="{{ url('assetlist') }}" id="btndetail"  class="sidebar-mini text-white">
+                        <a href="{{ url('assetlist') }}" id="btndetail"  class="sidebar-mini text-white d-none d-md-block">
                             <i class="fa fa-chevron-left w-auto mr-1"></i> Back
                         </a>
+                        <div class="d-inline-block mt-1">
+                            <a href="{{ url('assetlist') }}" id="btndetail"  class="sidebar-mini text-white d-md-none" style="font-size:  20px;">
+                                <i class="fa fa-chevron-left w-auto mr-1"></i>
+                            </a>
+                        </div>
                     @endif
 
                 </div>
                 <div class="col-md-6 ">
                      <!--responsive-->
-                        <div class="collapse" id="menu">
+                        <div class="collapse mt-4" id="menu">
                         <ul class="nav navmobile" >
                             
                             <li class="{{ Request::is( 'home') ? 'active' : '' }}">
@@ -277,10 +292,24 @@
                                         </p>
                                     </a>
                                 </li>
+                                
+                                <li class="{{ Request::is( 'usermanagement') ? 'active' : '' }}">
+                                    <a href="{{ URL::to( 'usermanagement') }}">
+                                        <p><?php echo trans('lang.usermanagementmenu');?>
+                                        </p>
+                                    </a>
+                                </li>
 
                                 <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'settinglist') }}">
                                         <p><?php echo trans('lang.settingmenu');?>
+                                        </p>
+                                    </a>
+                                </li>
+                                
+                                <li class="mt-5">
+                                    <a href="{{ URL::to( 'logout') }}">
+                                        <p><?php echo trans('lang.logout');?>
                                         </p>
                                     </a>
                                 </li>                               
@@ -288,7 +317,7 @@
                             
                     </div>
                         <!--end responsive-->
-                    <ul class="topmenu float-md-right float-sm-left">
+                    <ul class="topmenu float-md-right float-sm-left d-none d-md-block">
                         <li>
                             <a href="{{ URL::to( 'logout') }}">
                                 <span class="sidebar-mini">

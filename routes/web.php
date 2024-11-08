@@ -21,6 +21,7 @@ Route::get('/employeeslist','Employees@index');
 Route::get('/employeeslist/detail/{id}','Employees@detail');
 Route::get('/supplierlist','Supplier@index');
 Route::get('/userlist','User@index');
+Route::get('/rolemanagement','RoleManagement@index');
 Route::get('/settinglist','Settings@index');
 Route::get('/assetlist','Asset@index');
 Route::get('/assetlist/detail/{id}','Asset@detail')->name('assetDetail');
