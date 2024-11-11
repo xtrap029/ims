@@ -73,8 +73,14 @@
                                 </div>
 
                                 <div class="col-md-6">
+                                    <label><?php echo trans('lang.image_size');?></label>
+                                    <input name="imagesize" type="number" id="imagesize" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
                                     <label><?php echo trans('lang.address');?></label>
-                                    <textarea class="form-control" name="address" id="address"
+                                    <textarea class="form-control" name="address" id="address" rows="2"
                                         placeholder="<?php echo trans('lang.address');?>"></textarea>
                                 </div>
                             </div>
@@ -83,7 +89,7 @@
                                     <label><?php echo trans('lang.logo');?></label>
                                     <input name="logo" type="file" id="logo" class="form-control"
                                         placeholder="<?php echo trans('lang.logo');?>" />
-									<img id="logoimg" class="w-25 mt-3" src="" />
+                                    <img id="logoimg" class="w-25 mt-3" src="" />
                                 </div>
                                 <div class="col-md-6">
                                     <label><?php echo trans('lang.login_banner');?></label>
@@ -154,6 +160,7 @@
 			var country 	= $("#country").val();
 			var currency 	= $("#currency").val();
             var formatdate 	= $("#formatdate").val();
+            var imagesize 	= $("#imagesize").val();
             var logo 		= $('#logo')[0].files[0];
             var loginbanner = $('#loginbanner')[0].files[0];
 
@@ -166,6 +173,7 @@
 			form.append('country', country);
 			form.append('currency', currency);
             form.append('formatdate', formatdate);
+            form.append('imagesize', parseInt(imagesize)*1024);
             form.append('logo', logo);
             form.append('loginbanner', loginbanner);
 
@@ -205,6 +213,7 @@
             $("#address").val(data.data.address);
             $("#country").val(data.data.country);
 			$("#currency").val(data.data.currency);
+			$("#imagesize").val(parseInt(data.data.imagesize)/1024);
             $("#language").val(data.data.language);
             $("#logoimg").attr("src", data.logo);
             $("#loginbannerimg").attr("src", data.loginbanner);

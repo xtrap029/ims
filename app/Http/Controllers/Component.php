@@ -264,7 +264,7 @@ class Component extends Controller
        
       
             if($request->hasFile('picture')) {
-                $this->validate($request, ['picture' => 'mimes:jpeg,png,jpg|max:2048'],$message);
+                $this->validate($request, ['picture' => 'mimes:jpeg,png,jpg|max:'.DB::table('settings')->where('id', '1')->first()->imagesize],$message);
                 $picturename  = date('mdYHis').uniqid().$request->file('picture')->getClientOriginalName();
                 $request->file('picture')->move(public_path("/upload/assets"), $picturename);
                 $data       = array('name'=>$name, 
@@ -352,7 +352,7 @@ class Component extends Controller
     
        
         if($request->hasFile('picture')) {
-            $this->validate($request, ['picture' => 'mimes:jpeg,png,jpg|max:2048'],$message);
+            $this->validate($request, ['picture' => 'mimes:jpeg,png,jpg|max:'.DB::table('settings')->where('id', '1')->first()->imagesize],$message);
             $picturename  = date('mdYHis').uniqid().$request->file('picture')->getClientOriginalName();
             $request->file('picture')->move(public_path("/upload/assets"), $picturename);
 

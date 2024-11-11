@@ -73,7 +73,8 @@ return [
     //settings
     'formatdate'=> 'Format date',
     'logo' => 'Logo',
-    'login_banner' => 'Login Banner',
+    'login_banner' => 'Login banner',
+    'image_size' => 'Image size limit (mb)',
     'app_setting' => 'Application setting',
     'language' => 'Language',
     'database_setting' => 'Database setting',

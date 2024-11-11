@@ -23,6 +23,7 @@ class Settings extends Migration
             $table->text('logo');
             $table->text('loginbanner');
             $table->char('formatdate',10);
+            $table->integer('imagesize');
             $table->timestamps();
         });
     }

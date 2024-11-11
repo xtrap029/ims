@@ -146,7 +146,7 @@ class FileData extends Controller
 
       
             if($request->hasFile('filename')) {
-                $this->validate($request, ['filename' => 'mimes:jpeg,png,jpg,pdf,doc,docx,xls,xlsx, application/vnd.ms-excel|max:2048'],$message);
+                $this->validate($request, ['filename' => 'mimes:jpeg,png,jpg,pdf,doc,docx,xls,xlsx, application/vnd.ms-excel|max:'.DB::table('settings')->where('id', '1')->first()->imagesize],$message);
                 $filename  = date('mdYHis').uniqid().'_'.$request->file('filename')->getClientOriginalName();
                 $request->file('filename')->move(public_path("/upload/assets"), $filename);
                 $data       = array('assetid'=>$assetid, 

@@ -35,7 +35,6 @@ class Settings extends Controller
 	public function getdata() {
 		$data = DB::table('settings')->where('id', '1')->first();
 		if ($data) {
-
 			$res['success'] = true;
 			$res['data']  = $data;
 			$res['logo']  = url('/').'/upload/'.$data->logo;
@@ -67,6 +66,7 @@ class Settings extends Controller
         $country    = $request->input('country');
 		$currency   = $request->input('currency');
 		$language   = $request->input('language');
+		$imagesize   = $request->input('imagesize');
 		$formatdate = $request->input('formatdate');
 
 		if ($request->hasFile('logo') || $request->hasFile('loginbanner')) {
@@ -78,6 +78,7 @@ class Settings extends Controller
 				'country'   	=>$country,
 				'currency'      =>$currency,
 				'language'      =>$language,
+				'imagesize'      =>$imagesize,
 				'formatdate'    =>$formatdate
 			];
 
@@ -113,6 +114,7 @@ class Settings extends Controller
                     'country'   	=>$country,
                     'currency'      =>$currency,
                     'language'      =>$language,
+                    'imagesize'      =>$imagesize,
                     'formatdate'    =>$formatdate
 				]
 			);
