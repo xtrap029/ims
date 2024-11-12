@@ -42,7 +42,7 @@
                     <a href="#_" class="text-white vlign--top jsCopy" data-toggle="tooltip" data-placement="top" title="Copy to clipboard"><i class="fa fa-copy w-auto" style="font-size: 18px;"></i></a>
                     <label class="badge badge-pill badge-success p-2 assettype mt-3"></label>
                     <br>
-                    <label class="badge badge-pill badge-secondary p-2 text-white assetstatus"></label>
+                    <span class="assetstatus"></span>
                 </p>
             </div>    
         </div>
