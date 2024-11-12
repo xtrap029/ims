@@ -206,7 +206,9 @@
                                                 </table>
                                             </div>
                                             <div class="col-md-3 pt-2 text-center">
-                                                <img width="250" class="img-responsive assetimage" src="" />
+                                                <button type="button" class="btn btn-simple" data-toggle="modal" data-target="#magnifypicture">
+                                                    <img width="250" class="img-responsive assetimage" src="" />
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -428,6 +430,16 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="magnifypicture" class="modal fade" role="dialog" >
+        <div class="modal-dialog" style="width: 90%; max-width: 90%;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="img-responsive assetimage w-100" src="" />
                 </div>
             </div>
         </div>
