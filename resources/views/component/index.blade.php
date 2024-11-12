@@ -156,6 +156,7 @@
                             <label><?php echo trans('lang.status');?></label>
                             <select name="status" id="status" required class="form-control">
                                 <option value=""><?php echo trans('lang.status');?></option>
+                                <option value="7"><?php echo trans('lang.deployed');?></option>
                                 <option value="1"><?php echo trans('lang.readytodeploy');?></option>
                                 <option value="2"><?php echo trans('lang.pending');?></option>
                                 <option value="3"><?php echo trans('lang.archived');?></option>
@@ -279,6 +280,7 @@
                             <label><?php echo trans('lang.status');?></label>
                             <select name="status" id="editstatus" required class="form-control">
                                 <option value=""><?php echo trans('lang.status');?></option>
+                                <option value="7"><?php echo trans('lang.deployed');?></option>
                                 <option value="1"><?php echo trans('lang.readytodeploy');?></option>
                                 <option value="2"><?php echo trans('lang.pending');?></option>
                                 <option value="3"><?php echo trans('lang.archived');?></option>

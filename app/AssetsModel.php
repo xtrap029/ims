@@ -18,7 +18,8 @@ class AssetsModel extends Model
         '3' => trans('lang.archived'),
         '4' => trans('lang.broken'),
         '5' => trans('lang.lost'),
-        '6' => trans('lang.outofrepair')
+        '6' => trans('lang.outofrepair'),
+        '7' => trans('lang.deployed')
         ][$value];
     }
 

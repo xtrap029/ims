@@ -154,6 +154,7 @@ return [
     'lost' =>'Lost',
     'repair' =>'Repair',
     'outofrepair' =>'Out for repair',
+    'deployed' =>'Deployed',
     'serial' =>'Serial',
     'location' =>'Location',
     'updatedat' =>'Updated at',

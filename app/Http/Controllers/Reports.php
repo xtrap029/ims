@@ -191,6 +191,9 @@ class Reports extends Controller
             if($single->status=='6'){
                 $status = trans('lang.outofrepair');
             }
+            if($single->status=='7'){
+                $status = trans('lang.deployed');
+            }
 
             return $status;
         })

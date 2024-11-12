@@ -175,6 +175,9 @@ class Component extends Controller
             if($data->status=='6'){
                 $status = trans('lang.outofrepair');
             }
+            if($single->status=='7'){
+                $status = trans('lang.deployed');
+            }
 
             //get date format setting
             $setting = DB::table('settings')->where('id', '1')->first();
