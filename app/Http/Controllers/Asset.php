@@ -71,6 +71,17 @@ class Asset extends Controller
         ->addColumn('pictures',function($single){
             return '<img src="'.url('/').'/upload/assets/'.$single->picture.'" style="width:90px"/>';
         })
+        ->addColumn('status',function($single){
+            return [
+                '1' => '<label class="badge badge-pill badge-success">'.trans('lang.readytodeploy').'</label>',
+                '2' => '<label class="badge badge-pill badge-primary text-white">'.trans('lang.pending').'</label>',
+                '3' => '<label class="badge badge-pill badge-secondary text-white">'.trans('lang.archived').'</label>',
+                '4' => '<label class="badge badge-pill badge-danger text-white">'.trans('lang.broken').'</label>',
+                '5' => '<label class="badge badge-pill badge-danger text-white">'.trans('lang.lost').'</label>',
+                '6' => '<label class="badge badge-pill badge-danger text-white">'.trans('lang.outofrepair').'</label>',
+                '7' => '<label class="badge badge-pill badge-success">'.trans('lang.deployed').'</label>'
+                ][$single->status];
+        })
         ->addColumn( 'action', function ( $accountsingle ) {
             //for checkout 2 button, checkin or checkout depand the record
             //$checkout = '  <a class="dropdown-item" href="#" id="btncheckout" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#checkout"><i class="fa fa-check"></i> '. trans('lang.checkout').'</a>';
@@ -97,7 +108,7 @@ class Asset extends Controller
                 </div>
             </div>';
            
-        } )->rawColumns(['pictures', 'action'])
+        } )->rawColumns(['pictures', 'status', 'action'])
         ->make(true);       
     }
 
@@ -276,25 +287,25 @@ class Asset extends Controller
 
             //set status
             if($data->status=='1'){
-                $status = trans('lang.readytodeploy');
+                $status = '<label class="badge badge-pill badge-success p-2">'.trans('lang.readytodeploy').'</label>';
             }
             if($data->status=='2'){
-                $status = trans('lang.pending');
+                $status = '<label class="badge badge-pill badge-primary text-white p-2">'.trans('lang.pending').'</label>';
             }
             if($data->status=='3'){
-                $status = trans('lang.archived');
+                $status = '<label class="badge badge-pill badge-secondary text-white p-2">'.trans('lang.archived').'</label>';
             }
             if($data->status=='4'){
-                $status = trans('lang.broken');
+                $status = '<label class="badge badge-pill badge-danger text-white p-2">'.trans('lang.broken').'</label>';
             }
             if($data->status=='5'){
-                $status = trans('lang.lost');
+                $status = '<label class="badge badge-pill badge-danger text-white p-2">'.trans('lang.lost').'</label>';
             }
             if($data->status=='6'){
-                $status = trans('lang.outofrepair');
+                $status = '<label class="badge badge-pill badge-danger text-white p-2">'.trans('lang.outofrepair').'</label>';
             }
             if($data->status=='7'){
-                $status = trans('lang.deployed');
+                $status = '<label class="badge badge-pill badge-success p-2">'.trans('lang.deployed').'</label>';
             }
 
             //get date format setting

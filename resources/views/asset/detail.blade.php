@@ -12,7 +12,7 @@
                 </p>
                 <p class="assetdetail">
                     <label class="badge badge-pill badge-success p-2 assettype"></label>
-                    <label class="badge badge-pill badge-secondary p-2 text-white assetstatus"></label>
+                    <span class="assetstatus"></span>
                 </p>
             </div>
             <div class="col-md-4 text-md-right px-4">

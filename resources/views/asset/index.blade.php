@@ -33,6 +33,7 @@
                                         <th><?php echo trans('lang.cost');?></th>
                                         <th><?php echo trans('lang.description');?></th>
                                         <th><?php echo trans('lang.name');?></th>
+                                        <th><?php echo trans('lang.status');?></th>
                                         <th><?php echo trans('lang.type');?></th>
                                         <th><?php echo trans('lang.brand');?></th>
                                         <th><?php echo trans('lang.location');?></th>
@@ -49,6 +50,7 @@
                                         <th><?php echo trans('lang.cost');?></th>
                                         <th><?php echo trans('lang.description');?></th>
                                         <th><?php echo trans('lang.name');?></th>
+                                        <th><?php echo trans('lang.status');?></th>
                                         <th><?php echo trans('lang.type');?></th>
                                         <th><?php echo trans('lang.brand');?></th>
                                         <th><?php echo trans('lang.location');?></th>
@@ -495,6 +497,9 @@
             },
             {
                 data: 'name'
+            },
+            {
+                data: 'status'
             },
             {
                 data: 'type'
