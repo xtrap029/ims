@@ -82,6 +82,13 @@ class Asset extends Controller
                 '7' => '<label class="badge badge-pill badge-success">'.trans('lang.deployed').'</label>'
                 ][$single->status];
         })
+        ->addColumn('availability',function($accountsingle){
+            if($accountsingle->checkstatus===2){
+                return '<span class="font-weight-bold text-danger">'.strtoupper(trans('lang.out')).'</span>';
+            }else{
+                return '<span class="font-weight-bold text-success">'.strtoupper(trans('lang.in')).'</span>';
+            }
+        })
         ->addColumn( 'action', function ( $accountsingle ) {
             //for checkout 2 button, checkin or checkout depand the record
             //$checkout = '  <a class="dropdown-item" href="#" id="btncheckout" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#checkout"><i class="fa fa-check"></i> '. trans('lang.checkout').'</a>';
@@ -108,7 +115,7 @@ class Asset extends Controller
                 </div>
             </div>';
            
-        } )->rawColumns(['pictures', 'status', 'action'])
+        } )->rawColumns(['pictures', 'status', 'availability', 'action'])
         ->make(true);       
     }
 
@@ -275,7 +282,15 @@ class Asset extends Controller
     public function byid( Request $request ) {
         $id            = $request->input( 'id' );
 
-        $data = DB::table('assets')->select('assets.*','assets.name as assetname','assets.description as assetdescription', 'assets.created_at as assetcreated_at', 'assets.updated_at as assetupdated_at', 'assets.description as description', 'brand.*', 'brand.name as brand','asset_type.name as type','supplier.name as supplier','location.name as location')
+        $data = DB::table('assets')->select('assets.*','assets.name as assetname',
+            'assets.description as assetdescription', 
+            'assets.created_at as assetcreated_at', 
+            'assets.updated_at as assetupdated_at', 
+            'assets.description as description', 
+            'brand.*', 'brand.name as brand',
+            'asset_type.name as type',
+            'supplier.name as supplier',
+            'location.name as location')
         ->leftJoin('brand', 'brand.id', '=', 'assets.brandid')
         ->leftJoin('asset_type', 'asset_type.id', '=', 'assets.typeid')
         ->leftJoin('supplier', 'supplier.id', '=', 'assets.supplierid')

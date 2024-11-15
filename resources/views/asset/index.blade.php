@@ -33,6 +33,7 @@
                                         <th><?php echo trans('lang.cost');?></th>
                                         <th><?php echo trans('lang.description');?></th>
                                         <th><?php echo trans('lang.name');?></th>
+                                        <th><?php echo trans('lang.availability');?></th>
                                         <th><?php echo trans('lang.status');?></th>
                                         <th><?php echo trans('lang.type');?></th>
                                         <th><?php echo trans('lang.brand');?></th>
@@ -50,6 +51,7 @@
                                         <th><?php echo trans('lang.cost');?></th>
                                         <th><?php echo trans('lang.description');?></th>
                                         <th><?php echo trans('lang.name');?></th>
+                                        <th><?php echo trans('lang.availability');?></th>
                                         <th><?php echo trans('lang.status');?></th>
                                         <th><?php echo trans('lang.type');?></th>
                                         <th><?php echo trans('lang.brand');?></th>
@@ -316,8 +318,6 @@
     </div>
     <!--end edit data-->
 
-
-
      <!--add checkout -->
      <div id="checkout" class="modal fade" role="dialog" >
         <div class="modal-dialog ">
@@ -339,7 +339,10 @@
                                 <label><?php echo trans('lang.asset');?></label>
                                 <input name="asset" type="text" readonly id="checkoutname" class=" form-control" required placeholder="<?php echo trans('lang.asset');?>"/>
                             </div>
-                            
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.location');?></label>
+                                <input name="location" type="text" readonly id="checkoutlocationname" class=" form-control" required placeholder="<?php echo trans('lang.location');?>"/>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -374,7 +377,6 @@
     </div>
     <!--end checkout-->
 
-
      <!--add checkin -->
      <div id="checkin" class="modal fade" role="dialog" >
         <div class="modal-dialog ">
@@ -394,6 +396,10 @@
                             <div class="form-group col-md-12">
                                 <label><?php echo trans('lang.asset');?></label>
                                 <input name="asset" type="text" readonly id="checkinname" class=" form-control" required placeholder="<?php echo trans('lang.asset');?>"/>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.location');?></label>
+                                <input name="location" type="text" readonly id="checkinlocationname" class=" form-control" required placeholder="<?php echo trans('lang.location');?>"/>
                             </div>
                             <div class="form-group col-md-12">
                                 <label><?php echo trans('lang.employee');?></label>
@@ -427,7 +433,6 @@
         </div>
     </div>
     <!--end checkin-->
-
 
     <!--delete data -->
     <div class="modal fade" id="delete" role="dialog">
@@ -472,7 +477,7 @@
                 data: 'assettag'
             },
             {
-             data: 'serial',
+                data: 'serial',
                 orderable: false,
                 searchable: false,
                 visible: false
@@ -483,20 +488,25 @@
                 searchable: false,
                 visible: false
             },
-            {data: 'cost',
+            {
+                data: 'cost',
                 orderable: false,
                 searchable: false,
                 visible: false
             },
            
             {
-             data: 'description',
+                data: 'description',
                 orderable: false,
                 searchable: false,
                 visible: false
             },
             {
                 data: 'name'
+            },
+            {
+                data: 'availability',
+                className: 'text-center'
             },
             {
                 data: 'status'
@@ -522,7 +532,7 @@
                 className: 'btn btn-sm btn-fill btn-info ',
                 title: '<?php echo trans('lang.asset_list ');?>',
                 exportOptions: {
-                    columns: [2, 3, 4 ,5, 6 ,7 ,8, 9, 10]
+                    columns: [2, 3, 4 ,5, 6 ,7, 9, 10, 11],
                 }
             },
             {
@@ -531,7 +541,7 @@
                 className: 'btn btn-sm btn-fill btn-info ',
                 title: '<?php echo trans('lang.asset_list');?>',
                 exportOptions: {
-                    columns: [2, 3, 4 ,5, 6 ,7 ,8, 9, 10]
+                    columns: [2, 3, 4 ,5, 6 ,7, 9, 10, 11],
                 }
             },
             {
@@ -541,7 +551,7 @@
                 title: '<?php echo trans('lang.asset_list');?>',
                 orientation: 'landscape',
                 exportOptions: {
-                    columns: [2, 3, 4 ,5, 6 ,7 ,8, 9, 10]
+                    columns: [2, 3, 4 ,5, 6 ,7 , 9, 10, 11],
                 },
                 customize: function(doc) {
                     doc.styles.tableHeader.alignment = 'left';
@@ -555,7 +565,7 @@
                 className: 'btn btn-sm btn-fill btn-info ',
                 text: 'Print <i class="fa fa-print"></i>',
                 exportOptions: {
-                    columns: [2, 3, 4 ,5, 6 ,7 ,8, 9, 10]
+                    columns: [2, 3, 4 ,5, 6 ,7 ,9, 10, 11],
                 }
             }
         ]
@@ -898,6 +908,7 @@ $('#checkout').on('show.bs.modal', function(e) {
 			$("#assetid").val(id);
             $("#checkoutname").val(data.message.name);
             $("#checkoutassettag").val(data.message.assettag);
+            $("#checkoutlocationname").val(data.message.location);
 		}   
 	});
 });
@@ -915,6 +926,7 @@ $('#checkin').on('show.bs.modal', function(e) {
             $("#checkinassetid").val(id);
             $("#checkinname").val(data.message.name);
             $("#checkinassettag").val(data.message.assettag);
+            $("#checkinlocationname").val(data.message.location);
             $("#checkinemployeeid").val(data.assetemployee.id);
             $("#checkinemployee").val(data.assetemployee.fullname);
         }   

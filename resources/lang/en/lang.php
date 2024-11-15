@@ -107,6 +107,7 @@ return [
     
 
     'status' =>'Status',
+    'availability' =>'Availability',
     'deploymentstatus' =>'Deployment Status',
     'overall' =>'Overall',
     'overall ' =>'Overall',
@@ -175,6 +176,10 @@ return [
     'avalaiblequantity' =>'Available quantity',
     'checkin' =>'Check in',
     'checkout' =>'Check out',
+    'checkedin' =>'Checked in',
+    'checkedout' =>'Checked out',
+    'in' =>'In',
+    'out' =>'Out',
     'data_checkout_failed_quantity' => 'Error! Quantity more than available',
     'data_checkin_failed_quantity' => 'Error! Quantity is 0 or more than available',
     'componentdetail' => 'Component detail',
