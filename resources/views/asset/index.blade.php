@@ -158,13 +158,9 @@
                             <label><?php echo trans('lang.status');?></label>
                             <select name="status" id="status" required class="form-control">
                                 <option value=""><?php echo trans('lang.status');?></option>
-                                <option value="7"><?php echo trans('lang.deployed');?></option>
-                                <option value="1"><?php echo trans('lang.readytodeploy');?></option>
-                                <option value="2"><?php echo trans('lang.pending');?></option>
-                                <option value="3"><?php echo trans('lang.archived');?></option>
-                                <option value="4"><?php echo trans('lang.broken');?></option>
-                                <option value="5"><?php echo trans('lang.lost');?></option>
-                                <option value="6"><?php echo trans('lang.outofrepair');?></option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
                             </select>
                             </div>
                         </div>
@@ -284,13 +280,9 @@
                             <label><?php echo trans('lang.status');?></label>
                             <select name="status" id="editstatus" required class="form-control">
                                 <option value=""><?php echo trans('lang.status');?></option>
-                                <option value="7"><?php echo trans('lang.deployed');?></option>
-                                <option value="1"><?php echo trans('lang.readytodeploy');?></option>
-                                <option value="2"><?php echo trans('lang.pending');?></option>
-                                <option value="3"><?php echo trans('lang.archived');?></option>
-                                <option value="4"><?php echo trans('lang.broken');?></option>
-                                <option value="5"><?php echo trans('lang.lost');?></option>
-                                <option value="6"><?php echo trans('lang.outofrepair');?></option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
                             </select>
                             </div>
                         </div>

@@ -27,7 +27,10 @@ class Component extends Controller
 
     //return page
     public function index() {
-		return view( 'component.index' );
+        $status = DB::table('status')->whereNull('deleted_at')->orderBy('order', 'asc')->get();
+        return view( 'component.index' )->with([
+            'status' => $status
+        ]);
     }
 
     
@@ -155,30 +158,9 @@ class Component extends Controller
         ->first();
         
         if ( $data ) {
-
-            //set status
-            if($data->status=='1'){
-                $status = trans('lang.readytodeploy');
-            }
-            if($data->status=='2'){
-                $status = trans('lang.pending');
-            }
-            if($data->status=='3'){
-                $status = trans('lang.archived');
-            }
-            if($data->status=='4'){
-                $status = trans('lang.broken');
-            }
-            if($data->status=='5'){
-                $status = trans('lang.lost');
-            }
-            if($data->status=='6'){
-                $status = trans('lang.outofrepair');
-            }
-            if($single->status=='7'){
-                $status = trans('lang.deployed');
-            }
-
+            $status = DB::table('status')->where('id', $data->status)->first();
+            $status = $status->name;
+            
             //get date format setting
             $setting = DB::table('settings')->where('id', '1')->first();
 

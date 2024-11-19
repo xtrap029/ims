@@ -48,7 +48,10 @@ class Reports extends Controller
 	}
 
 	public function bystatus() {
-        return view( 'reports.bystatus' );
+        $status = DB::table('status')->whereNull('deleted_at')->orderBy('order', 'asc')->get();
+        return view( 'reports.bystatus' )->with([
+            'status' => $status
+        ]);
 	}
 
 	//show all report report view
@@ -172,28 +175,8 @@ class Reports extends Controller
 			return '<img src="'.url('/').'/upload/assets/'.$single->picture.'" style="width:90px"/>';
         })
         ->addColumn('status2', function($single){
-        	//set status
-            if($single->status=='1'){
-                $status = trans('lang.readytodeploy');
-            }
-            if($single->status=='2'){
-                $status = trans('lang.pending');
-            }
-            if($single->status=='3'){
-                $status = trans('lang.archived');
-            }
-            if($single->status=='4'){
-                $status = trans('lang.broken');
-            }
-            if($single->status=='5'){
-                $status = trans('lang.lost');
-            }
-            if($single->status=='6'){
-                $status = trans('lang.outofrepair');
-            }
-            if($single->status=='7'){
-                $status = trans('lang.deployed');
-            }
+            $status = DB::table('status')->where('id', $single->status)->first();
+            $status = $status->name;
 
             return $status;
         })

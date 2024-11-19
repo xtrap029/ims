@@ -120,6 +120,13 @@
                         </p>
                     </a>
                 </li>
+                <li class="{{ Request::is( 'statuslist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'statuslist') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.statusmenu');?>
+                        </p>
+                    </a>
+                </li>
                 <li class="{{ Request::is( 'employeeslist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'employeeslist') }}">
                         <p><img width="25"
@@ -261,6 +268,12 @@
                                 <li class="{{ Request::is( 'locationlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'locationlist') }}">
                                         <p><?php echo trans('lang.locationmenu');?>
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="{{ Request::is( 'statuslist') ? 'active' : '' }}">
+                                    <a href="{{ URL::to( 'statuslist') }}">
+                                        <p><?php echo trans('lang.statusmenu');?>
                                         </p>
                                     </a>
                                 </li>

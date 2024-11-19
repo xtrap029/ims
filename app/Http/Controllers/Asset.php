@@ -30,7 +30,10 @@ class Asset extends Controller
 
     //return page
     public function index() {
-        return view( 'asset.index' );
+        $status = DB::table('status')->whereNull('deleted_at')->orderBy('order', 'asc')->get();
+        return view( 'asset.index' )->with([
+            'status' => $status
+        ]);
     }
 
     
@@ -72,15 +75,8 @@ class Asset extends Controller
             return '<img src="'.url('/').'/upload/assets/'.$single->picture.'" style="width:90px"/>';
         })
         ->addColumn('status',function($single){
-            return [
-                '1' => '<label class="badge badge-pill badge-success">'.trans('lang.readytodeploy').'</label>',
-                '2' => '<label class="badge badge-pill badge-primary text-white">'.trans('lang.pending').'</label>',
-                '3' => '<label class="badge badge-pill badge-secondary text-white">'.trans('lang.archived').'</label>',
-                '4' => '<label class="badge badge-pill badge-danger text-white">'.trans('lang.broken').'</label>',
-                '5' => '<label class="badge badge-pill badge-danger text-white">'.trans('lang.lost').'</label>',
-                '6' => '<label class="badge badge-pill badge-danger text-white">'.trans('lang.outofrepair').'</label>',
-                '7' => '<label class="badge badge-pill badge-success">'.trans('lang.deployed').'</label>'
-                ][$single->status];
+            $status = DB::table('status')->where('id', $single->status)->first();
+            return '<label class="badge badge-pill badge-'.$status->color.' text-white">'.$status->name.'</label>';
         })
         ->addColumn('availability',function($accountsingle){
             if($accountsingle->checkstatus===2){
@@ -299,29 +295,8 @@ class Asset extends Controller
         ->first();
         
         if ( $data ) {
-
-            //set status
-            if($data->status=='1'){
-                $status = '<label class="badge badge-pill badge-success p-2">'.trans('lang.readytodeploy').'</label>';
-            }
-            if($data->status=='2'){
-                $status = '<label class="badge badge-pill badge-primary text-white p-2">'.trans('lang.pending').'</label>';
-            }
-            if($data->status=='3'){
-                $status = '<label class="badge badge-pill badge-secondary text-white p-2">'.trans('lang.archived').'</label>';
-            }
-            if($data->status=='4'){
-                $status = '<label class="badge badge-pill badge-danger text-white p-2">'.trans('lang.broken').'</label>';
-            }
-            if($data->status=='5'){
-                $status = '<label class="badge badge-pill badge-danger text-white p-2">'.trans('lang.lost').'</label>';
-            }
-            if($data->status=='6'){
-                $status = '<label class="badge badge-pill badge-danger text-white p-2">'.trans('lang.outofrepair').'</label>';
-            }
-            if($data->status=='7'){
-                $status = '<label class="badge badge-pill badge-success p-2">'.trans('lang.deployed').'</label>';
-            }
+            $status = DB::table('status')->where('id', $data->status)->first();
+            $status = '<label class="badge badge-pill badge-'.$status->color.' text-white p-2">'.$status->name.'</label>';
 
             //get date format setting
             $setting = DB::table('settings')->where('id', '1')->first();

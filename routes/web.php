@@ -17,6 +17,7 @@ Route::get('/brandlist','Brand@index');
 Route::get('/departmentlist','Department@index');
 Route::get('/assettypelist','AssetType@index');
 Route::get('/locationlist','Location@index');
+Route::get('/statuslist','Status@index');
 Route::get('/employeeslist','Employees@index');
 Route::get('/employeeslist/detail/{id}','Employees@detail');
 Route::get('/supplierlist','Supplier@index');
@@ -90,6 +91,14 @@ Route::post('savelocation', 'Location@save');
 Route::post('updatelocation', 'Location@update');
 Route::post('deletelocation', 'Location@delete');
 Route::post('locationbyid', 'Location@byid');
+
+//Status API
+Route::get('status', 'Status@getdata');
+Route::get('liststatus', 'Status@getrows');
+Route::post('savestatus', 'Status@save');
+Route::post('updatestatus', 'Status@update');
+Route::post('deletestatus', 'Status@delete');
+Route::post('statusbyid', 'Status@byid');
 
 //Employees API
 Route::get('employees', 'Employees@getdata');
