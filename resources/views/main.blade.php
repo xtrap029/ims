@@ -158,6 +158,20 @@
                         </p>
                     </a>
                 </li>
+                <li class="{{ Request::is( 'usertypelist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'usertypelist') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-visitor.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.usertypemenu');?>
+                        </p>
+                    </a>
+                </li>
+                <li class="{{ Request::is( 'useraccesslist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'useraccesslist') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.useraccessmenu');?>
+                        </p>
+                    </a>
+                </li>
                 <li class="{{ Request::is( 'rolemanagement') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'rolemanagement') }}">
                         <p><img width="25"
@@ -165,7 +179,6 @@
                         </p>
                     </a>
                 </li>
-
                 <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'settinglist') }}">
                         <p><img width="25"

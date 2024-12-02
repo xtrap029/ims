@@ -80,9 +80,16 @@ class Asset extends Controller
         })
         ->addColumn('availability',function($accountsingle){
             if($accountsingle->checkstatus===2){
-                return '<span class="font-weight-bold text-danger">'.strtoupper(trans('lang.out')).'</span>';
+                $assetemployee = DB::table('asset_history')
+                    ->select('employees.fullname as fullname')
+                    ->leftJoin('employees', 'employees.id', '=', 'asset_history.employeeid')
+                    ->where('asset_history.assetid', $accountsingle->id)
+                    ->where('asset_history.status', 1)
+                    ->first();
+
+                return '<span class="font-weight-bold text-danger">'.$assetemployee->fullname.'</span>';
             }else{
-                return '<span class="font-weight-bold text-success">'.strtoupper(trans('lang.in')).'</span>';
+                return '<span class="font-weight-bold text-success">'.trans('lang.available').'</span>';
             }
         })
         ->addColumn( 'action', function ( $accountsingle ) {
@@ -315,6 +322,7 @@ class Asset extends Controller
             $res['success'] = 'success';
             $res['message']= $data;
             $res['assetemployee']= $assetemployee;
+            $res['assetemployeefullname']= $assetemployee ? $assetemployee->fullname : 'Available';
             $res['assetcreated_at']= date($setting->formatdate, strtotime($data->assetcreated_at));
             $res['assetupdated_at']= date($setting->formatdate, strtotime($data->updated_at));
             $res['assetpurchasedate']= date($setting->formatdate, strtotime($data->purchasedate));

@@ -22,6 +22,8 @@ Route::get('/employeeslist','Employees@index');
 Route::get('/employeeslist/detail/{id}','Employees@detail');
 Route::get('/supplierlist','Supplier@index');
 Route::get('/userlist','User@index');
+Route::get('/usertypelist','UserType@index');
+Route::get('/useraccesslist','UserAccess@index');
 Route::get('/rolemanagement','RoleManagement@index');
 Route::get('/settinglist','Settings@index');
 Route::get('/assetlist','Asset@index');
@@ -99,6 +101,18 @@ Route::post('savestatus', 'Status@save');
 Route::post('updatestatus', 'Status@update');
 Route::post('deletestatus', 'Status@delete');
 Route::post('statusbyid', 'Status@byid');
+
+//User Type API
+Route::get('usertype', 'UserType@getdata');
+Route::get('listusertype', 'UserType@getrows');
+Route::post('updateusertype', 'UserType@update');
+Route::post('usertypebyid', 'UserType@byid');
+
+//User Access API
+Route::get('useraccess', 'UserAccess@getdata');
+Route::get('listuseraccess', 'UserAccess@getrows');
+Route::post('updateuseraccess', 'UserAccess@update');
+Route::post('useraccessbyid', 'UserAccess@byid');
 
 //Employees API
 Route::get('employees', 'Employees@getdata');

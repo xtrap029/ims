@@ -179,6 +179,15 @@
                                                     <tr>
                                                         <td bgcolor="#f2f3f4" width="200">
                                                             <p class="mb-0 font-bold">
+                                                                <?php echo trans('lang.availability');?>:</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 assetavailability"></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 font-bold">
                                                                 <?php echo trans('lang.updatedat');?>:</p>
                                                         </td>
                                                         <td>
@@ -555,6 +564,7 @@
             $(".assettag").html(data.message.assettag);
             $(".assettype").html(data.message.type);
             $(".assetsupplier").html(data.message.supplier);
+            $(".assetavailability").html(data.assetemployeefullname);
             $(".assetstatus").html(data.assetstatus);
             $(".assetbrand").html(data.message.brand);
             $(".assettype2").html(data.message.type);

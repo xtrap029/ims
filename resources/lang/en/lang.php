@@ -15,6 +15,8 @@ return [
     'suppliermenu' => 'Suppliers',
     'usermenu' => 'Users',
     'rolemanagementmenu' => 'Role Management',
+    'usertypemenu' => 'User Types',
+    'useraccessmenu' => 'User Access',
     'reportmenu' => 'Reports',
     'settingmenu' => 'Settings',
     'usermenu' => 'Users',
@@ -26,6 +28,7 @@ return [
     'reports' => 'Reports',
     'settings' => 'Settings',
     'description' => 'Description',
+    'code' => 'Code',
     'order' => 'Order',
     'action' => 'Action',
     'add' => 'Add',
@@ -69,6 +72,8 @@ return [
 	'assettype_list' =>'Asset Type list',
 	'location_list' =>'Location list',
 	'status_list' =>'Status list',
+	'usertype_list' =>'User Type list',
+	'useraccess_list' =>'User Access list',
 	'employees_list' => 'Employees list',
 	'supplier_list' => 'Supplier list',
 
@@ -112,6 +117,7 @@ return [
 
     'status' =>'Status',
     'availability' =>'Availability',
+    'available' =>'Available',
     'deploymentstatus' =>'Deployment Status',
     'overall' =>'Overall',
     'overall ' =>'Overall',
