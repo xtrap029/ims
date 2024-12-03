@@ -85,6 +85,7 @@ class Asset extends Controller
                     ->leftJoin('employees', 'employees.id', '=', 'asset_history.employeeid')
                     ->where('asset_history.assetid', $accountsingle->id)
                     ->where('asset_history.status', 1)
+                    ->orderBy('asset_history.id', 'desc')
                     ->first();
 
                 return '<span class="font-weight-bold text-danger">'.$assetemployee->fullname.'</span>';
@@ -313,6 +314,7 @@ class Asset extends Controller
                 ->leftJoin('employees', 'employees.id', '=', 'asset_history.employeeid')
                 ->where('asset_history.assetid', $id)
                 ->where('asset_history.status', 1)
+                ->orderBy('asset_history.id', 'desc')
                 ->first();
 
             //for warranty
