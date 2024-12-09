@@ -85,6 +85,7 @@ class UserAccess extends Controller
     public function update(Request $request){
         $id             = $request->input( 'id' );
         $code           = $request->input( 'code' );
+        $group           = $request->input( 'group' );
         $name           = $request->input( 'name' );
         $order    = $request->input( 'order' );
         $created_at     = date("Y-m-d H:i:s");
@@ -94,6 +95,7 @@ class UserAccess extends Controller
 		->update(
 			[
 			'name'          => $name,
+			'group'          => $group,
             'order'         => $order,
             'code'         => $code,
             'updated_at'    => $updated_at

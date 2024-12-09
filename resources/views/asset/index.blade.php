@@ -8,6 +8,7 @@
                 <h3 class=""><?php echo trans('lang.asset_list');?></h3>
             </div>
             <div class="col-md-6 text-md-right pb-md-0 pb-3">
+            <a href="/scan" class="btn btn-sm btn-fill btn-warning font-weight-bold" target="_blank"><i class="fa fa-camera"></i> <?php echo trans('lang.scan');?></a>
             <button type="button" data-toggle="modal" data-target="#add" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
             </div>
         </div>

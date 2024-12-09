@@ -27,6 +27,21 @@ class UserType extends Controller
 		return view( 'usertype.index' );
     }
 
+    public function access($id) {
+        $data = DB::table('user_type')->where('id', $id)->whereNull('deleted_at')->first();
+        $user_access_grouped = DB::table('user_access')->orderBy('order', 'asc')->groupBy('group')->get();
+
+        $list = [];
+        foreach($user_access_grouped as $item) {
+            $list[$item->group] = DB::table('user_access')->where('group', $item->group)->orderBy('order', 'asc')->get();
+        }
+        
+        return view( 'usertype.access' )->with([
+            'data' => $data,
+            'list' => $list,
+        ]);
+    }
+
     /**
 	 * get data from database
 	 * @return object
@@ -35,7 +50,8 @@ class UserType extends Controller
         $data = DB::table('user_type')->whereNull('deleted_at')->select(['user_type.*'])->orderBy('order', 'asc');
 		return Datatables::of($data)
         ->addColumn( 'action', function ( $accountsingle ) {
-            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>';
+            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
+            <a href="/usertype/access/'.$accountsingle->id.'" class="btn btn-sm btn-danger"><i class="fa fa-list"></i> '. trans('lang.access').'</a>';
         } )
         ->rawColumns(['action'])
         ->make( true );		

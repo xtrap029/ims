@@ -113,7 +113,7 @@ class Asset extends Controller
                 <div class="dropdown-menu actionmenu">
                 '.$checkout.'
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="'.url('/').'/assetlist/detail/'.$accountsingle->id.'"id="btndetail" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>
+                <a class="dropdown-item" href="'.url('/').'/assetlist/detail/'.$accountsingle->id.'"id="btndetail" target="_blank" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>
                 <a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
                 <a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>
                 </div>
@@ -743,5 +743,13 @@ class Asset extends Controller
             $res['message']=  'AST'.date('ymd').'1';
         }
         return response( $res );
+    }
+
+    public function scan() {
+        if (request('qr_data')) {
+            $asset = DB::table('assets')->where('assettag', request('qr_data'))->first();
+            return redirect('assetlist/detail/'.$asset->id);
+        }
+        return view( 'asset.scan' );
     }
 }

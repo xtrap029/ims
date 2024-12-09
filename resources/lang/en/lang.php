@@ -33,6 +33,7 @@ return [
     'action' => 'Action',
     'add' => 'Add',
     'add_data' => 'Add data',
+    'scan' => 'Scan QR',
     'delete' => 'Delete',
     'edit' => 'Edit',
     'search' => 'Search', 
@@ -66,6 +67,7 @@ return [
     'thismonth' =>'This month',
     
     'detail' =>'Detail',
+    'usertype_access' =>'User Type Access',
     
 	'brand_list' =>'Brand list',
 	'department_list' =>'Department list',
@@ -118,6 +120,8 @@ return [
     'status' =>'Status',
     'availability' =>'Availability',
     'available' =>'Available',
+    'group' =>'Group',
+    'access' =>'Access',
     'deploymentstatus' =>'Deployment Status',
     'overall' =>'Overall',
     'overall ' =>'Overall',

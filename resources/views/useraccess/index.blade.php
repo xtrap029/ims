@@ -21,6 +21,7 @@
                                         <th>ID</th>
                                         <th><?php echo trans('lang.order');?></th>
                                         <th><?php echo trans('lang.code');?></th>
+                                        <th><?php echo trans('lang.group');?></th>
                                         <th><?php echo trans('lang.name');?></th>
                                         <th><?php echo trans('lang.action');?></th>
                                     </tr>
@@ -30,6 +31,7 @@
                                         <th>ID</th>
                                         <th><?php echo trans('lang.order');?></th>
                                         <th><?php echo trans('lang.code');?></th>
+                                        <th><?php echo trans('lang.group');?></th>
                                         <th><?php echo trans('lang.name');?></th>
                                         <th><?php echo trans('lang.action');?></th>
                                     </tr>
@@ -62,6 +64,10 @@
                         <div class="form-group">
                             <label><?php echo trans('lang.code');?></label>
                             <input name="code" type="text" id="editcode" class=" form-control" required placeholder="<?php echo trans('lang.code');?>" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label><?php echo trans('lang.group');?></label>
+                            <input name="group" type="text" id="editgroup" class=" form-control" required placeholder="<?php echo trans('lang.group');?>"/>
                         </div>
                         <div class="form-group">
                             <label><?php echo trans('lang.name');?></label>
@@ -100,6 +106,9 @@
             },
             {
                 data: 'code'
+            },
+            {
+                data: 'group'
             },
             {
                 data: 'name'
@@ -186,6 +195,7 @@ $('#edit').on('show.bs.modal', function(e) {
 		success: function(data) {
 			$("#editid").val(id);
             $("#editname").val(data.message.name);
+            $("#editgroup").val(data.message.group);
             $("#editcode").val(data.message.code);
             $("#editorder").val(data.message.order);
 		}   

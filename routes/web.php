@@ -107,6 +107,7 @@ Route::get('usertype', 'UserType@getdata');
 Route::get('listusertype', 'UserType@getrows');
 Route::post('updateusertype', 'UserType@update');
 Route::post('usertypebyid', 'UserType@byid');
+Route::get('usertype/access/{id}', 'UserType@access')->name('usertype');
 
 //User Access API
 Route::get('useraccess', 'UserAccess@getdata');
@@ -158,6 +159,7 @@ Route::post('activityassetbyid', 'Asset@activityassetbyid');
 Route::post('onhandassetbyemployee', 'Asset@onhandassetbyemployee');
 Route::get('asset/generateproductcode', 'Asset@generateproductcode');
 Route::get('assetnotbyid', 'Asset@isnotbyid');
+Route::get('scan', 'Asset@scan');
 
 //Component API
 Route::get('component', 'Component@getdata');
