@@ -18,6 +18,8 @@ Route::get('/departmentlist','Department@index');
 Route::get('/assettypelist','AssetType@index');
 Route::get('/locationlist','Location@index');
 Route::get('/statuslist','Status@index');
+Route::get('/assetstatuslist','AssetStatus@index');
+Route::get('/previouslyinstalledlist','PreviouslyInstalled@index');
 Route::get('/employeeslist','Employees@index');
 Route::get('/employeeslist/detail/{id}','Employees@detail');
 Route::get('/supplierlist','Supplier@index');
@@ -101,6 +103,22 @@ Route::post('savestatus', 'Status@save');
 Route::post('updatestatus', 'Status@update');
 Route::post('deletestatus', 'Status@delete');
 Route::post('statusbyid', 'Status@byid');
+
+//Asset Status API
+Route::get('assetstatus', 'AssetStatus@getdata');
+Route::get('listassetstatus', 'AssetStatus@getrows');
+Route::post('saveassetstatus', 'AssetStatus@save');
+Route::post('updateassetstatus', 'AssetStatus@update');
+Route::post('deleteassetstatus', 'AssetStatus@delete');
+Route::post('assetstatusbyid', 'AssetStatus@byid');
+
+//Previously Installed API
+Route::get('previouslyinstalled', 'PreviouslyInstalled@getdata');
+Route::get('listpreviouslyinstalled', 'PreviouslyInstalled@getrows');
+Route::post('savepreviouslyinstalled', 'PreviouslyInstalled@save');
+Route::post('updatepreviouslyinstalled', 'PreviouslyInstalled@update');
+Route::post('deletepreviouslyinstalled', 'PreviouslyInstalled@delete');
+Route::post('previouslyinstalledbyid', 'PreviouslyInstalled@byid');
 
 //User Type API
 Route::get('usertype', 'UserType@getdata');

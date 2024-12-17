@@ -26,6 +26,8 @@ class Asset extends Migration
             $table->string('cost',10);
             $table->string('warranty',5);
             $table->string('status',20);
+            $table->integer('assetstatusid');
+            $table->integer('previousinstallid');
             $table->text('picture')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

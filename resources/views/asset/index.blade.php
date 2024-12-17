@@ -147,6 +147,21 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.previouslyinstalled');?></label>
+                                <select name="previouslyinstalledid" id="previouslyinstalledid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.previouslyinstalled');?></option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.assetstatus');?></label>
+                                <select name="assetstatusid" id="assetstatusid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.assetstatus');?></option> 
+                                </select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6 mb-0" >
                             <label for="warranty" class="control-label"><?php echo trans('lang.warranty');?></label> 
 								<div class="input-group mb-0" >                                    
@@ -267,6 +282,21 @@
                                 </div>
                                 <label class="error" for="purchasedate"></label>
                             </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.previouslyinstalled');?></label>
+                                <select name="previouslyinstalledid" id="editpreviouslyinstalledid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.previouslyinstalled');?></option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.assetstatus');?></label>
+                                <select name="assetstatusid" id="editassetstatusid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.assetstatus');?></option> 
+                                </select>
+                            </div>
+                           
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6 mb-0" >
@@ -585,6 +615,44 @@ $.ajax({
 		}   
     }); 
 
+$.ajax({
+        type: "GET",
+		url: "{{ url('listassetstatus')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#assetstatusid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#editassetstatusid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+
+$.ajax({
+        type: "GET",
+		url: "{{ url('listpreviouslyinstalled')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#previouslyinstalledid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#editpreviouslyinstalledid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+
 //get all employee
 $.ajax({
         type: "GET",
@@ -700,6 +768,8 @@ $("#formadd").validate({
         var cost                = $("#cost").val();
         var warranty            = $("#warranty").val();
         var status              = $("#status").val();
+        var assetstatusid       = $("#assetstatusid").val();
+        var previouslyinstalledid= $("#previouslyinstalledid").val();
         var description         = $("#description").val();
 		var picture             = $('#picture')[0].files[0];
 		
@@ -715,6 +785,8 @@ $("#formadd").validate({
         form.append('cost', cost);
         form.append('warranty', warranty);
         form.append('status', status);
+        form.append('assetstatusid', assetstatusid);
+        form.append('previouslyinstalledid', previouslyinstalledid);
         form.append('description', description);
         form.append('picture', picture);
         
@@ -763,6 +835,8 @@ $("#formedit").validate({
         var cost                = $("#editcost").val();
         var warranty            = $("#editwarranty").val();
         var status              = $("#editstatus").val();
+        var assetstatusid       = $("#editassetstatusid").val();
+        var previouslyinstalledid= $("#editpreviouslyinstalledid").val();
         var description         = $("#editdescription").val();
 		var picture             = $('#editpicture')[0].files[0];
         
@@ -780,6 +854,8 @@ $("#formedit").validate({
         form.append('cost', cost);
         form.append('warranty', warranty);
         form.append('status', status);
+        form.append('assetstatusid', assetstatusid);
+        form.append('previouslyinstalledid', previouslyinstalledid);
         form.append('description', description);
         form.append('picture', picture);
 
@@ -847,6 +923,8 @@ $('#edit').on('show.bs.modal', function(e) {
             $("#editcost").val(data.message.cost);
             $("#editwarranty").val(data.message.warranty);
             $("#editstatus").val(data.message.status);
+            $("#editassetstatusid").val(data.message.assetstatusid);
+            $("#editpreviouslyinstalledid").val(data.message.previousinstallid);
             $("#editdescription").val(data.message.assetdescription);
 		}   
 	});

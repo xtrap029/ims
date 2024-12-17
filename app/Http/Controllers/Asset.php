@@ -294,11 +294,15 @@ class Asset extends Controller
             'brand.*', 'brand.name as brand',
             'asset_type.name as type',
             'supplier.name as supplier',
+            'asset_status.name as assetstatus',
+            'previous_install.name as previouslyinstalled',
             'location.name as location')
         ->leftJoin('brand', 'brand.id', '=', 'assets.brandid')
         ->leftJoin('asset_type', 'asset_type.id', '=', 'assets.typeid')
         ->leftJoin('supplier', 'supplier.id', '=', 'assets.supplierid')
         ->leftJoin('location', 'location.id', '=', 'assets.locationid')
+        ->leftJoin('asset_status', 'asset_status.id', '=', 'assets.assetstatusid')
+        ->leftJoin('previous_install', 'previous_install.id', '=', 'assets.previousinstallid')
         ->where('assets.id',$id)
         ->first();
         
@@ -396,6 +400,8 @@ class Asset extends Controller
         $cost               = $request->input( 'cost' );
         $warranty           = $request->input( 'warranty' );
         $status             = $request->input( 'status' );
+        $assetstatusid        = $request->input( 'assetstatusid' );
+        $previouslyinstalledid= $request->input( 'previouslyinstalledid' );
         $checkstatus        = 0;
         $picture            = $request->file( 'picture' );
         $description        = $request->input( 'description' );
@@ -431,6 +437,8 @@ class Asset extends Controller
                             'cost'=>$cost,
                             'warranty'=>$warranty,
                             'status'=>$status,
+                            'assetstatusid'=>$assetstatusid,
+                            'previousinstallid'=>$previouslyinstalledid,
                             'picture'=>$picturename,
                             'description'=>$description,
                             'created_at'=>$created_at,
@@ -451,6 +459,8 @@ class Asset extends Controller
                                 'checkstatus'=>0,
                                 'warranty'=>$warranty,
                                 'status'=>$status,
+                                'assetstatusid'=>$assetstatusid,
+                                'previousinstallid'=>$previouslyinstalledid,
                                 'picture'=>$defaultimage,
                                 'description'=>$description,
                                 'created_at'=>$created_at,
@@ -505,6 +515,8 @@ class Asset extends Controller
         $cost           = $request->input( 'cost' );
         $warranty       = $request->input( 'warranty' );
         $status         = $request->input( 'status' );
+        $assetstatusid  = $request->input( 'assetstatusid' );
+        $previouslyinstalledid= $request->input( 'previouslyinstalledid' );
         $picture        = $request->file( 'picture' );
         $description    = $request->input( 'description' );
         $created_at     = date("Y-m-d H:i:s");
@@ -539,6 +551,8 @@ class Asset extends Controller
                     'cost'                => $cost,
                     'warranty'            => $warranty,
                     'status'              => $status,
+                    'assetstatusid'       => $assetstatusid,
+                    'previousinstallid'   => $previouslyinstalledid,
                     'description'         => $description,
                     'picture'             => $picturename,
                     'updated_at'          => $updated_at
@@ -560,6 +574,8 @@ class Asset extends Controller
                     'cost'                => $cost,
                     'warranty'            => $warranty,
                     'status'              => $status,
+                    'assetstatusid'       => $assetstatusid,
+                    'previousinstallid'   => $previouslyinstalledid,
                     'description'         => $description,
                     'updated_at'          => $updated_at
                 ];

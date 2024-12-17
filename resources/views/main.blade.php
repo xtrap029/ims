@@ -87,16 +87,8 @@
                                 src="<?php echo asset('images/icon-depreciation.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.depreciationmenu');?>
                         </p>
                     </a>
-                </li>
-              
-                <li class="{{ Request::is( 'assettypelist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'assettypelist') }}">
-                        <p><img width="22"
-                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assettypemenu');?>
-                        </p>
-                    </a>
-                </li>
-             
+                </li>         
+
                 <li class="{{ Request::is( 'brandlist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'brandlist') }}">
                         <p><img width="25"
@@ -120,13 +112,15 @@
                         </p>
                     </a>
                 </li>
-                <li class="{{ Request::is( 'statuslist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'statuslist') }}">
+                <li class="{{ Request::is( 'previouslyinstalledlist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'previouslyinstalledlist') }}">
                         <p><img width="25"
-                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.statusmenu');?>
+                                src="<?php echo asset('images/icon-location.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.previouslyinstalledmenu');?>
                         </p>
                     </a>
                 </li>
+            </ul>
+            <ul class="nav mt-5">
                 <li class="{{ Request::is( 'employeeslist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'employeeslist') }}">
                         <p><img width="25"
@@ -134,11 +128,33 @@
                         </p>
                     </a>
                 </li>
-
                 <li class="{{ Request::is( 'departmentlist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'departmentlist') }}">
                         <p><img width="20"
                                 src="<?php echo asset('images/icon-department.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.departmentmenu');?>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav mt-5">
+                <li class="{{ Request::is( 'assettypelist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'assettypelist') }}">
+                        <p><img width="22"
+                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assettypemenu');?>
+                        </p>
+                    </a>
+                </li>
+                <li class="{{ Request::is( 'statuslist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'statuslist') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.statusmenu');?>
+                        </p>
+                    </a>
+                </li>
+                <li class="{{ Request::is( 'assetstatuslist') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'assetstatuslist') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assetstatusmenu');?>
                         </p>
                     </a>
                 </li>

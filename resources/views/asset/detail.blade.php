@@ -179,6 +179,24 @@
                                                     <tr>
                                                         <td bgcolor="#f2f3f4" width="200">
                                                             <p class="mb-0 font-bold">
+                                                                <?php echo trans('lang.assetstatus');?>:</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 assetassetstatus"></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 font-bold">
+                                                                <?php echo trans('lang.previouslyinstalled');?>:</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 assetpreviouslyinstalled"></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 font-bold">
                                                                 <?php echo trans('lang.availability');?>:</p>
                                                         </td>
                                                         <td>
@@ -564,6 +582,8 @@
             $(".assettag").html(data.message.assettag);
             $(".assettype").html(data.message.type);
             $(".assetsupplier").html(data.message.supplier);
+            $(".assetassetstatus").html(data.message.assetstatus);
+            $(".assetpreviouslyinstalled").html(data.message.previouslyinstalled);
             $(".assetavailability").html(data.assetemployeefullname);
             $(".assetstatus").html(data.assetstatus);
             $(".assetbrand").html(data.message.brand);
