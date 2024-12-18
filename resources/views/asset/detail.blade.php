@@ -583,7 +583,7 @@
             $(".assettype").html(data.message.type);
             $(".assetsupplier").html(data.message.supplier);
             $(".assetassetstatus").html(data.message.assetstatus);
-            $(".assetpreviouslyinstalled").html(data.message.previouslyinstalled);
+            $(".assetpreviouslyinstalled").html(data.previouslyinstalled);
             $(".assetavailability").html(data.assetemployeefullname);
             $(".assetstatus").html(data.assetstatus);
             $(".assetbrand").html(data.message.brand);

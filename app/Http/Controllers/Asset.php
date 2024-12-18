@@ -295,7 +295,7 @@ class Asset extends Controller
             'asset_type.name as type',
             'supplier.name as supplier',
             'asset_status.name as assetstatus',
-            'previous_install.name as previouslyinstalled',
+            'assets.previousinstallid as previousinstallid',
             'location.name as location')
         ->leftJoin('brand', 'brand.id', '=', 'assets.brandid')
         ->leftJoin('asset_type', 'asset_type.id', '=', 'assets.typeid')
@@ -324,6 +324,10 @@ class Asset extends Controller
             //for warranty
             $prchasedate = strtotime($data->purchasedate);
             $nextexpired = date($setting->formatdate, strtotime($data->warranty.' month', $prchasedate));
+
+            // for previously installed
+            $previouslyinstalled = DB::table('previous_install')->whereIn('id', explode(',',$data->previousinstallid))->pluck('name')->toArray();         
+            $res['previouslyinstalled'] = implode(', ', $previouslyinstalled);
 
             $res['success'] = 'success';
             $res['message']= $data;

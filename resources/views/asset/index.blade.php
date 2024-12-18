@@ -149,8 +149,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label><?php echo trans('lang.previouslyinstalled');?></label>
-                                <select name="previouslyinstalledid" id="previouslyinstalledid" required class="form-control">
-                                    <option value=""><?php echo trans('lang.previouslyinstalled');?></option> 
+                                <select name="previouslyinstalledid" id="previouslyinstalledid" required class="form-control" multiple>
+                                    <option value="" disabled><?php echo trans('lang.previouslyinstalled');?></option> 
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -286,8 +286,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label><?php echo trans('lang.previouslyinstalled');?></label>
-                                <select name="previouslyinstalledid" id="editpreviouslyinstalledid" required class="form-control">
-                                    <option value=""><?php echo trans('lang.previouslyinstalled');?></option> 
+                                <select name="previouslyinstalledid" id="editpreviouslyinstalledid" required class="form-control" multiple>
+                                    <option value="" disabled><?php echo trans('lang.previouslyinstalled');?></option> 
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -615,6 +615,7 @@ $.ajax({
 		}   
     }); 
 
+//get all asset status
 $.ajax({
         type: "GET",
 		url: "{{ url('listassetstatus')}}",
@@ -633,7 +634,7 @@ $.ajax({
             });
 		}   
     }); 
-
+//get all previously installed
 $.ajax({
         type: "GET",
 		url: "{{ url('listpreviouslyinstalled')}}",
@@ -924,7 +925,7 @@ $('#edit').on('show.bs.modal', function(e) {
             $("#editwarranty").val(data.message.warranty);
             $("#editstatus").val(data.message.status);
             $("#editassetstatusid").val(data.message.assetstatusid);
-            $("#editpreviouslyinstalledid").val(data.message.previousinstallid);
+            $("#editpreviouslyinstalledid").val(data.message.previousinstallid.split(','));
             $("#editdescription").val(data.message.assetdescription);
 		}   
 	});
