@@ -188,6 +188,13 @@
                         </p>
                     </a>
                 </li>
+                <li class="{{ Request::is( 'csv') ? 'active' : '' }}">
+                    <a href="{{ URL::to( 'csv') }}">
+                        <p><img width="25"
+                                src="<?php echo asset('images/icon-component.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.import_assets');?>
+                        </p>
+                    </a>
+                </li>
                 <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
                     <a href="{{ URL::to( 'settinglist') }}">
                         <p><img width="25"

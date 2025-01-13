@@ -36,6 +36,9 @@ Route::get('/componentlist/detail/{componentid}','Component@detail');
 Route::get('/maintenancelist','Maintenance@index');
 Route::get('/depreciationlist','Depreciation@index');
 
+Route::get('/csv', 'Asset@csv')->name('csv');
+Route::post('/csv', 'Asset@csvUpload');
+
 
 //report
 Route::get('/reports/assetactivity','Reports@assetactivity')->name('report');

@@ -772,4 +772,219 @@ class Asset extends Controller
         }
         return view( 'asset.scan' );
     }
+
+    public function csv() {
+        return view('asset.csv');
+    }
+
+    public function csvUpload(Request $request) {
+        if($request->hasFile('csv')) {
+            $this->validate($request, ['csv' => 'required|mimes:csv,txt|max:2048']);
+
+            $supplierDefault = DB::table('supplier')->select('id')->where('name', 'N/A')->orderBy('id', 'asc')->first();
+            $locationDefault = DB::table('location')->select('id')->where('name', 'N/A')->orderBy('id', 'asc')->first();
+            $brandDefault = DB::table('brand')->select('id')->where('name', 'N/A')->orderBy('id', 'asc')->first();
+            $assetTypeDefault = DB::table('asset_type')->select('id')->where('name', 'N/A')->orderBy('id', 'asc')->first();
+            $statusDefault = DB::table('status')->select('id')->where('name', 'Unknown')->orderBy('id', 'asc')->first();
+            $assetStatusDefault = DB::table('asset_status')->select('id')->where('name', 'N/A')->orderBy('id', 'asc')->first();
+            $previouslyInstalledDefault = DB::table('previous_install')->select('id')->where('name', 'N/A')->orderBy('id', 'asc')->first();
+
+            $error = "";
+            if (!$supplierDefault) {
+                $error = "Missing supplier default.";
+            } else if (!$locationDefault) {
+                $error = "Missing location default.";
+            } else if (!$brandDefault) {
+                $error = "Missing brand default.";
+            } else if (!$assetTypeDefault) {
+                $error = "Missing asset type default.";
+            } else if (!$statusDefault) {
+                $error = "Missing status default.";
+            } else if (!$assetStatusDefault) {
+                $error = "Missing asset status default.";
+            } else if (!$previouslyInstalledDefault) {
+                $error = "Missing previously installed default.";
+            }
+
+            if ($error != "") {
+                return view('asset.csv')->with([
+                    'error' => $error,
+                ]);
+            }
+
+            $file = $request->file('csv');
+            $path = $file->getRealPath();
+            $rows = [];
+
+            if (($handle = fopen($path, 'r')) !== false) {
+                $headers = fgetcsv($handle);
+                while (($data = fgetcsv($handle)) !== false) {
+                    $rows[] = array_combine($headers, $data);
+                }
+                fclose($handle);
+            } else {
+                return view('asset.csv')->with([
+                    'error' => "Error opening file",
+                ]);
+            }
+
+            $listSuccess = [];
+
+            foreach ($rows as $sequence => $row) {
+                $randomDefault = date('Ymd').'-'.$this->generateRandomString();
+
+                $defaults =  [
+                    'NAME' => 'NAME-'.$randomDefault,
+                    'ASSET_TAG' => 'AST-'.$randomDefault,
+                    'SUPPLIER' => $supplierDefault->id,
+                    'LOCATION' => $locationDefault->id,
+                    'BRAND' => $brandDefault->id,
+                    'SERIAL_NUMBER' => 'SN-'.$randomDefault,
+                    'ASSET_TYPE' => $assetTypeDefault->id,
+                    'COST' => "0",
+                    'PURCHASE_DATE' => date('Y-m-d'),
+                    'WARRANTY' => "0",
+                    'STATUS' => $statusDefault->id,
+                    'PICTURE' => 'pic.png',
+                    'ASSET_STATUS' => $assetStatusDefault->id,
+                    'PREVIOUSLY_INSTALLED' => $previouslyInstalledDefault->id,
+                    'DESCRIPTION' => '',
+                ];
+
+                $currentRow = $row;
+                $accumulatedDescription = "";
+
+                foreach ($defaults as $key => $default) {
+                    switch ($key) {
+                        case 'PICTURE':
+                            $row['PICTURE'] = $default;
+                            break;
+                        case 'SUPPLIER':
+                        case 'LOCATION':
+                        case 'BRAND':
+                        case 'ASSET_TYPE':
+                        case 'STATUS':
+                        case 'ASSET_STATUS':
+                            if ($row[$key] != "") {
+                                $check = DB::table(strtolower($key))->find($row[$key]);
+                                if (!$check) {
+                                    return view('asset.csv')->with([
+                                        'error' => str_replace('_', ' ', ucfirst(strtolower($key)))." ID for item #".($sequence+1)." (row #".($sequence+2)." in csv file) not found.",
+                                        'listSuccess' => $listSuccess,
+                                        'currentRow' => $currentRow,
+                                    ]);
+                                }
+                            } else {
+                                $row[$key] = $default;
+                            }
+                            break;
+                        case 'COST':
+                        case 'WARRANTY':
+                            if ((
+                                    filter_var($row[$key], FILTER_VALIDATE_INT) == false
+                                        && filter_var($row[$key], FILTER_VALIDATE_FLOAT) == false
+                                        && $row[$key] !== "0")
+                                    || $row[$key] == ""
+                                ) {
+                                if ($row[$key] !== "") {
+                                    $accumulatedDescription .= ucfirst(strtolower($key)).": ".$row[$key]."</br>";
+                                }
+                                $row[$key] = $default;
+                            }
+                            break;
+                        case 'PREVIOUSLY_INSTALLED':
+                            if ($row[$key] == "") {
+                                $row[$key] = $default;
+                            } else {
+                                foreach (explode(',', $row[$key]) as $value) {
+                                    $check = DB::table('previous_install')->find($row[$key]);
+                                    if (!$check) {
+                                        return view('asset.csv')->with([
+                                            'error' => str_replace('_', ' ', ucfirst(strtolower($key)))." ID for item #".($sequence+1)." (row #".($sequence+2)." in csv file) not found.",
+                                            'listSuccess' => $listSuccess,
+                                            'currentRow' => $currentRow,
+                                        ]);
+                                    }
+                                }
+                            }
+                            break;
+                        case 'DESCRIPTION':
+                            $row[$key] = $row[$key]."</br>".$accumulatedDescription;  
+                            break; 
+                        case 'ASSET_TAG':
+                            if ($row[$key] != "") {
+                                $check = DB::table('assets')->where('assettag', $row[$key])->first();
+                                if ($check) {
+                                    return view('asset.csv')->with([
+                                        'error' => str_replace('_', ' ', ucfirst(strtolower($key)))." for item #".($sequence+1)." (row #".($sequence+2)." in csv file) already exists.",
+                                        'listSuccess' => $listSuccess,
+                                        'currentRow' => $currentRow,
+                                    ]);
+                                }
+                            } else {
+                                $row[$key] = $default;
+                            }
+                            break; 
+                        case 'SERIAL_NUMBER':
+                            if ($row[$key] != "") {
+                                $check = DB::table('assets')->where('serial', $row[$key])->first();
+                                if ($check) {
+                                    return view('asset.csv')->with([
+                                        'error' => str_replace('_', ' ', ucfirst(strtolower($key)))." for item #".($sequence+1)." (row #".($sequence+2)." in csv file) already exists.",
+                                        'listSuccess' => $listSuccess,
+                                        'currentRow' => $currentRow,
+                                    ]);
+                                }
+                            } else {
+                                $row[$key] = $default;
+                            }
+                            break;                    
+                        default:
+                            // name
+                            $row[$key] = $row[$key] != "" ? $row[$key] : $default;
+                            break;
+                    }
+                }
+
+                AssetsModel::create(array(
+                    'name'              => $row['NAME'], 
+                    'locationid'        => $row['LOCATION'],
+                    'supplierid'        => $row['SUPPLIER'],
+                    'typeid'            => $row['ASSET_TYPE'],
+                    'brandid'           => $row['BRAND'],
+                    'assettag'          => $row['ASSET_TAG'],
+                    'serial'            => $row['SERIAL_NUMBER'],
+                    'quantity'          => 'undefined',
+                    'purchasedate'      => $row['PURCHASE_DATE'],
+                    'cost'              => $row['COST'],
+                    'checkstatus'       => 0,
+                    'warranty'          => $row['WARRANTY'],
+                    'status'            => $row['STATUS'],
+                    'assetstatusid'     => $row['ASSET_STATUS'],
+                    'previousinstallid' => $row['PREVIOUSLY_INSTALLED'],
+                    'picture'           => $row['PICTURE'],
+                    'description'       => $row['DESCRIPTION'],
+                    'created_at'        => date("Y-m-d H:i:s"),
+                    'updated_at'        => date("Y-m-d H:i:s")
+                )); 
+
+                $listSuccess[] = $row; 
+            }
+
+            return view('asset.csv', [
+                'isSuccess' => true,
+                'listSuccess' => $listSuccess,
+            ]);
+        }
+    }
+
+    function generateRandomString($length = 5) {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }

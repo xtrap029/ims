@@ -83,7 +83,7 @@ return [
 	'employees_list' => 'Employees list',
 	'supplier_list' => 'Supplier list',
 
-
+	'import_assets' => 'Import Assets',
 
     //settings
     'formatdate'=> 'Format date',
