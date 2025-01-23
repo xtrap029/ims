@@ -9,6 +9,9 @@
     ">
         <h3>Scan Asset QR</h3>
         <form id="qr-form">
+            @if (isset($error))
+                <div class="alert bg-danger text-white">{{ $error }}</div>
+            @endif
             <div class="mb-3">
                 <input type="hidden" id="qr-result" name="qr_data" class="form-control" readonly>
             </div>

@@ -768,7 +768,11 @@ class Asset extends Controller
     public function scan() {
         if (request('qr_data')) {
             $asset = DB::table('assets')->where('assettag', request('qr_data'))->first();
-            return redirect('assetlist/detail/'.$asset->id);
+            if ($asset) {
+                return redirect('assetlist/detail/'.$asset->id);
+            } else {
+                return view( 'asset.scan' )->with('error', 'Asset not found!');
+            }
         }
         return view( 'asset.scan' );
     }
