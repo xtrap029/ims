@@ -251,9 +251,9 @@
         ajax: "{{ url('depreciation')}}",
         columns: [{
             data: 'id',
-                orderable: false,
+                orderable: true,
                 searchable: false,
-                visible: false
+                visible: true
             },
            
             {
