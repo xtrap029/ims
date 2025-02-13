@@ -111,7 +111,20 @@
                                     <div class="tab-pane fade show active" id="details" role="tabpanel"
                                         aria-labelledby="details-tab">
                                         <div class="row">
-                                            <div class="col-md-9 pt-3">
+                                            <div class="col-12 pt-3">
+                                                <div id="checkoutsuccess" class="display-none alert alert-success"><?php echo trans('lang.data_checkout_succeess');?></div>
+                                                <div id="checkinsuccess"  class="display-none alert alert-success"><?php echo trans('lang.data_checkin_succeess');?></div>
+                                                <div id="messageupdate"  class="display-none alert alert-success"><?php echo trans('lang.data_updated');?></div>
+                                                <div class="text-md-right text-left pt-2">
+                                                    @if($accountsingle->checkstatus===2)
+                                                        <a class="btn btn-sm btn-fill btn-primary" href="#" id="btncheckin" customdata="<?=$accountsingle->id?>"  data-toggle="modal" data-target="#checkin"><i class="fa fa-check"></i><?=trans('lang.checkin')?></a>
+                                                    @else
+                                                        <a class="btn btn-sm btn-fill btn-primary" href="#" id="btncheckout" customdata="<?=$accountsingle->id?>"  data-toggle="modal" data-target="#checkout"><i class="fa fa-check"></i><?=trans('lang.checkout')?></a>
+                                                    @endif
+                                                    <a ref="#" class="btn btn-sm btn-fill btn-primary" id="btnedit" customdata="<?=$id?>" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> <?= trans('lang.edit') ?></a>
+                                                </div>
+                                            </div>                                                
+                                            <div class="col-md-9 pt-3">                                                
                                                 <table class="table table-hover" cellpadding="0" cellspacing="0">
                                                     <tr>
                                                         <td bgcolor="#f2f3f4" width="200">
@@ -232,8 +245,8 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                            <div class="col-md-3 pt-2 text-center">
-                                                <button type="button" class="btn btn-simple" data-toggle="modal" data-target="#magnifypicture">
+                                            <div class="col-md-3 pt-2 text-right">
+                                                <button type="button" class="btn btn-simple p-0" data-toggle="modal" data-target="#magnifypicture">
                                                     <img width="250" class="img-responsive assetimage" src="" />
                                                 </button>
                                             </div>
@@ -563,6 +576,257 @@
     </div>
     <!--end delete data -->
 
+    <!--edit new data -->
+    <div id="edit" class="modal fade" role="dialog" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="#" id="formedit" enctype="multipart/form-data">
+                    <div class="modal-header">
+                       
+                        <h5 class="modal-title"><?php echo trans('lang.edit_data');?></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                    <div  class="messageexist alert alert-success display-none"><?php echo trans('lang.tag_exist');?></div>
+                    <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.name');?></label>
+                                <input name="name" type="text" id="editname" class=" form-control" required placeholder="<?php echo trans('lang.name');?>"/>
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.assettag');?></label>
+                                <input name="assettag" type="text" id="editassettag" class=" form-control" required placeholder="<?php echo trans('lang.assettag');?>"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.supplier');?></label>
+                                <select name="supplierid" id="editsupplierid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.supplier');?></option> 
+                                </select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                            
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.location');?></label>
+                                <select name="locationid" id="editlocationid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.location');?></option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label><?php echo trans('lang.brand');?></label>
+                                <select name="brandid" id="editbrandid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.brand');?></option>
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.serial');?></label>
+                                <input name="serial" type="text" id="editserial" class="form-control " required placeholder="<?php echo trans('lang.serial');?>"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.assettype');?></label>
+                                <select name="typeid" id="edittypeid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.assettype');?></option> 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 mb-0" >
+								<label for="cost" class="control-label"><?php echo trans('lang.cost');?></label> 
+								<div class="input-group mb-0" >
+									<span class="input-group-addon setcurrency border-1" id="editcurrency" ></span>                                      
+									<input class="form-control number" required="" placeholder="<?php echo trans('lang.cost');?>" id="editcost" name="cost" type="text">
+								</div>
+                                <label class="error" for="cost"></label>
+							</div>
+                            <div class="form-group col-md-6 mb-0" >
+                                    <label for="purchasedate" class="control-label"><?php echo trans('lang.purchasedate');?></label>     
+                                    <div class="input-group mb-0" >                       
+									<input class="form-control setdate" required="" placeholder="<?php echo trans('lang.purchasedate');?>" id="editpurchasedate" name="purchasedate" type="text">
+                                    <span class="input-group-addon border-1" id="editdate" ><i class="fa fa-calendar"></i></span>      
+                                </div>
+                                <label class="error" for="purchasedate"></label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.previouslyinstalled');?></label>
+                                <select name="previouslyinstalledid" id="editpreviouslyinstalledid" required class="form-control" multiple>
+                                    <option value="" disabled><?php echo trans('lang.previouslyinstalled');?></option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.assetstatus');?></label>
+                                <select name="assetstatusid" id="editassetstatusid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.assetstatus');?></option> 
+                                </select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 mb-0" >
+                            <label for="warranty" class="control-label"><?php echo trans('lang.warranty');?></label> 
+								<div class="input-group mb-0" >                                    
+									<input class="form-control number" required="" placeholder="<?php echo trans('lang.warranty');?>" id="editwarranty" name="warranty" type="text">
+                                    <span class="input-group-addon border-1" id="editwarrantyyear" ><?php echo trans('lang.month');?></span>
+                                </div>
+                                <label class="error" for="warranty"></label>
+                            </div>
+                            <div class="form-group col-md-6 mb-0" >
+                            <label><?php echo trans('lang.status');?></label>
+                            <select name="status" id="editstatus" required class="form-control">
+                                <option value=""><?php echo trans('lang.status');?></option>
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label><?php echo trans('lang.description');?></label>
+                            <textarea class="form-control" name="description" id="editdescription" placeholder="<?php echo trans('lang.description');?>"></textarea>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label><?php echo trans('lang.picture');?></label>
+                            <input name="picture" type="file" id="editpicture" class=" form-control"  placeholder="<?php echo trans('lang.picture');?>"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="id" id="editid"/>
+                        <button type="submit" class="btn btn-primary"
+                            id="saveedit"><?php echo trans('lang.save');?></button>
+                        <button type="button" class="btn btn-default"
+                            data-dismiss="modal"><?php echo trans('lang.close');?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end edit data-->
+
+    <!--add checkout -->
+    <div id="checkout" class="modal fade" role="dialog" >
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <form action="#" id="formcheckout" enctype="multipart/form-data" autocomplete="off">
+                    <div class="modal-header">
+                       
+                        <h5 class="modal-title"><?php echo trans('lang.checkout');?></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.assettag');?></label>
+                                <input name="assettag" type="text" readonly id="checkoutassettag" class=" form-control" required placeholder="<?php echo trans('lang.assettag');?>"/>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.asset');?></label>
+                                <input name="asset" type="text" readonly id="checkoutname" class=" form-control" required placeholder="<?php echo trans('lang.asset');?>"/>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.location');?></label>
+                                <input name="location" type="text" readonly id="checkoutlocationname" class=" form-control" required placeholder="<?php echo trans('lang.location');?>"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.checkoutto');?></label>
+                                <select name="employeeid" id="checkoutemployeeid" required class="form-control">
+                                    <option value=""><?php echo trans('lang.employee');?></option> 
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <div class="form-row">
+                            <div class="form-group col-md-12 mb-0" >
+                                    <label for="checkoutdate" class="control-label"><?php echo trans('lang.checkoutdate');?></label>     
+                                    <div class="input-group mb-0" >                       
+									<input class="form-control setdate" required="" placeholder="<?php echo trans('lang.checkoutdate');?>" id="checkoutdate" name="checkoutdate" type="text">
+                                    <span class="input-group-addon border-1" id="date" ><i class="fa fa-calendar"></i></span>      
+                                </div>
+                                <label class="error" for="checkoutdate"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <input type="hidden" name="assetid" id="assetid"/>
+                        <button type="submit" class="btn btn-primary"
+                            id="savecheckout"><?php echo trans('lang.save');?></button>
+                        <button type="button" class="btn btn-default"
+                            data-dismiss="modal"><?php echo trans('lang.close');?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end checkout-->
+
+     <!--add checkin -->
+     <div id="checkin" class="modal fade" role="dialog" >
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <form action="#" id="formcheckin" enctype="multipart/form-data" autocomplete="off">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?php echo trans('lang.checkin');?></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.assettag');?></label>
+                                <input name="assettag" type="text" readonly id="checkinassettag" class=" form-control" required placeholder="<?php echo trans('lang.assettag');?>"/>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.asset');?></label>
+                                <input name="asset" type="text" readonly id="checkinname" class=" form-control" required placeholder="<?php echo trans('lang.asset');?>"/>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.location');?></label>
+                                <input name="location" type="text" readonly id="checkinlocationname" class=" form-control" required placeholder="<?php echo trans('lang.location');?>"/>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo trans('lang.employee');?></label>
+                                <input type="text" disabled id="checkinemployee" class=" form-control"/>
+                            </div>
+                            
+                        </div>
+                       
+                        <div class="form-row">
+                            <div class="form-group col-md-12 mb-0" >
+                                    <label for="checkindate" class="control-label"><?php echo trans('lang.checkindate');?></label>     
+                                    <div class="input-group mb-0" >                       
+                                    <input class="form-control setdate" required="" placeholder="<?php echo trans('lang.checkindate');?>" id="checkindate" name="checkindate" type="text">
+                                    <span class="input-group-addon border-1" id="date" ><i class="fa fa-calendar"></i></span>      
+                                </div>
+                                <label class="error" for="checkindate"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    {{-- <input type="hidden" name="employeeid" id="checkinemployeeid" value="0" /> --}}
+                    <input type="hidden" name="employeeid" id="checkinemployeeid" />
+                    <input type="hidden" name="assetid" id="checkinassetid"/>
+                        <button type="submit" class="btn btn-primary"
+                            id="savecheckin"><?php echo trans('lang.save');?></button>
+                        <button type="button" class="btn btn-default"
+                            data-dismiss="modal"><?php echo trans('lang.close');?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end checkin-->
 </section>
 
 <script>
@@ -1138,6 +1402,315 @@
         document.execCommand("copy")
         document.getSelection().removeAllRanges()
     }
+
+    //get all supplier
+    $.ajax({
+        type: "GET",
+		url: "{{ url('listsupplier')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#supplierid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#editsupplierid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+
+    //get all asset status
+    $.ajax({
+        type: "GET",
+		url: "{{ url('listassetstatus')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#assetstatusid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#editassetstatusid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+    //get all previously installed
+    $.ajax({
+        type: "GET",
+		url: "{{ url('listpreviouslyinstalled')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#previouslyinstalledid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#editpreviouslyinstalledid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+    //get all location 
+    $.ajax({
+        type: "GET",
+		url: "{{ url('listlocation')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#locationid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#editlocationid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+    //get all brand 
+    $.ajax({
+        type: "GET",
+		url: "{{ url('listbrand')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#brandid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#editbrandid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+    //get all asset type
+    $.ajax({
+        type: "GET",
+		url: "{{ url('listassettype')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.name);
+                $("#typeid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#edittypeid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name));     
+            });
+		}   
+    }); 
+    //get all employee
+    $.ajax({
+        type: "GET",
+		url: "{{ url('listemployees')}}",
+		dataType: "JSON",
+		success: function(html) {
+            var objs = html.message;
+            jQuery.each(objs, function (index, record) {
+                var id = decodeURIComponent(record.id);
+                var name = decodeURIComponent(record.fullname);
+                $("#checkinemployeeid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+                $("#checkoutemployeeid").append($("<option></option>")
+                    .attr("value",id)
+                    .text(name)); 
+            });
+		}   
+    }); 
+
+    //show edit data
+    $('#edit').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+        id = $(e.relatedTarget).attr('customdata');
+        $.ajax({
+            type: "POST",
+            url: "{{ url('assetbyid')}}",
+            data: {id:id},
+            dataType: "JSON",
+            success: function(data) {
+                $("#editid").val(id);
+                $("#editname").val(data.message.assetname);
+                $("#editlocationid").val(data.message.locationid);
+                $("#editsupplierid").val(data.message.supplierid);
+                $("#editbrandid").val(data.message.brandid);
+                $("#edittypeid").val(data.message.typeid);
+                $("#editassettag").val(data.message.assettag);
+                $("#editserial").val(data.message.serial);
+                $("#editquantity").val(data.message.quantity);
+                $("#editpurchasedate").val(data.message.purchasedate);
+                $("#editcost").val(data.message.cost);
+                $("#editwarranty").val(data.message.warranty);
+                $("#editstatus").val(data.message.status);
+                $("#editassetstatusid").val(data.message.assetstatusid);
+                $("#editpreviouslyinstalledid").val(data.message.previousinstallid.split(','));
+                $("#editdescription").val(data.message.assetdescription);
+            }   
+        });
+    });
+
+    //edit data
+    $("#formedit").validate({
+        rules: {
+        warranty: {
+            required: true,
+            digits: true,
+            maxlength:2
+        }
+        },
+        submitHandler: function(form) {
+            var form = new FormData();
+            var id                  = $("#editid").val();
+            var name                = $("#editname").val();
+            var locationid            = $("#editlocationid").val();
+            var supplierid          = $("#editsupplierid").val();
+            var typeid              = $("#edittypeid").val();
+            var brandid             = $("#editbrandid").val();
+            var assettag            = $("#editassettag").val();
+            var serial              = $("#editserial").val();
+            var quantity            = $("#editquantity").val();
+            var purchasedate        = $("#editpurchasedate").val();
+            var cost                = $("#editcost").val();
+            var warranty            = $("#editwarranty").val();
+            var status              = $("#editstatus").val();
+            var assetstatusid       = $("#editassetstatusid").val();
+            var previouslyinstalledid= $("#editpreviouslyinstalledid").val();
+            var description         = $("#editdescription").val();
+            var picture             = $('#editpicture')[0].files[0];
+            
+            
+            form.append('id', id);
+            form.append('name', name);
+            form.append('locationid', locationid);
+            form.append('supplierid', supplierid);
+            form.append('brandid', brandid);
+            form.append('typeid', typeid);
+            form.append('assettag', assettag);
+            form.append('serial', serial);
+            form.append('quantity', quantity);
+            form.append('purchasedate', purchasedate);
+            form.append('cost', cost);
+            form.append('warranty', warranty);
+            form.append('status', status);
+            form.append('assetstatusid', assetstatusid);
+            form.append('previouslyinstalledid', previouslyinstalledid);
+            form.append('description', description);
+            form.append('picture', picture);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url('updateasset')}}",
+                data: form,
+                contentType: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    console.log(data);
+                    if(data.message=='success'){
+                        $("#messageupdate").css({'display':"block"});
+                        $('#edit').modal('hide');
+                        window.setTimeout(function(){location.reload()},2000);
+                    }
+                    if(data.message=='exist'){
+                        $(".messageexist").css({'display':"block"});
+                    }
+
+                }
+            });
+        }
+    });
+
+    //checkout
+    $("#formcheckout").validate({
+        submitHandler: function(form) {
+            $.ajax({
+                method: "POST",
+                url: "{{ url('savecheckout')}}",
+                data: $("#formcheckout").serialize(),
+                dataType: "JSON",
+                success: function(data) {
+                    $("#checkoutsuccess").css({'display':"block"});
+                    $('#checkout').modal('hide');
+                    window.setTimeout(function(){location.reload()},2000)
+                }
+            });
+        }
+    });
+
+
+    //checkin
+    $("#formcheckin").validate({
+        submitHandler: function(form) {
+            $.ajax({
+                method: "POST",
+                url: "{{ url('savecheckin')}}",
+                data: $("#formcheckin").serialize(),
+                dataType: "JSON",
+                success: function(data) {
+                    $("#checkinsuccess").css({'display':"block"});
+                    $('#checkin').modal('hide');
+                    window.setTimeout(function(){location.reload()},2000)
+                }
+            });
+        }
+    });
+
+    //show checkout
+    $('#checkout').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+        id = $(e.relatedTarget).attr('customdata');
+        $.ajax({
+            type: "POST",
+            url: "{{ url('assetbyid')}}",
+            data: {id:id},
+            dataType: "JSON",
+            success: function(data) {
+                $("#assetid").val(id);
+                $("#checkoutname").val(data.message.name);
+                $("#checkoutassettag").val(data.message.assettag);
+                $("#checkoutlocationname").val(data.message.location);
+            }   
+        });
+    });
+
+    //show checkin
+    $('#checkin').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+        id = $(e.relatedTarget).attr('customdata');
+        $.ajax({
+            type: "POST",
+            url: "{{ url('assetbyid')}}",
+            data: {id:id},
+            dataType: "JSON",
+            success: function(data) {
+                $("#checkinassetid").val(id);
+                $("#checkinname").val(data.message.name);
+                $("#checkinassettag").val(data.message.assettag);
+                $("#checkinlocationname").val(data.message.location);
+                $("#checkinemployeeid").val(data.assetemployee.id);
+                $("#checkinemployee").val(data.assetemployee.fullname);
+            }   
+        });
+    });
 })(jQuery);
 </script>
 @endsection

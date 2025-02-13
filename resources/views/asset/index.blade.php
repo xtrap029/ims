@@ -341,8 +341,8 @@
     </div>
     <!--end edit data-->
 
-     <!--add checkout -->
-     <div id="checkout" class="modal fade" role="dialog" >
+    <!--add checkout -->
+    <div id="checkout" class="modal fade" role="dialog" >
         <div class="modal-dialog ">
             <div class="modal-content">
                 <form action="#" id="formcheckout" enctype="multipart/form-data" autocomplete="off">

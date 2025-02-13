@@ -42,7 +42,12 @@ class Asset extends Controller
      * @return object
      */
     public function detail($id){
-        return view('asset.detail', compact('id'));
+        $status = DB::table('status')->whereNull('deleted_at')->orderBy('order', 'asc')->get();
+        $accountsingle = DB::table('assets')->find($id);
+        return view('asset.detail', compact('id'))->with([
+            'status' => $status,
+            'accountsingle' => $accountsingle
+        ]);
     }
 
 
