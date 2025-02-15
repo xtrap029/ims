@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\TraitSettings;
 use DB;
+use Carbon\Carbon;
 use App\User;
 use App\AssetsModel;
 use App;
@@ -26,7 +27,50 @@ class Home extends Controller
 
 	//return view
     public function index() {
-		return view( 'home.index' );
+		$url = "https://api.trello.com/1/lists/".env('TRELLO_INPROGRESS')."/cards?fields=name,shortUrl,dateLastActivity&key=".env('TRELLO_KEY')."&token=".env('TRELLO_TOKEN');
+		$response = file_get_contents($url);
+		$data = json_decode($response, true);
+
+		$cards_inprogress = array();
+		foreach ($data as $key => $value) {
+			$cards_inprogress[] = array(
+				'name' => $value['name'],
+				'url' => $value['shortUrl'],
+				'date' => Carbon::parse($value['dateLastActivity'])->diffForHumans(),
+			);
+		}
+
+		$url = "https://api.trello.com/1/lists/".env('TRELLO_STAGING')."/cards?fields=name,shortUrl,dateLastActivity&key=".env('TRELLO_KEY')."&token=".env('TRELLO_TOKEN');
+		$response = file_get_contents($url);
+		$data = json_decode($response, true);
+
+		$cards_staging = array();
+		foreach ($data as $key => $value) {
+			$cards_staging[] = array(
+				'name' => $value['name'],
+				'url' => $value['shortUrl'],
+				'date' => Carbon::parse($value['dateLastActivity'])->diffForHumans(),
+			);
+		}
+
+		$url = "https://api.trello.com/1/lists/".env('TRELLO_PRODUCTION')."/cards?fields=name,shortUrl,dateLastActivity&key=".env('TRELLO_KEY')."&token=".env('TRELLO_TOKEN');
+		$response = file_get_contents($url);
+		$data = json_decode($response, true);
+
+		$cards_production = array();
+		foreach ($data as $key => $value) {
+			$cards_production[] = array(
+				'name' => $value['name'],
+				'url' => $value['shortUrl'],
+				'date' => Carbon::parse($value['dateLastActivity'])->diffForHumans(),
+			);
+		}
+
+		return view( 'home.index' )->with([
+			'cards_inprogress' => $cards_inprogress,
+			'cards_staging' => $cards_staging,
+			'cards_production' => $cards_production,
+		]);
     }
 
 

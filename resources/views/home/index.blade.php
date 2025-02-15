@@ -215,6 +215,107 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+        <div class="col-md-4">
+                <div class="card bg-gray">
+                    <div class="header">
+                        <h5 class="title text-center font-weight-bold">In Progress</h5>
+                    </div>
+                    <div class="card-body ">
+                        @foreach($cards_inprogress as $item)
+                            <div class="card bg-dark mb-2 text-light">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3">
+                                        <img src="https://trello.com/favicon.ico" style="
+                                            max-height: 70px;
+                                            position: absolute;
+                                            top: 0;
+                                            bottom: 0;
+                                            margin: auto;
+                                            left: 0;
+                                            right: 0;
+                                            " alt="...">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-0">{{$item['name']}}</h5>
+                                            <p class="card-text mb-0"><small class="text-help">Last updated {{$item['date']}}</small></p>
+                                            <a href="{{$item['url']}}" target="_blank" class="card-link">Visit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-warning">
+                    <div class="header">
+                        <h5 class="title text-center font-weight-bold">Staging - For Q.A.</h5>
+                    </div>
+                    <div class="card-body ">
+                        @foreach($cards_staging as $item)
+                            <div class="card bg-dark mb-2 text-light">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3">
+                                        <img src="https://trello.com/favicon.ico" style="
+                                            max-height: 70px;
+                                            position: absolute;
+                                            top: 0;
+                                            bottom: 0;
+                                            margin: auto;
+                                            left: 0;
+                                            right: 0;
+                                            " alt="...">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-0">{{$item['name']}}</h5>
+                                            <p class="card-text mb-0"><small class="text-help">Last updated {{$item['date']}}</small></p>
+                                            <a href="{{$item['url']}}" target="_blank" class="card-link">Visit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success">
+                    <div class="header">
+                        <h5 class="title text-center font-weight-bold">Production - For Q.A.</h5>
+                    </div>
+                    <div class="card-body ">
+                        @foreach($cards_production as $item)
+                            <div class="card bg-dark mb-2 text-light">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3">
+                                        <img src="https://trello.com/favicon.ico" style="
+                                            max-height: 70px;
+                                            position: absolute;
+                                            top: 0;
+                                            bottom: 0;
+                                            margin: auto;
+                                            left: 0;
+                                            right: 0;
+                                            " alt="...">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-0">{{$item['name']}}</h5>
+                                            <p class="card-text mb-0"><small class="text-help">Last updated {{$item['date']}}</small></p>
+                                            <a href="{{$item['url']}}" target="_blank" class="card-link">Visit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
