@@ -65,6 +65,9 @@ class Asset extends Controller
      * @return object
      */
     public function getdata(){
+
+        $filters = '';
+
         $data = DB::select("select assets.*, supplier.name as supplier, brand.name as brand, asset_type.name as type , location.name as location
         from assets left join supplier 
         on assets.supplierid = supplier.id
@@ -73,8 +76,10 @@ class Asset extends Controller
         left join asset_type
         on assets.typeid = asset_type.id
         left join location
-        on assets.locationid = location.id
-        order by assets.created_at desc"); 
+        on assets.locationid = location.id "
+        .$filters.
+        " order by assets.created_at desc"); 
+
         return Datatables::of($data)
         ->addColumn('pictures',function($single){
             return '<img src="'.url('/').'/upload/assets/'.$single->picture.'" style="width:90px"/>';
