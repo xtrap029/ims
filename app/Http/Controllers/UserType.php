@@ -35,11 +35,50 @@ class UserType extends Controller
         foreach($user_access_grouped as $item) {
             $list[$item->group] = DB::table('user_access')->where('group', $item->group)->orderBy('order', 'asc')->get();
         }
-        
+
+        $access_types = DB::table('user_access')
+            ->whereRaw("FIND_IN_SET(?, user_types)", [$id])
+            ->pluck('id')
+            ->toArray();
+
         return view( 'usertype.access' )->with([
             'data' => $data,
             'list' => $list,
+            'access_types' => $access_types
         ]);
+    }
+
+    public function updateaccess(Request $request, $id) {
+        $validate = $request->validate([
+            'access' => 'array',
+            'access.*' => 'in:0,1'
+        ]);
+        
+        foreach ($validate['access'] as $key => $value) {
+            if ($value) {
+                DB::table('user_access')
+                    ->where('id', $key)
+                    ->update([
+                        'user_types' => DB::raw("
+                            IF(user_types IS NULL OR user_types = '', '$id', 
+                                IF(FIND_IN_SET($id, user_types), user_types, CONCAT(user_types, ',$id'))
+                            )
+                        ")
+                    ]);
+            } else {
+                DB::table('user_access')
+                    ->where('id', $key)
+                    ->update([
+                        'user_types' => DB::raw("
+                            IF(user_types IS NULL OR user_types = '', '', 
+                                TRIM(BOTH ',' FROM REPLACE(CONCAT(',', user_types, ','), ',$id,', ','))
+                            )
+                        ")
+                    ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Access updated successfully');
     }
 
     /**

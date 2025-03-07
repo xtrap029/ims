@@ -13,28 +13,30 @@
 
 Route::get('/','Home@index');
 Route::get('/home','Home@index');
-Route::get('/brandlist','Brand@index');
+Route::get('/brandlist','Brand@index')->middleware('auth', 'checkAccess:BRANDS');
 Route::get('/departmentlist','Department@index');
-Route::get('/assettypelist','AssetType@index');
+Route::get('/assettypelist','AssetType@index')->middleware('auth', 'checkAccess:ASSETTYPES');
 Route::get('/locationlist','Location@index');
 Route::get('/statuslist','Status@index');
 Route::get('/assetstatuslist','AssetStatus@index');
 Route::get('/previouslyinstalledlist','PreviouslyInstalled@index');
 Route::get('/employeeslist','Employees@index');
 Route::get('/employeeslist/detail/{id}','Employees@detail');
-Route::get('/supplierlist','Supplier@index');
+Route::get('/supplierlist','Supplier@index')->middleware('auth', 'checkAccess:SUPPLIERS');
 Route::get('/userlist','User@index');
 Route::get('/usertypelist','UserType@index');
 Route::get('/useraccesslist','UserAccess@index');
 Route::get('/rolemanagement','RoleManagement@index');
 Route::get('/settinglist','Settings@index');
-Route::get('/assetlist','Asset@index');
-Route::get('/assetlist/detail/{id}','Asset@detail')->name('assetDetail');
-Route::get('/assetlist/generatelabel/{id}', 'Asset@generatelabel');
+
+Route::get('/assetlist','Asset@index')->middleware('auth', 'checkAccess:ASSETS');
+Route::get('/assetlist/detail/{id}','Asset@detail')->name('assetDetail')->middleware('auth', 'checkAccess:ASSETS_DETAIL');
+Route::get('/assetlist/generatelabel/{id}', 'Asset@generatelabel')->middleware('auth', 'checkAccess:ASSETS_DETAIL');
+
 Route::get('/componentlist','Component@index');
 Route::get('/componentlist/detail/{componentid}','Component@detail');
-Route::get('/maintenancelist','Maintenance@index');
-Route::get('/depreciationlist','Depreciation@index');
+Route::get('/maintenancelist','Maintenance@index')->middleware('auth', 'checkAccess:MAINTENANCES');
+Route::get('/depreciationlist','Depreciation@index')->middleware('auth', 'checkAccess:DEPRECIATIONS');
 
 Route::get('/csv', 'Asset@csv')->name('csv');
 Route::post('/csv', 'Asset@csvUpload');
@@ -68,12 +70,12 @@ Route::get('home/recentassetactivity', 'Home@recentassetactivity');
 Route::get('home/recentcomponentactivity', 'Home@recentcomponentactivity');
 
 //Brand API
-Route::get('brand', 'Brand@getdata');
-Route::get('listbrand', 'Brand@getrows');
-Route::post('savebrand', 'Brand@save');
-Route::post('updatebrand', 'Brand@update');
-Route::post('deletebrand', 'Brand@delete');
-Route::post('brandbyid', 'Brand@byid');
+Route::get('brand', 'Brand@getdata')->middleware('auth', 'checkAccess:BRANDS');
+Route::get('listbrand', 'Brand@getrows')->middleware('auth', 'checkAccess:BRANDS');
+Route::post('savebrand', 'Brand@save')->middleware('auth', 'checkAccess:BRANDS_ADD');
+Route::post('updatebrand', 'Brand@update')->middleware('auth', 'checkAccess:BRANDS_EDIT');
+Route::post('deletebrand', 'Brand@delete')->middleware('auth', 'checkAccess:BRANDS_DELETE');
+Route::post('brandbyid', 'Brand@byid')->middleware('auth', 'checkAccess:BRANDS_EDIT');
 
 //Department API
 Route::get('department', 'Department@getdata');
@@ -84,12 +86,12 @@ Route::post('deletedepartment', 'Department@delete');
 Route::post('departmentbyid', 'Department@byid');
 
 //Asset Type API
-Route::get('assettype', 'AssetType@getdata');
-Route::get('listassettype', 'AssetType@getrows');
-Route::post('saveassettype', 'AssetType@save');
-Route::post('updateassettype', 'AssetType@update');
-Route::post('deleteassettype', 'AssetType@delete');
-Route::post('assettypebyid', 'AssetType@byid');
+Route::get('assettype', 'AssetType@getdata')->middleware('auth', 'checkAccess:ASSETTYPES');
+Route::get('listassettype', 'AssetType@getrows')->middleware('auth', 'checkAccess:ASSETTYPES');
+Route::post('saveassettype', 'AssetType@save')->middleware('auth', 'checkAccess:ASSETTYPES_ADD');
+Route::post('updateassettype', 'AssetType@update')->middleware('auth', 'checkAccess:ASSETTYPES_EDIT');
+Route::post('deleteassettype', 'AssetType@delete')->middleware('auth', 'checkAccess:ASSETTYPES_DELETE');
+Route::post('assettypebyid', 'AssetType@byid')->middleware('auth', 'checkAccess:ASSETTYPES_EDIT');
 
 //Location API
 Route::get('location', 'Location@getdata');
@@ -129,6 +131,7 @@ Route::get('listusertype', 'UserType@getrows');
 Route::post('updateusertype', 'UserType@update');
 Route::post('usertypebyid', 'UserType@byid');
 Route::get('usertype/access/{id}', 'UserType@access')->name('usertype');
+Route::post('usertype/access/{id}', 'UserType@updateaccess');
 
 //User Access API
 Route::get('useraccess', 'UserAccess@getdata');
@@ -145,12 +148,12 @@ Route::post('deleteemployees', 'Employees@delete');
 Route::post('employeesbyid', 'Employees@byid');
 
 //Supplier API
-Route::get('supplier', 'Supplier@getdata');
-Route::get('listsupplier', 'Supplier@getrows');
-Route::post('savesupplier', 'Supplier@save');
-Route::post('updatesupplier', 'Supplier@update');
-Route::post('deletesupplier', 'Supplier@delete');
-Route::post('supplierbyid', 'Supplier@byid');
+Route::get('supplier', 'Supplier@getdata')->middleware('auth', 'checkAccess:SUPPLIERS');
+Route::get('listsupplier', 'Supplier@getrows')->middleware('auth', 'checkAccess:SUPPLIERS');
+Route::post('savesupplier', 'Supplier@save')->middleware('auth', 'checkAccess:SUPPLIERS_ADD');
+Route::post('updatesupplier', 'Supplier@update')->middleware('auth', 'checkAccess:SUPPLIERS_EDIT');
+Route::post('deletesupplier', 'Supplier@delete')->middleware('auth', 'checkAccess:SUPPLIERS_DELETE');
+Route::post('supplierbyid', 'Supplier@byid')->middleware('auth', 'checkAccess:SUPPLIERS_EDIT');
 
 //User API
 Route::get('user', 'User@getdata');
@@ -165,18 +168,20 @@ Route::get('settings', 'Settings@getdata');
 Route::post('updatesettings', 'Settings@update');
 Route::get('exportdatabase', 'Settings@exportdatabase');
 
-//Asset API
-Route::get('asset', 'Asset@getdata');
+Route::get('asset', 'Asset@getData')->middleware('auth', 'checkAccess:ASSETS');
+
 Route::get('listasset', 'Asset@getrows');
-Route::post('saveasset', 'Asset@save');
-Route::post('updateasset', 'Asset@update');
-Route::post('deleteasset', 'Asset@delete');
-Route::post('assetbyid', 'Asset@byid');
-Route::post('savecheckout', 'Asset@savecheckout');
-Route::post('savecheckin', 'Asset@savecheckin');
-Route::post('historyassetbyid', 'Asset@historyassetbyid');
+Route::post('saveasset', 'Asset@save')->middleware('auth', 'checkAccess:ASSETS_ADD');
+Route::post('updateasset', 'Asset@update')->middleware('auth', 'checkAccess:ASSETS_EDIT');
+Route::post('deleteasset', 'Asset@delete')->middleware('auth', 'checkAccess:ASSETS_DELETE');
+Route::post('assetbyid', 'Asset@byid')->middleware('auth', 'checkAccess:ASSETS_DETAIL');
+Route::post('savecheckout', 'Asset@savecheckout')->middleware('auth', 'checkAccess:ASSETS_CHECKIN');
+Route::post('savecheckin', 'Asset@savecheckin')->middleware('auth', 'checkAccess:ASSETS_CHECKIN');
+
+Route::post('historyassetbyid', 'Asset@historyassetbyid')->middleware('auth', 'checkAccess:ASSETS_DETAIL_HISTORY');
+
 Route::post('historyassetbyemployee', 'Asset@historyassetbyemployee');
-Route::post('activityassetbyid', 'Asset@activityassetbyid');
+Route::post('activityassetbyid', 'Asset@activityassetbyid')->middleware('auth', 'checkAccess:ASSETS_DETAIL_ACTIVITY_LOG');
 Route::post('onhandassetbyemployee', 'Asset@onhandassetbyemployee');
 Route::get('asset/generateproductcode', 'Asset@generateproductcode');
 Route::get('assetnotbyid', 'Asset@isnotbyid');
@@ -198,31 +203,30 @@ Route::post('historycomponentbyid', 'Component@historycomponentbyid');
 Route::get('componentnotbyid', 'Component@isnotbyid');
 
 //Maintenance API
-Route::get('maintenance', 'Maintenance@getdata');
-Route::get('listmaintenance', 'Maintenance@getrows');
-Route::post('savemaintenance', 'Maintenance@save');
-Route::post('updatemaintenance', 'Maintenance@update');
-Route::post('deletemaintenance', 'Maintenance@delete');
-Route::post('maintenancebyid', 'Maintenance@byid');
-Route::post('maintenanceassetsbyid', 'Maintenance@assetsbyid');
-
+Route::get('maintenance', 'Maintenance@getdata')->middleware('auth', 'checkAccess:MAINTENANCES');
+Route::get('listmaintenance', 'Maintenance@getrows')->middleware('auth', 'checkAccess:MAINTENANCES');
+Route::post('savemaintenance', 'Maintenance@save')->middleware('auth', 'checkAccess:MAINTENANCES_ADD');
+Route::post('updatemaintenance', 'Maintenance@update')->middleware('auth', 'checkAccess:MAINTENANCES_EDIT');
+Route::post('deletemaintenance', 'Maintenance@delete')->middleware('auth', 'checkAccess:MAINTENANCES_DELETE');
+Route::post('maintenancebyid', 'Maintenance@byid')->middleware('auth', 'checkAccess:MAINTENANCES_EDIT');
+Route::post('maintenanceassetsbyid', 'Maintenance@assetsbyid')->middleware('auth', 'checkAccess:ASSETS_DETAIL_MAINTENANCES');
 
 //File API
-Route::post('fileassetsbyid', 'FileData@getdataaset');
-Route::post('fileassetgallerybyid', 'FileData@getdataasetgallery');
+Route::post('fileassetgallerybyid', 'FileData@getdataasetgallery')->middleware('auth', 'checkAccess:ASSETS_DETAIL_GALLERY');
+Route::post('filecomponentbyid', 'FileData@getdatacomponent')->middleware('auth', 'checkAccess:ASSETS_DETAIL_COMPONENTS');
+Route::post('fileassetsbyid', 'FileData@getdataaset')->middleware('auth', 'checkAccess:ASSETS_DETAIL_FILE');
+
 Route::post('fileemployeebyid', 'FileData@getdataemployee');
-Route::post('filecomponentbyid', 'FileData@getdatacomponent');
 Route::post('savefile', 'FileData@save');
 Route::post('deletefile', 'FileData@delete');
 
-
 //Depreciation API
-Route::get('depreciation', 'Depreciation@getdata');
-Route::get('listdepreciation', 'Depreciation@getrows');
-Route::post('savedepreciation', 'Depreciation@save');
-Route::post('updatedepreciation', 'Depreciation@update');
-Route::post('deletedepreciation', 'Depreciation@delete');
-Route::post('depreciationbyid', 'Depreciation@byid');
+Route::get('depreciation', 'Depreciation@getdata')->middleware('auth', 'checkAccess:DEPRECIATIONS');
+Route::get('listdepreciation', 'Depreciation@getrows')->middleware('auth', 'checkAccess:DEPRECIATIONS');
+Route::post('savedepreciation', 'Depreciation@save')->middleware('auth', 'checkAccess:DEPRECIATIONS_ADD');
+Route::post('updatedepreciation', 'Depreciation@update')->middleware('auth', 'checkAccess:DEPRECIATIONS_EDIT');
+Route::post('deletedepreciation', 'Depreciation@delete')->middleware('auth', 'checkAccess:DEPRECIATIONS_DELETE');
+Route::post('depreciationbyid', 'Depreciation@byid')->middleware('auth', 'checkAccess:DEPRECIATIONS_EDIT');
 Route::post('depreciationvaluebyid', 'Depreciation@calculator');
 Route::post('componentdepreciationvaluebyid', 'Depreciation@calculatorcomponent');
 

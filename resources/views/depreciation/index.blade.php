@@ -8,7 +8,9 @@
                 <h3 class=""><?php echo trans('lang.depreciation_list');?></h3>
             </div>
             <div class="col-md-6 text-md-right pb-md-0 pb-3">
-            <button type="button" data-toggle="modal" data-target="#add" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+            @if (count(app('userAccess')('DEPRECIATIONS_ADD')) > 0)
+                <button type="button" data-toggle="modal" data-target="#add" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+            @endif
             </div>
         </div>
        
@@ -119,84 +121,88 @@
     <!--end add data-->
 
     <!--edit new data -->
-    <div id="edit" class="modal fade" role="dialog" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="#" id="formedit">
-                    <div class="modal-header">
-                       
-                        <h5 class="modal-title"><?php echo trans('lang.edit_data');?></h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="messagehigher display-none alert alert-success"><?php echo trans('lang.assetvaluecannothigh');?></div>
+    @if (count(app('userAccess')('DEPRECIATIONS_EDIT')) > 0)
+        <div id="edit" class="modal fade" role="dialog" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="#" id="formedit">
+                        <div class="modal-header">
                         
-                        <div class="asset-sec form-group d-none">
-                            <label><?php echo trans('lang.asset');?></label>
-                            <input type="text" id="editasset" name="editasset" class="form-control" readonly/>
+                            <h5 class="modal-title"><?php echo trans('lang.edit_data');?></h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="messagehigher display-none alert alert-success"><?php echo trans('lang.assetvaluecannothigh');?></div>
                             
-                        </div>
-                        <div class="component-sec form-group d-none">
-                            <label><?php echo trans('lang.component');?></label>
-                            <input type="text" id="editcomponent" name="editcomponent" class="form-control" readonly/>
+                            <div class="asset-sec form-group d-none">
+                                <label><?php echo trans('lang.asset');?></label>
+                                <input type="text" id="editasset" name="editasset" class="form-control" readonly/>
+                                
+                            </div>
+                            <div class="component-sec form-group d-none">
+                                <label><?php echo trans('lang.component');?></label>
+                                <input type="text" id="editcomponent" name="editcomponent" class="form-control" readonly/>
+                                
+                            </div>
+                            <div class="form-group">
+                            <label for="editperiod" class="control-label"><?php echo trans('lang.period');?></label> 
+                                    <div class="input-group mb-0" >                                    
+                                        <input class="form-control number" required="" placeholder="<?php echo trans('lang.period');?>" id="editperiod" name="editperiod" type="text">
+                                        <span class="input-group-addon border-1" id="period" ><?php echo trans('lang.month');?></span>
+                                    </div>
+                                    <label class="error" for="editperiod"></label>
+                            </div>
                             
+                            <div class="form-group">
+                                <label for="editassetvalue" class="control-label"><?php echo trans('lang.assetvalue');?></label> 
+                                    <div class="input-group mb-0">
+                                        <span class="input-group-addon setcurrency border-1" id="currency"></span>                                      
+                                        <input class="form-control number" required="" placeholder="<?php echo trans('lang.assetvalue');?>" id="editassetvalue" name="editassetvalue" type="text">
+                                    </div>
+                                    <label class="error" for="editassetvalue"></label>
+                            
+                            </div>
                         </div>
-                        <div class="form-group">
-                        <label for="editperiod" class="control-label"><?php echo trans('lang.period');?></label> 
-								<div class="input-group mb-0" >                                    
-									<input class="form-control number" required="" placeholder="<?php echo trans('lang.period');?>" id="editperiod" name="editperiod" type="text">
-                                    <span class="input-group-addon border-1" id="period" ><?php echo trans('lang.month');?></span>
-                                </div>
-                                <label class="error" for="editperiod"></label>
+                        <div class="modal-footer">
+                            <input type="hidden" name="editcostcomponent" id="editcostcomponent"/>
+                            <input type="hidden" name="editcostasset" id="editcostasset"/>
+                            <input type="hidden" name="id" id="editid"/>
+                            <button type="submit" class="btn btn-primary"
+                                id="saveedit"><?php echo trans('lang.save');?></button>
+                            <button type="button" class="btn btn-default"
+                                data-dismiss="modal"><?php echo trans('lang.close');?></button>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="editassetvalue" class="control-label"><?php echo trans('lang.assetvalue');?></label> 
-								<div class="input-group mb-0">
-									<span class="input-group-addon setcurrency border-1" id="currency"></span>                                      
-									<input class="form-control number" required="" placeholder="<?php echo trans('lang.assetvalue');?>" id="editassetvalue" name="editassetvalue" type="text">
-								</div>
-                                <label class="error" for="editassetvalue"></label>
-                           
-                        </div>
-</div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="editcostcomponent" id="editcostcomponent"/>
-                        <input type="hidden" name="editcostasset" id="editcostasset"/>
-                        <input type="hidden" name="id" id="editid"/>
-                        <button type="submit" class="btn btn-primary"
-                            id="saveedit"><?php echo trans('lang.save');?></button>
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal"><?php echo trans('lang.close');?></button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
     <!--end edit data-->
 
     <!--delete data -->
-    <div class="modal fade" id="delete" role="dialog">
-        <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <form action="#" id="formdelete">
-                <div class="modal-header">
-                    <h5 class="modal-title"><?php echo trans('lang.delete');?></h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p><?php echo trans('lang.delete_confirm');?></p>
-                    <input type="hidden" value="" name="id" id="iddelete"/>
-            
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="delete"><?php echo trans('lang.delete');?></button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('lang.close');?></button>
-                </div>
-            </form>   
+    @if (count(app('userAccess')('DEPRECIATIONS_DELETE')) > 0)
+        <div class="modal fade" id="delete" role="dialog">
+            <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form action="#" id="formdelete">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?php echo trans('lang.delete');?></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p><?php echo trans('lang.delete_confirm');?></p>
+                        <input type="hidden" value="" name="id" id="iddelete"/>
+                
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="delete"><?php echo trans('lang.delete');?></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('lang.close');?></button>
+                    </div>
+                </form>   
+            </div>
+            </div>
         </div>
-        </div>
-    </div>
+    @endif
     <!--end delete data -->
 </section>
 

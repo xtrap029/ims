@@ -8,7 +8,9 @@
                 <h3 class=""><?php echo trans('lang.maintenance_list');?></h3>
             </div>
             <div class="col-md-6 text-md-right pb-md-0 pb-3">
-            <button type="button" data-toggle="modal" data-target="#add" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+            @if (count(app('userAccess')('MAINTENANCES_ADD')) > 0)
+                <button type="button" data-toggle="modal" data-target="#add" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+            @endif
             </div>
         </div>
        
@@ -133,101 +135,105 @@
     <!--end add data-->
 
     <!--edit new data -->
-    <div id="edit" class="modal fade" role="dialog" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="#" id="formedit">
-                    <div class="modal-header">
-                       
-                        <h5 class="modal-title"><?php echo trans('lang.edit_data');?></h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                    <div class="form-group" >
-                            <label><?php echo trans('lang.asset');?></label>
-                                <select name="assetid" id="editassetid" required class="form-control">
-                                    <option value=""><?php echo trans('lang.asset');?></option>
-                                </select>
+    @if (count(app('userAccess')('MAINTENANCES_EDIT')) > 0)
+        <div id="edit" class="modal fade" role="dialog" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="#" id="formedit">
+                        <div class="modal-header">
+                        
+                            <h5 class="modal-title"><?php echo trans('lang.edit_data');?></h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
+                        <div class="modal-body">
                         <div class="form-group" >
-                            <label><?php echo trans('lang.supplier');?></label>
-                                <select name="supplierid" id="editsupplierid" required class="form-control">
-                                    <option value=""><?php echo trans('lang.supplier');?></option>
-                                </select>
+                                <label><?php echo trans('lang.asset');?></label>
+                                    <select name="assetid" id="editassetid" required class="form-control">
+                                        <option value=""><?php echo trans('lang.asset');?></option>
+                                    </select>
+                            </div>
+                            <div class="form-group" >
+                                <label><?php echo trans('lang.supplier');?></label>
+                                    <select name="supplierid" id="editsupplierid" required class="form-control">
+                                        <option value=""><?php echo trans('lang.supplier');?></option>
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.type');?></label>
+                                    <select name="type" id="edittype" required class="form-control">
+                                        <option value=""><?php echo trans('lang.type');?></option>
+                                        <option value="<?php echo trans('lang.Maintenance');?>"><?php echo trans('lang.Maintenance');?></option>
+                                        <option value="<?php echo trans('lang.Repair');?>"><?php echo trans('lang.Repair');?></option>
+                                        <option value="<?php echo trans('lang.Upgrade');?>"><?php echo trans('lang.Upgrade');?></option>
+                                        <option value="<?php echo trans('lang.Testing');?>"><?php echo trans('lang.Testing');?></option>
+                                        <option value="<?php echo trans('lang.Calibration');?>"><?php echo trans('lang.Calibration');?></option>
+                                        <option value="<?php echo trans('lang.Softwaresupport');?>"><?php echo trans('lang.Softwaresupport');?></option>
+                                        <option value="<?php echo trans('lang.Hardwaresupport');?>"><?php echo trans('lang.Hardwaresupport');?></option>
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.CalibrationNo');?></label>
+                                <input name="calibrationno" type="text" id="editcalibrationno" class=" form-control" placeholder="<?php echo trans('lang.calibrationno');?>"/>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.remarks');?></label>
+                                <input name="remarks" type="text" id="editremarks" class=" form-control" required placeholder="<?php echo trans('lang.remarks');?>"/>
+                            </div>
+                            <div class="form-group mb-0" >
+                                        <label for="editstartdate" class="control-label"><?php echo trans('lang.startdate');?></label>     
+                                        <div class="input-group mb-0" >                       
+                                        <input class="form-control setdate" required="" placeholder="<?php echo trans('lang.startdate');?>" id="editstartdate" name="startdate" type="text">
+                                        <span class="input-group-addon border-1" id="date" ><i class="fa fa-calendar"></i></span>      
+                                    </div>
+                                    <label class="error" for="editstartdate"></label>
+                            </div>
+                            <div class="form-group mb-0">
+                                        <label for="editenddate" class="control-label"><?php echo trans('lang.enddate');?></label>     
+                                        <div class="input-group mb-0" >                       
+                                        <input class="form-control setdate" required="" placeholder="<?php echo trans('lang.enddate');?>" id="editenddate" name="enddate" type="text">
+                                        <span class="input-group-addon border-1" id="date" ><i class="fa fa-calendar"></i></span>      
+                                    </div>
+                                    <label class="error" for="editenddate"></label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.type');?></label>
-                                <select name="type" id="edittype" required class="form-control">
-                                    <option value=""><?php echo trans('lang.type');?></option>
-                                    <option value="<?php echo trans('lang.Maintenance');?>"><?php echo trans('lang.Maintenance');?></option>
-                                    <option value="<?php echo trans('lang.Repair');?>"><?php echo trans('lang.Repair');?></option>
-                                    <option value="<?php echo trans('lang.Upgrade');?>"><?php echo trans('lang.Upgrade');?></option>
-                                    <option value="<?php echo trans('lang.Testing');?>"><?php echo trans('lang.Testing');?></option>
-                                    <option value="<?php echo trans('lang.Calibration');?>"><?php echo trans('lang.Calibration');?></option>
-                                    <option value="<?php echo trans('lang.Softwaresupport');?>"><?php echo trans('lang.Softwaresupport');?></option>
-                                    <option value="<?php echo trans('lang.Hardwaresupport');?>"><?php echo trans('lang.Hardwaresupport');?></option>
-                                </select>
+                        <div class="modal-footer">
+                            <input type="hidden" name="id" id="editid"/>
+                            <button type="submit" class="btn btn-primary"
+                                id="saveedit"><?php echo trans('lang.save');?></button>
+                            <button type="button" class="btn btn-default"
+                                data-dismiss="modal"><?php echo trans('lang.close');?></button>
                         </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.CalibrationNo');?></label>
-                            <input name="calibrationno" type="text" id="editcalibrationno" class=" form-control" placeholder="<?php echo trans('lang.calibrationno');?>"/>
-                        </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.remarks');?></label>
-                            <input name="remarks" type="text" id="editremarks" class=" form-control" required placeholder="<?php echo trans('lang.remarks');?>"/>
-                        </div>
-                        <div class="form-group mb-0" >
-                                    <label for="editstartdate" class="control-label"><?php echo trans('lang.startdate');?></label>     
-                                    <div class="input-group mb-0" >                       
-									<input class="form-control setdate" required="" placeholder="<?php echo trans('lang.startdate');?>" id="editstartdate" name="startdate" type="text">
-                                    <span class="input-group-addon border-1" id="date" ><i class="fa fa-calendar"></i></span>      
-                                </div>
-                                <label class="error" for="editstartdate"></label>
-                        </div>
-                        <div class="form-group mb-0">
-                                    <label for="editenddate" class="control-label"><?php echo trans('lang.enddate');?></label>     
-                                    <div class="input-group mb-0" >                       
-									<input class="form-control setdate" required="" placeholder="<?php echo trans('lang.enddate');?>" id="editenddate" name="enddate" type="text">
-                                    <span class="input-group-addon border-1" id="date" ><i class="fa fa-calendar"></i></span>      
-                                </div>
-                                <label class="error" for="editenddate"></label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="id" id="editid"/>
-                        <button type="submit" class="btn btn-primary"
-                            id="saveedit"><?php echo trans('lang.save');?></button>
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal"><?php echo trans('lang.close');?></button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
     <!--end edit data-->
 
     <!--delete data -->
-    <div class="modal fade" id="delete" role="dialog">
-        <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <form action="#" id="formdelete">
-                <div class="modal-header">
-                    <h5 class="modal-title"><?php echo trans('lang.delete');?></h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p><?php echo trans('lang.delete_confirm');?></p>
-                    <input type="hidden" value="" name="id" id="iddelete"/>
-            
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="delete"><?php echo trans('lang.delete');?></button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('lang.close');?></button>
-                </div>
-            </form>   
+    @if (count(app('userAccess')('MAINTENANCES_DELETE')) > 0)
+        <div class="modal fade" id="delete" role="dialog">
+            <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form action="#" id="formdelete">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?php echo trans('lang.delete');?></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p><?php echo trans('lang.delete_confirm');?></p>
+                        <input type="hidden" value="" name="id" id="iddelete"/>
+                
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="delete"><?php echo trans('lang.delete');?></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('lang.close');?></button>
+                    </div>
+                </form>   
+            </div>
+            </div>
         </div>
-        </div>
-    </div>
+    @endif
     <!--end delete data -->
 </section>
 

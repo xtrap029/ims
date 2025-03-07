@@ -55,153 +55,185 @@
                     </a>
                 </li>
 
-              
-                <li class="{{ Request::is( 'assetlist') || Route::currentRouteName() == 'assetDetail' ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'assetlist') }}">
-                        <p><img width="22"
-                                src="<?php echo asset('images/icon-asset.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assetmenu');?>
-                        </p>
-                    </a>
-                </li>
+                @if (count(app('userAccess')('ASSETS')) > 0)
+                    <li class="{{ Request::is( 'assetlist') || Route::currentRouteName() == 'assetDetail' ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'assetlist') }}">
+                            <p><img width="22"
+                                    src="<?php echo asset('images/icon-asset.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assetmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
             </ul>
             <ul class="nav mt-5">
-                <li class="{{ Request::is( 'componentlist') ? 'active' : '' }} d-none">
-                    <a href="{{ URL::to( 'componentlist') }}">
-                        <p><img width="22"
-                                src="<?php echo asset('images/icon-component.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.componentmenu');?>
-                        </p>
-                    </a>
-                </li>
-              
-                <li class="{{ Request::is( 'maintenancelist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'maintenancelist') }}">
-                        <p><img width="22"
-                                src="<?php echo asset('images/icon-maintenance.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.maintenancemenu');?>
-                        </p>
-                    </a>
-                </li>
-
-                <li class="{{ Request::is( 'depreciationlist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'depreciationlist') }}">
-                        <p><img width="22"
-                                src="<?php echo asset('images/icon-depreciation.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.depreciationmenu');?>
-                        </p>
-                    </a>
-                </li>         
-
-                <li class="{{ Request::is( 'brandlist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'brandlist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-manufacturer.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.brandmenu');?>
-                        </p>
-                    </a>
-                </li>
-                
-                <li class="{{ Request::is( 'supplierlist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'supplierlist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-supplier.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.suppliermenu');?>
-                        </p>
-                    </a>
-                </li>
-
-                <li class="{{ Request::is( 'locationlist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'locationlist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-location.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.locationmenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'previouslyinstalledlist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'previouslyinstalledlist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-location.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.previouslyinstalledmenu');?>
-                        </p>
-                    </a>
-                </li>
+                @if (count(app('userAccess')('COMPONENTS')) > 0)
+                    <li class="{{ Request::is( 'componentlist') ? 'active' : '' }} d-none">
+                        <a href="{{ URL::to( 'componentlist') }}">
+                            <p><img width="22"
+                                    src="<?php echo asset('images/icon-component.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.componentmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('MAINTENANCES')) > 0)
+                    <li class="{{ Request::is( 'maintenancelist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'maintenancelist') }}">
+                            <p><img width="22"
+                                    src="<?php echo asset('images/icon-maintenance.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.maintenancemenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('DEPRECIATIONS')) > 0)
+                    <li class="{{ Request::is( 'depreciationlist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'depreciationlist') }}">
+                            <p><img width="22"
+                                    src="<?php echo asset('images/icon-depreciation.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.depreciationmenu');?>
+                            </p>
+                        </a>
+                    </li>         
+                @endif
+                @if (count(app('userAccess')('BRANDS')) > 0)
+                    <li class="{{ Request::is( 'brandlist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'brandlist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-manufacturer.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.brandmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('SUPPLIERS')) > 0)
+                    <li class="{{ Request::is( 'supplierlist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'supplierlist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-supplier.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.suppliermenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('LOCATIONS')) > 0)
+                    <li class="{{ Request::is( 'locationlist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'locationlist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-location.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.locationmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('PREVIOUSLYINSTALLED')) > 0)
+                    <li class="{{ Request::is( 'previouslyinstalledlist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'previouslyinstalledlist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-location.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.previouslyinstalledmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
             </ul>
             <ul class="nav mt-5">
-                <li class="{{ Request::is( 'employeeslist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'employeeslist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-employee.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.employeemenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'departmentlist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'departmentlist') }}">
-                        <p><img width="20"
-                                src="<?php echo asset('images/icon-department.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.departmentmenu');?>
-                        </p>
-                    </a>
-                </li>
+                @if (count(app('userAccess')('EMPLOYEES')) > 0)
+                    <li class="{{ Request::is( 'employeeslist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'employeeslist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-employee.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.employeemenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('DEPARTMENTS')) > 0)
+                    <li class="{{ Request::is( 'departmentlist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'departmentlist') }}">
+                            <p><img width="20"
+                                    src="<?php echo asset('images/icon-department.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.departmentmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
             </ul>
             <ul class="nav mt-5">
-                <li class="{{ Request::is( 'assettypelist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'assettypelist') }}">
-                        <p><img width="22"
-                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assettypemenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'statuslist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'statuslist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.statusmenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'assetstatuslist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'assetstatuslist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assetstatusmenu');?>
-                        </p>
-                    </a>
-                </li>
+                @if (count(app('userAccess')('ASSETTYPES')) > 0)
+                    <li class="{{ Request::is( 'assettypelist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'assettypelist') }}">
+                            <p><img width="22"
+                                    src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assettypemenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('STATUS')) > 0)
+                    <li class="{{ Request::is( 'statuslist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'statuslist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.statusmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('ASSETSTATUS')) > 0)
+                    <li class="{{ Request::is( 'assetstatuslist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'assetstatuslist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.assetstatusmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
             </ul>
             <ul class="nav mt-5">
-                <li class="{{ Request::is( 'reports/allreports') || Route::currentRouteName() == 'report' ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'reports/allreports') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-report.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.reportmenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'userlist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'userlist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-employee.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.usermenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'usertypelist') || Route::currentRouteName() == 'usertype' ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'usertypelist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-visitor.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.usertypemenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'useraccesslist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'useraccesslist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.useraccessmenu');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'csv') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'csv') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-component.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.import_assets');?>
-                        </p>
-                    </a>
-                </li>
-                <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
-                    <a href="{{ URL::to( 'settinglist') }}">
-                        <p><img width="25"
-                                src="<?php echo asset('images/icon-setting.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.settingmenu');?>
-                        </p>
-                    </a>
-                </li>
+                @if (count(app('userAccess')('REPORTS')) > 0)
+                    <li class="{{ Request::is( 'reports/allreports') || Route::currentRouteName() == 'report' ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'reports/allreports') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-report.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.reportmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('USERS')) > 0)
+                    <li class="{{ Request::is( 'userlist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'userlist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-employee.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.usermenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('USERTYPES')) > 0)
+                    <li class="{{ Request::is( 'usertypelist') || Route::currentRouteName() == 'usertype' ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'usertypelist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-visitor.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.usertypemenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('USERACCESS')) > 0)
+                    <li class="{{ Request::is( 'useraccesslist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'useraccesslist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-type.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.useraccessmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('ASSETS_ADD')) > 0)
+                    <li class="{{ Request::is( 'csv') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'csv') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-component.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.import_assets');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (count(app('userAccess')('SETTINGS')) > 0)
+                    <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
+                        <a href="{{ URL::to( 'settinglist') }}">
+                            <p><img width="25"
+                                    src="<?php echo asset('images/icon-setting.png')?>" />&nbsp;&nbsp;&nbsp;<?php echo trans('lang.settingmenu');?>
+                            </p>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
@@ -235,128 +267,132 @@
                 <div class="col-md-6 ">
                      <!--responsive-->
                         <div class="collapse mt-4" id="menu">
-                        <ul class="nav navmobile" >
-                            
+                        <ul class="nav navmobile" >                         
                             <li class="{{ Request::is( 'home') ? 'active' : '' }}">
-                                    <a href="{{ URL::to( 'home') }}">
-                                        <p><?php echo trans('lang.dashboard');?>
-                                        </p>
-                                    </a>
-                                </li>
-
-                              
+                                <a href="{{ URL::to( 'home') }}">
+                                    <p><?php echo trans('lang.dashboard');?>
+                                    </p>
+                                </a>
+                            </li>  
+                            @if (count(app('userAccess')('ASSETS')) > 0)
                                 <li class="{{ Request::is( 'assetlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'assetlist') }}">
                                         <p><?php echo trans('lang.assetmenu');?>
                                         </p>
                                     </a>
-                                </li>
-                              
+                                </li>                            
+                            @endif
+                            @if (count(app('userAccess')('COMPONENTS')) > 0)
                                 <li class="{{ Request::is( 'componentlist') ? 'active' : '' }} d-none">
                                     <a href="{{ URL::to( 'componentlist') }}">
                                         <p><?php echo trans('lang.componentmenu');?>
                                         </p>
                                     </a>
-                                </li>
-                              
+                                </li>                            
+                            @endif
+                            @if (count(app('userAccess')('MAINTENANCES')) > 0)
                                 <li class="{{ Request::is( 'maintenancelist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'maintenancelist') }}">
                                         <p><?php echo trans('lang.maintenancemenu');?>
                                         </p>
                                     </a>
                                 </li>
-
+                            @endif
+                            @if (count(app('userAccess')('DEPRECIATIONS')) > 0)
                                 <li class="{{ Request::is( 'depreciationlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'depreciationlist') }}">
                                         <p><?php echo trans('lang.depreciationmenu');?>
                                         </p>
                                     </a>
-                                </li>
-                              
+                                </li>                            
+                            @endif
+                            @if (count(app('userAccess')('ASSETTYPES')) > 0)
                                 <li class="{{ Request::is( 'assettypelist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'assettypelist') }}">
                                         <p><?php echo trans('lang.assettypemenu');?>
                                         </p>
                                     </a>
-                                </li>
-                             
+                                </li>                            
+                            @endif
+                            @if (count(app('userAccess')('BRANDS')) > 0)
                                 <li class="{{ Request::is( 'brandlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'brandlist') }}">
                                         <p><?php echo trans('lang.brandmenu');?>
                                         </p>
                                     </a>
-                                </li>
-                                
+                                </li>                            
+                            @endif
+                            @if (count(app('userAccess')('SUPPLIERS')) > 0)
                                 <li class="{{ Request::is( 'supplierlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'supplierlist') }}">
                                         <p><?php echo trans('lang.suppliermenu');?>
                                         </p>
                                     </a>
                                 </li>
-
+                            @endif
+                            @if (count(app('userAccess')('LOCATIONS')) > 0)
                                 <li class="{{ Request::is( 'locationlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'locationlist') }}">
                                         <p><?php echo trans('lang.locationmenu');?>
                                         </p>
                                     </a>
                                 </li>
+                            @endif
+                            @if (count(app('userAccess')('STATUS')) > 0)
                                 <li class="{{ Request::is( 'statuslist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'statuslist') }}">
                                         <p><?php echo trans('lang.statusmenu');?>
                                         </p>
                                     </a>
                                 </li>
+                            @endif
+                            @if (count(app('userAccess')('EMPLOYEES')) > 0)
                                 <li class="{{ Request::is( 'employeeslist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'employeeslist') }}">
                                         <p><?php echo trans('lang.employeemenu');?>
                                         </p>
                                     </a>
                                 </li>
-
+                            @endif
+                            @if (count(app('userAccess')('DEPARTMENTS')) > 0)
                                 <li class="{{ Request::is( 'departmentlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'departmentlist') }}">
                                         <p><?php echo trans('lang.departmentmenu');?>
                                         </p>
                                     </a>
                                 </li>
-
-
+                            @endif
+                            @if (count(app('userAccess')('REPORTS')) > 0)
                                 <li class="{{ Request::is( 'reports/allreports') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'reports/allreports') }}">
                                         <p><?php echo trans('lang.reportmenu');?>
                                         </p>
                                     </a>
                                 </li>
-
+                            @endif
+                            @if (count(app('userAccess')('USERS')) > 0)
                                 <li class="{{ Request::is( 'userlist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'userlist') }}">
                                         <p><?php echo trans('lang.usermenu');?>
                                         </p>
                                     </a>
-                                </li>
-                                
-                                <li class="{{ Request::is( 'usermanagement') ? 'active' : '' }}">
-                                    <a href="{{ URL::to( 'usermanagement') }}">
-                                        <p><?php echo trans('lang.usermanagementmenu');?>
-                                        </p>
-                                    </a>
-                                </li>
-
+                                </li>                            
+                            @endif
+                            @if (count(app('userAccess')('SETTINGS')) > 0)
                                 <li class="{{ Request::is( 'settinglist') ? 'active' : '' }}">
                                     <a href="{{ URL::to( 'settinglist') }}">
                                         <p><?php echo trans('lang.settingmenu');?>
                                         </p>
                                     </a>
                                 </li>
-                                
-                                <li class="mt-5">
-                                    <a href="{{ URL::to( 'logout') }}">
-                                        <p><?php echo trans('lang.logout');?>
-                                        </p>
-                                    </a>
-                                </li>                               
-                            </ul>
-                            
+                            @endif                            
+                            <li class="mt-5">
+                                <a href="{{ URL::to( 'logout') }}">
+                                    <p><?php echo trans('lang.logout');?>
+                                    </p>
+                                </a>
+                            </li>                               
+                        </ul>                           
                     </div>
                         <!--end responsive-->
                     <ul class="topmenu float-md-right float-sm-left d-none d-md-block">

@@ -110,17 +110,21 @@ class Asset extends Controller
                     $checkout = '<a class="dropdown-item" href="#" id="btncheckout" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#checkout"><i class="fa fa-check"></i> '. trans('lang.checkout').'</a>';
             }
 
+            $actiondetail = '<a class="dropdown-item" href="'.url('/').'/assetlist/detail/'.$accountsingle->id.'"id="btndetail" target="_blank" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>';
+            $actionedit = '<a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>';
+            $actiondelete = '<a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>';
+
             return '
                 <div class="btn-group">
                 <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu actionmenu">
-                '.$checkout.'
+                '.(count(app('userAccess')('ASSETS_CHECKIN')) > 0 ? $checkout : "").'
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="'.url('/').'/assetlist/detail/'.$accountsingle->id.'"id="btndetail" target="_blank" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>
-                <a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
-                <a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>
+                '.(count(app('userAccess')('ASSETS_DETAIL')) > 0 ? $actiondetail : "").'
+                '.(count(app('userAccess')('ASSETS_EDIT')) > 0 ? $actionedit : "").'
+                '.(count(app('userAccess')('ASSETS_DELETE')) > 0 ? $actiondelete : "").'
                 </div>
             </div>';
            

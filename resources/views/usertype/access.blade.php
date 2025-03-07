@@ -16,27 +16,31 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        @foreach ($list as $key => $group)
-                            <div class="row mt-1 mb-1">
-                                <div class="col-md-4">
-                                    <h5>{{ $key }}</h5>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="row">
-                                        @foreach ($group as $item)
-                                            <div class="col-md-3">
-                                                <div class="form-row mb-2">
-                                                    <input type="checkbox" name="" id="">
-                                                    <label for="" class="ml-2 mt-1 text-body">{{ $item->name }}</label>
+                        <form method="post">
+                            @csrf
+                            @foreach ($list as $key => $group)
+                                <div class="row mt-1 mb-1">
+                                    <div class="col-md-4">
+                                        <h5>{{ $key }}</h5>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            @foreach ($group as $item)
+                                                <div class="col-md-3 pl-0 pb-0">
+                                                    <div class="form-row mb-0">
+                                                        <input type="hidden" name="access[{{$item->id}}]" value="0">
+                                                        <input type="checkbox" name="access[{{$item->id}}]" id="access{{$item->id}}" {{ in_array($item->id, $access_types) ? 'checked' : '' }} value="1">
+                                                        <label for="access{{$item->id}}" class="ml-2 mt-1 text-body">{{ $item->name }}</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
-                        @endforeach
-                        <input type="submit" value="Save Changes" class="btn btn-info btn-fill mb-5 float-right">
+                                <hr>
+                            @endforeach
+                            <input type="submit" value="Save Changes" class="btn btn-info btn-fill mb-5 float-right">
+                        </form>
                     </div>
                 </div>
             </div>
