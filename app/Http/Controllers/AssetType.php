@@ -17,7 +17,6 @@ class AssetType extends Controller
     use TraitSettings;
 
     public function __construct() {
-		
 		$data = $this->getapplications();
 		$lang = $data->language;
 		App::setLocale($lang);

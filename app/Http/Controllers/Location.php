@@ -36,8 +36,8 @@ class Location extends Controller
         $data = DB::table('location')->select(['location.*']);
 		return Datatables::of($data)
 		->addColumn( 'action', function ( $accountsingle ) {
-            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
-                    <a href="#" id="btndelete" customdata='.$accountsingle->id.' class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>';
+            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary '.(count(app('userAccess')('LOCATIONS_EDIT')) > 0 ? '' : 'd-none').'" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
+                    <a href="#" id="btndelete" customdata='.$accountsingle->id.' class="btn btn-sm btn-danger '.(count(app('userAccess')('LOCATIONS_DELETE')) > 0 ? '' : 'd-none').'" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>';
         } )->make( true );		
     }
 

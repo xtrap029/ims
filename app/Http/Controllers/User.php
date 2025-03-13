@@ -56,8 +56,8 @@ class User extends Controller
 			return $status;
         })
 		->addColumn( 'action', function ( $accountsingle ) {
-            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit"><i class="ti-pencil"></i> '. trans('lang.edit').'</a>
-                    <a href="#" id="btndelete" customdata='.$accountsingle->id.' class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete"><i class="ti-trash"></i> '. trans('lang.delete').'</a>';
+            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary '.(count(app('userAccess')('USERS_EDIT')) > 0 ? '' : 'd-none').'" data-toggle="modal" data-target="#edit"><i class="ti-pencil"></i> '. trans('lang.edit').'</a>
+                    <a href="#" id="btndelete" customdata='.$accountsingle->id.' class="btn btn-sm btn-danger '.(count(app('userAccess')('USERS_DELETE')) > 0 ? '' : 'd-none').'" data-toggle="modal" data-target="#delete"><i class="ti-trash"></i> '. trans('lang.delete').'</a>';
         } )->rawColumns(['status','role', 'action'])
         ->make( true );		
     }

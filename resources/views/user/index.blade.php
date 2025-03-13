@@ -8,7 +8,9 @@
                 <h3 class=""><?php echo trans('lang.user_list');?></h3>
             </div>
             <div class="col-md-6 text-md-right pb-md-0 pb-3">
-            <button type="button" data-toggle="modal" data-target="#add" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+            @if (count(app('userAccess')('USERS_ADD')) > 0)
+                <button type="button" data-toggle="modal" data-target="#add" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+            @endif
             </div>
         </div>
        
@@ -119,90 +121,94 @@
     <!--end add data-->
 
     <!--edit new data -->
-    <div id="edit" class="modal fade" role="dialog" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="#" id="formedit">
-                    <div class="modal-header">
-                       
-                        <h5 class="modal-title"><?php echo trans('lang.edit_data');?></h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                    <div   class="display-none messageexist alert alert-success"><?php echo trans('lang.data_exist');?></div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.fullname');?></label>
-                            <input name="fullname" type="text" id="editfullname" class=" form-control" required placeholder="<?php echo trans('lang.fullname');?>"/>
+    @if (count(app('userAccess')('USERS_EDIT')) > 0)
+        <div id="edit" class="modal fade" role="dialog" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="#" id="formedit">
+                        <div class="modal-header">
+                        
+                            <h5 class="modal-title"><?php echo trans('lang.edit_data');?></h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.email');?></label>
-                            <input name="email" type="email" id="editemail" class=" form-control" required placeholder="<?php echo trans('lang.email');?>"/>
+                        <div class="modal-body">
+                        <div   class="display-none messageexist alert alert-success"><?php echo trans('lang.data_exist');?></div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.fullname');?></label>
+                                <input name="fullname" type="text" id="editfullname" class=" form-control" required placeholder="<?php echo trans('lang.fullname');?>"/>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.email');?></label>
+                                <input name="email" type="email" id="editemail" class=" form-control" required placeholder="<?php echo trans('lang.email');?>"/>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.phone');?></label>
+                                <input name="phone" type="text" id="editphone" class=" form-control" required placeholder="<?php echo trans('lang.phone');?>"/>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.status');?></label>
+                                <select name="status" id="editstatus" required class="form-control">
+                                    <option value=""><?php echo trans('lang.status');?></option>
+                                    <option value="1"><?php echo trans('lang.active');?></option>
+                                    <option value="2"><?php echo trans('lang.inactive');?></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.role');?></label>
+                                <select name="role" id="editrole" required class="form-control">
+                                    <option value=""><?php echo trans('lang.role');?></option>
+                                    <option value="1"><?php echo trans('lang.admin');?></option>
+                                    <option value="2"><?php echo trans('lang.user');?></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.city');?></label>
+                                <input name="city" type="text" id="editcity" class=" form-control" required placeholder="<?php echo trans('lang.city');?>"/>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo trans('lang.password');?></label>
+                                <input name="password" type="password" id="editpassword" class=" form-control"  placeholder="<?php echo trans('lang.password');?>"/>
+                                <p class="text-help"><?php echo trans('lang.password_note');?></p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.phone');?></label>
-                            <input name="phone" type="text" id="editphone" class=" form-control" required placeholder="<?php echo trans('lang.phone');?>"/>
+                        <div class="modal-footer">
+                            <input type="hidden" name="id" id="editid"/>
+                            <button type="submit" class="btn btn-primary"
+                                id="saveedit"><?php echo trans('lang.save');?></button>
+                            <button type="button" class="btn btn-default"
+                                data-dismiss="modal"><?php echo trans('lang.close');?></button>
                         </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.status');?></label>
-                            <select name="status" id="editstatus" required class="form-control">
-                                <option value=""><?php echo trans('lang.status');?></option>
-                                <option value="1"><?php echo trans('lang.active');?></option>
-                                <option value="2"><?php echo trans('lang.inactive');?></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.role');?></label>
-                            <select name="role" id="editrole" required class="form-control">
-                                <option value=""><?php echo trans('lang.role');?></option>
-                                <option value="1"><?php echo trans('lang.admin');?></option>
-                                <option value="2"><?php echo trans('lang.user');?></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.city');?></label>
-                            <input name="city" type="text" id="editcity" class=" form-control" required placeholder="<?php echo trans('lang.city');?>"/>
-                        </div>
-                        <div class="form-group">
-                            <label><?php echo trans('lang.password');?></label>
-                            <input name="password" type="password" id="editpassword" class=" form-control"  placeholder="<?php echo trans('lang.password');?>"/>
-                            <p class="text-help"><?php echo trans('lang.password_note');?></p>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="id" id="editid"/>
-                        <button type="submit" class="btn btn-primary"
-                            id="saveedit"><?php echo trans('lang.save');?></button>
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal"><?php echo trans('lang.close');?></button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
     <!--end edit data-->
 
     <!--delete data -->
-    <div class="modal fade" id="delete" role="dialog">
-        <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <form action="#" id="formdelete">
-                <div class="modal-header">
-                    <h5 class="modal-title"><?php echo trans('lang.delete');?></h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p><?php echo trans('lang.delete_confirm');?></p>
-                    <input type="hidden" value="" name="id" id="iddelete"/>
-            
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="delete"><?php echo trans('lang.delete');?></button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('lang.close');?></button>
-                </div>
-            </form>   
+    @if (count(app('userAccess')('USERS_DELETE')) > 0)
+        <div class="modal fade" id="delete" role="dialog">
+            <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form action="#" id="formdelete">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?php echo trans('lang.delete');?></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p><?php echo trans('lang.delete_confirm');?></p>
+                        <input type="hidden" value="" name="id" id="iddelete"/>
+                
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="delete"><?php echo trans('lang.delete');?></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo trans('lang.close');?></button>
+                    </div>
+                </form>   
+            </div>
+            </div>
         </div>
-        </div>
-    </div>
+    @endif
     <!--end delete data -->
 </section>
 

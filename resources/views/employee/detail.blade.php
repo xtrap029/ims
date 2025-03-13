@@ -37,21 +37,27 @@
                                             role="tab" aria-controls="details"
                                             aria-selected="true"><?php echo trans('lang.details');?></a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="file-tab" data-toggle="tab" href="#file"
-                                            role="tab" aria-controls="file"
-                                            aria-selected="false"><?php echo trans('lang.file');?></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="onhand-tab" data-toggle="tab" href="#onhand"
-                                            role="tab" aria-controls="onhand"
-                                            aria-selected="false"><?php echo trans('lang.onhand');?></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="history-tab" data-toggle="tab" href="#history"
-                                            role="tab" aria-controls="history"
-                                            aria-selected="false"><?php echo trans('lang.history');?></a>
-                                    </li>
+                                    @if (count(app('userAccess')('EMPLOYEES_DETAIL_FILE')) > 0)
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="file-tab" data-toggle="tab" href="#file"
+                                                role="tab" aria-controls="file"
+                                                aria-selected="false"><?php echo trans('lang.file');?></a>
+                                        </li>
+                                    @endif
+                                    @if (count(app('userAccess')('EMPLOYEES_DETAIL_ONHAND')) > 0)
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="onhand-tab" data-toggle="tab" href="#onhand"
+                                                role="tab" aria-controls="onhand"
+                                                aria-selected="false"><?php echo trans('lang.onhand');?></a>
+                                        </li>
+                                    @endif
+                                    @if (count(app('userAccess')('EMPLOYEES_DETAIL_HISTORY')) > 0)
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="history-tab" data-toggle="tab" href="#history"
+                                                role="tab" aria-controls="history"
+                                                aria-selected="false"><?php echo trans('lang.history');?></a>
+                                        </li>
+                                    @endif
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="details" role="tabpanel"
@@ -108,91 +114,99 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="file" role="tabpanel"
-                                        aria-labelledby="file-tab">
-                                        <div class="text-md-right text-left pt-2">
-                                            <button type="button" data-toggle="modal" data-target="#addfile" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+                                    @if (count(app('userAccess')('EMPLOYEES_DETAIL_FILE')) > 0)
+                                        <div class="tab-pane fade" id="file" role="tabpanel"
+                                            aria-labelledby="file-tab">
+                                            <div class="text-md-right text-left pt-2">
+                                                @if (count(app('userAccess')('EMPLOYEES_DETAIL_FILE_ADD')) > 0)
+                                                    <button type="button" data-toggle="modal" data-target="#addfile" class="btn btn-sm btn-fill btn-primary"><i class="fa fa-plus"></i> <?php echo trans('lang.add_data');?></button>
+                                                @endif
+                                            </div>
+                                            <div class="table-responsive  pt-4">
+                                                <table id="datafile" class="table table-striped table-bordered"
+                                                    cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th><?php echo trans('lang.date');?></th>
+                                                            <th><?php echo trans('lang.name');?></th>
+                                                            <th><?php echo trans('lang.file');?></th>
+                                                            <th><?php echo trans('lang.action');?></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th><?php echo trans('lang.date');?></th>
+                                                            <th><?php echo trans('lang.name');?></th>
+                                                            <th><?php echo trans('lang.file');?></th>
+                                                            <th><?php echo trans('lang.action');?></th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                        <div class="table-responsive  pt-4">
-                                            <table id="datafile" class="table table-striped table-bordered"
-                                                cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th><?php echo trans('lang.date');?></th>
-                                                        <th><?php echo trans('lang.name');?></th>
-                                                        <th><?php echo trans('lang.file');?></th>
-                                                        <th><?php echo trans('lang.action');?></th>
-                                                    </tr>
-                                                </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th><?php echo trans('lang.date');?></th>
-                                                        <th><?php echo trans('lang.name');?></th>
-                                                        <th><?php echo trans('lang.file');?></th>
-                                                        <th><?php echo trans('lang.action');?></th>
-                                                    </tr>
-                                                </tfoot>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
+                                    @endif
+                                    @if (count(app('userAccess')('EMPLOYEES_DETAIL_ONHAND')) > 0)
+                                        <div class="tab-pane fade" id="onhand" role="tabpanel"
+                                            aria-labelledby="onhand-tab">
+                                            <div class="table-responsive  pt-4">
+                                                <table id="dataonhand" class="table table-striped table-bordered"
+                                                    cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th><?php echo trans('lang.date');?></th>
+                                                            <th><?php echo trans('lang.assetname');?></th>
+                                                            <th><?php echo trans('lang.assettag');?></th>
+                                                            <th><?php echo trans('lang.serial');?></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th><?php echo trans('lang.date');?></th>
+                                                            <th><?php echo trans('lang.assetname');?></th>
+                                                            <th><?php echo trans('lang.assettag');?></th>
+                                                            <th><?php echo trans('lang.serial');?></th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="onhand" role="tabpanel"
-                                        aria-labelledby="onhand-tab">
-                                        <div class="table-responsive  pt-4">
-                                            <table id="dataonhand" class="table table-striped table-bordered"
-                                                cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th><?php echo trans('lang.date');?></th>
-                                                        <th><?php echo trans('lang.assetname');?></th>
-                                                        <th><?php echo trans('lang.assettag');?></th>
-                                                        <th><?php echo trans('lang.serial');?></th>
-                                                    </tr>
-                                                </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th><?php echo trans('lang.date');?></th>
-                                                        <th><?php echo trans('lang.assetname');?></th>
-                                                        <th><?php echo trans('lang.assettag');?></th>
-                                                        <th><?php echo trans('lang.serial');?></th>
-                                                    </tr>
-                                                </tfoot>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
+                                    @endif
+                                    @if (count(app('userAccess')('EMPLOYEES_DETAIL_HISTORY')) > 0)
+                                        <div class="tab-pane fade" id="history" role="tabpanel"
+                                            aria-labelledby="history-tab">
+                                            <div class="table-responsive  pt-4">
+                                                <table id="datahistory" class="table table-striped table-bordered"
+                                                    cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th><?php echo trans('lang.date');?></th>
+                                                            <th><?php echo trans('lang.assetname');?></th>
+                                                            <th><?php echo trans('lang.action');?></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th><?php echo trans('lang.date');?></th>
+                                                            <th><?php echo trans('lang.assetname');?></th>
+                                                            <th><?php echo trans('lang.action');?></th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="history" role="tabpanel"
-                                        aria-labelledby="history-tab">
-                                        <div class="table-responsive  pt-4">
-                                            <table id="datahistory" class="table table-striped table-bordered"
-                                                cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th><?php echo trans('lang.date');?></th>
-                                                        <th><?php echo trans('lang.assetname');?></th>
-                                                        <th><?php echo trans('lang.action');?></th>
-                                                    </tr>
-                                                </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th><?php echo trans('lang.date');?></th>
-                                                        <th><?php echo trans('lang.assetname');?></th>
-                                                        <th><?php echo trans('lang.action');?></th>
-                                                    </tr>
-                                                </tfoot>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

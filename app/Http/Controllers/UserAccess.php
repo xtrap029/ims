@@ -35,7 +35,7 @@ class UserAccess extends Controller
         $data = DB::table('user_access')->whereNull('deleted_at')->select(['user_access.*'])->orderBy('order', 'asc');
 		return Datatables::of($data)
         ->addColumn( 'action', function ( $accountsingle ) {
-            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>';
+            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary '.(count(app('userAccess')('USERACCESS_EDIT')) > 0 ? '' : 'd-none').'" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>';
         } )
         ->rawColumns(['action'])
         ->make( true );		

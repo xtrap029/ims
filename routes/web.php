@@ -14,20 +14,20 @@
 Route::get('/','Home@index');
 Route::get('/home','Home@index');
 Route::get('/brandlist','Brand@index')->middleware('auth', 'checkAccess:BRANDS');
-Route::get('/departmentlist','Department@index');
+Route::get('/departmentlist','Department@index')->middleware('auth', 'checkAccess:DEPARTMENTS');
 Route::get('/assettypelist','AssetType@index')->middleware('auth', 'checkAccess:ASSETTYPES');
-Route::get('/locationlist','Location@index');
-Route::get('/statuslist','Status@index');
-Route::get('/assetstatuslist','AssetStatus@index');
-Route::get('/previouslyinstalledlist','PreviouslyInstalled@index');
-Route::get('/employeeslist','Employees@index');
-Route::get('/employeeslist/detail/{id}','Employees@detail');
+Route::get('/locationlist','Location@index')->middleware('auth', 'checkAccess:LOCATIONS');
+Route::get('/statuslist','Status@index')->middleware('auth', 'checkAccess:STATUS');
+Route::get('/assetstatuslist','AssetStatus@index')->middleware('auth', 'checkAccess:ASSETSTATUS');
+Route::get('/previouslyinstalledlist','PreviouslyInstalled@index')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED');
+Route::get('/employeeslist','Employees@index')->middleware('auth', 'checkAccess:EMPLOYEES');
+Route::get('/employeeslist/detail/{id}','Employees@detail')->middleware('auth', 'checkAccess:EMPLOYEES_DETAIL');
 Route::get('/supplierlist','Supplier@index')->middleware('auth', 'checkAccess:SUPPLIERS');
-Route::get('/userlist','User@index');
-Route::get('/usertypelist','UserType@index');
-Route::get('/useraccesslist','UserAccess@index');
+Route::get('/userlist','User@index')->middleware('auth', 'checkAccess:USERS');
+Route::get('/usertypelist','UserType@index')->middleware('auth', 'checkAccess:USERTYPES');
+Route::get('/useraccesslist','UserAccess@index')->middleware('auth', 'checkAccess:USERACCESS');
 Route::get('/rolemanagement','RoleManagement@index');
-Route::get('/settinglist','Settings@index');
+Route::get('/settinglist','Settings@index')->middleware('auth', 'checkAccess:SETTINGS');
 
 Route::get('/assetlist','Asset@index')->middleware('auth', 'checkAccess:ASSETS');
 Route::get('/assetlist/detail/{id}','Asset@detail')->name('assetDetail')->middleware('auth', 'checkAccess:ASSETS_DETAIL');
@@ -43,14 +43,14 @@ Route::post('/csv', 'Asset@csvUpload');
 
 
 //report
-Route::get('/reports/assetactivity','Reports@assetactivity')->name('report');
-Route::get('/reports/componentactivity','Reports@componentactivity')->name('report');
-Route::get('/reports/maintenance','Reports@maintenance')->name('report');
-Route::get('/reports/bytype','Reports@bytype')->name('report');
-Route::get('/reports/bystatus','Reports@bystatus')->name('report');
-Route::get('/reports/bylocation','Reports@bylocation')->name('report');
-Route::get('/reports/bysupplier','Reports@bysupplier')->name('report');
-Route::get('/reports/allreports','Reports@allreports')->name('report');
+Route::get('/reports/assetactivity','Reports@assetactivity')->name('report')->middleware('auth', 'checkAccess:REPORTS');
+Route::get('/reports/componentactivity','Reports@componentactivity')->name('report')->middleware('auth', 'checkAccess:REPORTS');
+Route::get('/reports/maintenance','Reports@maintenance')->name('report')->middleware('auth', 'checkAccess:REPORTS');
+Route::get('/reports/bytype','Reports@bytype')->name('report')->middleware('auth', 'checkAccess:REPORTS');
+Route::get('/reports/bystatus','Reports@bystatus')->name('report')->middleware('auth', 'checkAccess:REPORTS');
+Route::get('/reports/bylocation','Reports@bylocation')->name('report')->middleware('auth', 'checkAccess:REPORTS');
+Route::get('/reports/bysupplier','Reports@bysupplier')->name('report')->middleware('auth', 'checkAccess:REPORTS');
+Route::get('/reports/allreports','Reports@allreports')->name('report')->middleware('auth', 'checkAccess:REPORTS');
 
 Route::get('logout', 'Auth\LoginController@logout');
 
@@ -78,12 +78,12 @@ Route::post('deletebrand', 'Brand@delete')->middleware('auth', 'checkAccess:BRAN
 Route::post('brandbyid', 'Brand@byid')->middleware('auth', 'checkAccess:BRANDS_EDIT');
 
 //Department API
-Route::get('department', 'Department@getdata');
-Route::get('listdepartment', 'Department@getrows');
-Route::post('savedepartment', 'Department@save');
-Route::post('updatedepartment', 'Department@update');
-Route::post('deletedepartment', 'Department@delete');
-Route::post('departmentbyid', 'Department@byid');
+Route::get('department', 'Department@getdata')->middleware('auth', 'checkAccess:DEPARTMENTS');
+Route::get('listdepartment', 'Department@getrows')->middleware('auth', 'checkAccess:DEPARTMENTS');
+Route::post('savedepartment', 'Department@save')->middleware('auth', 'checkAccess:DEPARTMENTS_ADD');
+Route::post('updatedepartment', 'Department@update')->middleware('auth', 'checkAccess:DEPARTMENTS_EDIT');
+Route::post('deletedepartment', 'Department@delete')->middleware('auth', 'checkAccess:DEPARTMENTS_DELETE');
+Route::post('departmentbyid', 'Department@byid')->middleware('auth', 'checkAccess:DEPARTMENTS_EDIT');
 
 //Asset Type API
 Route::get('assettype', 'AssetType@getdata')->middleware('auth', 'checkAccess:ASSETTYPES');
@@ -94,57 +94,57 @@ Route::post('deleteassettype', 'AssetType@delete')->middleware('auth', 'checkAcc
 Route::post('assettypebyid', 'AssetType@byid')->middleware('auth', 'checkAccess:ASSETTYPES_EDIT');
 
 //Location API
-Route::get('location', 'Location@getdata');
-Route::get('listlocation', 'Location@getrows');
-Route::post('savelocation', 'Location@save');
-Route::post('updatelocation', 'Location@update');
-Route::post('deletelocation', 'Location@delete');
-Route::post('locationbyid', 'Location@byid');
+Route::get('location', 'Location@getdata')->middleware('auth', 'checkAccess:LOCATIONS');
+Route::get('listlocation', 'Location@getrows')->middleware('auth', 'checkAccess:LOCATIONS');
+Route::post('savelocation', 'Location@save')->middleware('auth', 'checkAccess:LOCATIONS_ADD');
+Route::post('updatelocation', 'Location@update')->middleware('auth', 'checkAccess:LOCATIONS_EDIT');
+Route::post('deletelocation', 'Location@delete')->middleware('auth', 'checkAccess:LOCATIONS_DELETE');
+Route::post('locationbyid', 'Location@byid')->middleware('auth', 'checkAccess:LOCATIONS_EDIT');
 
 //Status API
-Route::get('status', 'Status@getdata');
-Route::get('liststatus', 'Status@getrows');
-Route::post('savestatus', 'Status@save');
-Route::post('updatestatus', 'Status@update');
-Route::post('deletestatus', 'Status@delete');
-Route::post('statusbyid', 'Status@byid');
+Route::get('status', 'Status@getdata')->middleware('auth', 'checkAccess:STATUS');
+Route::get('liststatus', 'Status@getrows')->middleware('auth', 'checkAccess:STATUS');
+Route::post('savestatus', 'Status@save')->middleware('auth', 'checkAccess:STATUS_ADD');
+Route::post('updatestatus', 'Status@update')->middleware('auth', 'checkAccess:STATUS_EDIT');
+Route::post('deletestatus', 'Status@delete')->middleware('auth', 'checkAccess:STATUS_DELETE');
+Route::post('statusbyid', 'Status@byid')->middleware('auth', 'checkAccess:STATUS_EDIT');
 
 //Asset Status API
-Route::get('assetstatus', 'AssetStatus@getdata');
-Route::get('listassetstatus', 'AssetStatus@getrows');
-Route::post('saveassetstatus', 'AssetStatus@save');
-Route::post('updateassetstatus', 'AssetStatus@update');
-Route::post('deleteassetstatus', 'AssetStatus@delete');
-Route::post('assetstatusbyid', 'AssetStatus@byid');
+Route::get('assetstatus', 'AssetStatus@getdata')->middleware('auth', 'checkAccess:ASSETSTATUS');
+Route::get('listassetstatus', 'AssetStatus@getrows')->middleware('auth', 'checkAccess:ASSETSTATUS');
+Route::post('saveassetstatus', 'AssetStatus@save')->middleware('auth', 'checkAccess:ASSETSTATUS_ADD');
+Route::post('updateassetstatus', 'AssetStatus@update')->middleware('auth', 'checkAccess:ASSETSTATUS_EDIT');
+Route::post('deleteassetstatus', 'AssetStatus@delete')->middleware('auth', 'checkAccess:ASSETSTATUS_DELETE');
+Route::post('assetstatusbyid', 'AssetStatus@byid')->middleware('auth', 'checkAccess:ASSETSTATUS_EDIT');
 
 //Previously Installed API
-Route::get('previouslyinstalled', 'PreviouslyInstalled@getdata');
-Route::get('listpreviouslyinstalled', 'PreviouslyInstalled@getrows');
-Route::post('savepreviouslyinstalled', 'PreviouslyInstalled@save');
-Route::post('updatepreviouslyinstalled', 'PreviouslyInstalled@update');
-Route::post('deletepreviouslyinstalled', 'PreviouslyInstalled@delete');
-Route::post('previouslyinstalledbyid', 'PreviouslyInstalled@byid');
+Route::get('previouslyinstalled', 'PreviouslyInstalled@getdata')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED');
+Route::get('listpreviouslyinstalled', 'PreviouslyInstalled@getrows')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED');
+Route::post('savepreviouslyinstalled', 'PreviouslyInstalled@save')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED_ADD');
+Route::post('updatepreviouslyinstalled', 'PreviouslyInstalled@update')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED_EDIT');
+Route::post('deletepreviouslyinstalled', 'PreviouslyInstalled@delete')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED_DELETE');
+Route::post('previouslyinstalledbyid', 'PreviouslyInstalled@byid')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED_EDIT');
 
 //User Type API
-Route::get('usertype', 'UserType@getdata');
-Route::get('listusertype', 'UserType@getrows');
-Route::post('updateusertype', 'UserType@update');
-Route::post('usertypebyid', 'UserType@byid');
-Route::get('usertype/access/{id}', 'UserType@access')->name('usertype');
-Route::post('usertype/access/{id}', 'UserType@updateaccess');
+Route::get('usertype', 'UserType@getdata')->middleware('auth', 'checkAccess:USERTYPES');
+Route::get('listusertype', 'UserType@getrows')->middleware('auth', 'checkAccess:USERTYPES');
+Route::post('updateusertype', 'UserType@update')->middleware('auth', 'checkAccess:USERTYPES_EDIT');
+Route::post('usertypebyid', 'UserType@byid')->middleware('auth', 'checkAccess:USERTYPES_EDIT');
+Route::get('usertype/access/{id}', 'UserType@access')->name('usertype')->middleware('auth', 'checkAccess:USERTYPES_EDIT');
+Route::post('usertype/access/{id}', 'UserType@updateaccess')->middleware('auth', 'checkAccess:USERTYPES_EDIT');
 
 //User Access API
-Route::get('useraccess', 'UserAccess@getdata');
-Route::get('listuseraccess', 'UserAccess@getrows');
-Route::post('updateuseraccess', 'UserAccess@update');
-Route::post('useraccessbyid', 'UserAccess@byid');
+Route::get('useraccess', 'UserAccess@getdata')->middleware('auth', 'checkAccess:USERACCESS');
+Route::get('listuseraccess', 'UserAccess@getrows')->middleware('auth', 'checkAccess:USERACCESS');
+Route::post('updateuseraccess', 'UserAccess@update')->middleware('auth', 'checkAccess:USERACCESS_EDIT');
+Route::post('useraccessbyid', 'UserAccess@byid')->middleware('auth', 'checkAccess:USERACCESS_EDIT');
 
 //Employees API
-Route::get('employees', 'Employees@getdata');
-Route::get('listemployees', 'Employees@getrows');
-Route::post('saveemployees', 'Employees@save');
-Route::post('updateemployees', 'Employees@update');
-Route::post('deleteemployees', 'Employees@delete');
+Route::get('employees', 'Employees@getdata')->middleware('auth', 'checkAccess:EMPLOYEES');
+Route::get('listemployees', 'Employees@getrows')->middleware('auth', 'checkAccess:EMPLOYEES');
+Route::post('saveemployees', 'Employees@save')->middleware('auth', 'checkAccess:EMPLOYEES_ADD');
+Route::post('updateemployees', 'Employees@update')->middleware('auth', 'checkAccess:EMPLOYEES_EDIT');
+Route::post('deleteemployees', 'Employees@delete')->middleware('auth', 'checkAccess:EMPLOYEES_DELETE');
 Route::post('employeesbyid', 'Employees@byid');
 
 //Supplier API
@@ -156,17 +156,17 @@ Route::post('deletesupplier', 'Supplier@delete')->middleware('auth', 'checkAcces
 Route::post('supplierbyid', 'Supplier@byid')->middleware('auth', 'checkAccess:SUPPLIERS_EDIT');
 
 //User API
-Route::get('user', 'User@getdata');
-Route::get('listuser', 'User@getrows');
-Route::post('saveuser', 'User@save');
-Route::post('updateuser', 'User@update');
-Route::post('deleteuser', 'User@delete');
-Route::post('userbyid', 'User@byid');
+Route::get('user', 'User@getdata')->middleware('auth', 'checkAccess:USERS');
+Route::get('listuser', 'User@getrows')->middleware('auth', 'checkAccess:USERS');
+Route::post('saveuser', 'User@save')->middleware('auth', 'checkAccess:USERS_ADD');
+Route::post('updateuser', 'User@update')->middleware('auth', 'checkAccess:USERS_EDIT');
+Route::post('deleteuser', 'User@delete')->middleware('auth', 'checkAccess:USERS_DELETE');
+Route::post('userbyid', 'User@byid')->middleware('auth', 'checkAccess:USERS_EDIT');
 
 //Settings API
-Route::get('settings', 'Settings@getdata');
-Route::post('updatesettings', 'Settings@update');
-Route::get('exportdatabase', 'Settings@exportdatabase');
+Route::get('settings', 'Settings@getdata')->middleware('auth', 'checkAccess:SETTINGS');
+Route::post('updatesettings', 'Settings@update')->middleware('auth', 'checkAccess:SETTINGS');
+Route::get('exportdatabase', 'Settings@exportdatabase')->middleware('auth', 'checkAccess:SETTINGS_DATABASE');
 
 Route::get('asset', 'Asset@getData')->middleware('auth', 'checkAccess:ASSETS');
 
@@ -174,7 +174,7 @@ Route::get('listasset', 'Asset@getrows');
 Route::post('saveasset', 'Asset@save')->middleware('auth', 'checkAccess:ASSETS_ADD');
 Route::post('updateasset', 'Asset@update')->middleware('auth', 'checkAccess:ASSETS_EDIT');
 Route::post('deleteasset', 'Asset@delete')->middleware('auth', 'checkAccess:ASSETS_DELETE');
-Route::post('assetbyid', 'Asset@byid')->middleware('auth', 'checkAccess:ASSETS_DETAIL');
+Route::post('assetbyid', 'Asset@byid');
 Route::post('savecheckout', 'Asset@savecheckout')->middleware('auth', 'checkAccess:ASSETS_CHECKIN');
 Route::post('savecheckin', 'Asset@savecheckin')->middleware('auth', 'checkAccess:ASSETS_CHECKIN');
 

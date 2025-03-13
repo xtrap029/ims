@@ -53,9 +53,9 @@ class Employees extends Controller
                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu actionmenu">
-                <a class="dropdown-item" href="'.url('/').'/employeeslist/detail/'.$accountsingle->id.'"id="btndetail" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>
-                <a class="dropdown-item" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
-                <a class="dropdown-item" href="#" id="btndelete" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>
+                <a class="dropdown-item '.(count(app('userAccess')('EMPLOYEES_DETAIL')) > 0 ? '' : 'd-none').'" href="'.url('/').'/employeeslist/detail/'.$accountsingle->id.'"id="btndetail" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>
+                <a class="dropdown-item '.(count(app('userAccess')('EMPLOYEES_EDIT')) > 0 ? '' : 'd-none').'" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
+                <a class="dropdown-item '.(count(app('userAccess')('EMPLOYEES_DELETE')) > 0 ? '' : 'd-none').'" href="#" id="btndelete" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>
                 </div>
             </div>';
         } )->rawColumns(['gender','picture', 'action'])

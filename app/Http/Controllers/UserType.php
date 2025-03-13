@@ -89,8 +89,8 @@ class UserType extends Controller
         $data = DB::table('user_type')->whereNull('deleted_at')->select(['user_type.*'])->orderBy('order', 'asc');
 		return Datatables::of($data)
         ->addColumn( 'action', function ( $accountsingle ) {
-            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
-            <a href="/usertype/access/'.$accountsingle->id.'" class="btn btn-sm btn-danger"><i class="fa fa-list"></i> '. trans('lang.access').'</a>';
+            return '<a href="#" id="btnedit" customdata='.$accountsingle->id.' class="btn btn-sm btn-primary '.(count(app('userAccess')('USERTYPES_EDIT')) > 0 ? '' : 'd-none').'" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
+            <a href="/usertype/access/'.$accountsingle->id.'" class="btn btn-sm btn-danger '.(count(app('userAccess')('USERTYPES_EDIT')) > 0 ? '' : 'd-none').'"><i class="fa fa-list"></i> '. trans('lang.access').'</a>';
         } )
         ->rawColumns(['action'])
         ->make( true );		
