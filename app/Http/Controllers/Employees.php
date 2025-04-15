@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\EmployeesModel;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\TraitSettings;
 use DB;
-use App\User;
 use App;
-use Auth;
 
 class Employees extends Controller
 {
@@ -34,6 +31,10 @@ class Employees extends Controller
      */
     public function detail($id){
         return view('employee.detail', compact('id'));
+    }
+
+    public function accountability($id){
+        return view('employee.accountability', compact('id'));
     }
 
     /**

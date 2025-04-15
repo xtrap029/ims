@@ -22,6 +22,7 @@ Route::get('/assetstatuslist','AssetStatus@index')->middleware('auth', 'checkAcc
 Route::get('/previouslyinstalledlist','PreviouslyInstalled@index')->middleware('auth', 'checkAccess:PREVIOUSLYINSTALLED');
 Route::get('/employeeslist','Employees@index')->middleware('auth', 'checkAccess:EMPLOYEES');
 Route::get('/employeeslist/detail/{id}','Employees@detail')->middleware('auth', 'checkAccess:EMPLOYEES_DETAIL');
+Route::get('/employeeslist/accountability/{id}','Employees@accountability')->middleware('auth', 'checkAccess:EMPLOYEES_DETAIL');
 Route::get('/supplierlist','Supplier@index')->middleware('auth', 'checkAccess:SUPPLIERS');
 Route::get('/userlist','User@index')->middleware('auth', 'checkAccess:USERS');
 Route::get('/usertypelist','UserType@index')->middleware('auth', 'checkAccess:USERTYPES');
