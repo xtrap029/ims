@@ -34,7 +34,21 @@ class Employees extends Controller
     }
 
     public function accountability($id){
-        return view('employee.accountability', compact('id'));
+        $data = DB::table('employees')->where('id', $id)->first();
+        $data->departmentname = DB::table('department')->find($data->departmentid)->name;
+        $data->assets = DB::select("select asset_history.*, assets.name as assetname, assets.assettag as assettag, assets.serial as serial, asset_type.name as assettype
+            from asset_history left join assets  
+            on asset_history.assetid = assets.id
+            left join asset_type on assets.typeid = asset_type.id
+            where asset_history.employeeid = '$id'
+            group by asset_history.assetid
+            order by asset_history.created_at desc"); 
+
+        if ($data) {
+            return view('employee.accountability', compact('id'))->with('data', $data);
+        } else {
+            return redirect()->back()->with('error', 'Employee not found');
+        }
     }
 
     /**

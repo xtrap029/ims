@@ -2,10 +2,10 @@
 @section('content')
 <style>
     @media print {
-    td {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
+        td {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
     }
 </style>
 <div class="content">
@@ -20,38 +20,38 @@
             </td>
         </tr>
         <tr>
-            <td class="py-2">
+            <td class="py-2 border-top border-left border-dark">
                 <table>
                     <tr>
                         <td class="font-weight-bold" style="width: 150px;">Employee No:</td>
-                        <td>10036<td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Employee No."></td>
                     </tr>
                         <td class="font-weight-bold" style="width: 150px;">Employee Name:</td>
-                        <td>Raymond Allan Villapol</td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Employee Name" value="{{ $data->fullname }}"></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 150px;">Position Title:</td>
-                        <td>Project Engineer</td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Position Title" value="{{ $data->jobrole }}"></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 150px;">Department:</td>
-                        <td>Technical Team</td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Department" value="{{ $data->departmentname }}"></td>
                     </tr>
                 </table>
             </td>
-            <td class="py-3">
+            <td class="py-2 border-top border-right border-dark">
                 <table>
                     <tr>
                         <td class="font-weight-bold" style="width: 150px;">Date of Release:</td>
-                        <td>April 13, 2025</td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" value="{{ now()->format('F d, Y') }}" placeholder="Enter Date of Releases"></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 150px;">Location:</td>
-                        <td>Makati</td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Location"></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 150px;">Purpose:</td>
-                        <td>1 TP-LINK 4G LTE ROUTER</td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Purpose"></td>
                     </tr>
                 </table>
             </td>
@@ -68,51 +68,29 @@
                         <tr>
                             <th class="font-weight-bold text-center border-1 border-dark" style="width: 150px;">Asset Tag</th>
                             <th class="font-weight-bold text-center border-1 border-dark" style="width: 150px;">Category</th>
-                            <th class="font-weight-bold text-center border-1 border-dark" style="width: 100px;">Asset Type</th>
+                            <th class="font-weight-bold text-center border-1 border-dark" style="width: 150px;">Asset Type</th>
                             <th class="font-weight-bold text-center border-1 border-dark" style="width: 150px;">Model</th>
                             <th class="font-weight-bold text-center border-1 border-dark">Serial No. / Identifier</th>
                             <th class="font-weight-bold text-center border-1 border-dark" style="width: 150px">Remarks</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">AST241120279</td>
-                            <td class="text-center">Service Device Accessories</td>
-                            <td class="text-center">Laptop Charger</td>
-                            <td class="text-center">Acer Charger Nitro V 15</td>
-                            <td class="text-center">NHQPGSPOO24250CE317600</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">AST241120279</td>
-                            <td class="text-center">Service Device Accessories</td>
-                            <td class="text-center">Laptop Charger</td>
-                            <td class="text-center">Acer Charger Nitro V 15</td>
-                            <td class="text-center">NHQPGSPOO24250CE317600</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">AST241120279</td>
-                            <td class="text-center">Service Device Accessories</td>
-                            <td class="text-center">Laptop Charger</td>
-                            <td class="text-center">Acer Charger Nitro V 15</td>
-                            <td class="text-center">NHQPGSPOO24250CE317600</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">AST241120279</td>
-                            <td class="text-center">Service Device Accessories</td>
-                            <td class="text-center">Laptop Charger</td>
-                            <td class="text-center">Acer Charger Nitro V 15</td>
-                            <td class="text-center">NHQPGSPOO24250CE317600</td>
-                            <td></td>
-                        </tr>
+                        @foreach ($data->assets as $asset)
+                            <tr>
+                                <td class="text-center border-left border-right border-dark">{{ $asset->assettag }}</td>
+                                <td class="text-center border-left border-right border-dark">
+                                    <input type="text" class="form-control border-0 p-0 bg-transparent text-center" placeholder="Enter Category">
+                                </td>
+                                <td class="text-center border-left border-right border-dark">{{ $asset->assettype }}</td>
+                                <td class="text-center border-left border-right border-dark">{{ $asset->assetname }}</td>
+                                <td class="text-center border-left border-right border-dark">{{ $asset->serial }}</td>
+                                <td class="text-center border-left border-right border-dark">
+                                    <input type="text" class="form-control border-0 p-0 bg-transparent text-center" placeholder="Enter Remarks">
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="pt-1">
             </td>
         </tr>
         <tr>
@@ -149,7 +127,7 @@
             <td class="border-right border-bottom border-dark pt-3">
                 RECEIVED, ACCEPTED, AND AGREED:
                 <p class="text-center mt-5">
-                    <span class="font-weight-bold">Raymond Allan Villapol</span>
+                    <span class="font-weight-bold">{{ $data->fullname }}</span>
                     <br>
                     EMPLOYEE (Signature over Printed Name and Date)
                 </p>
@@ -161,6 +139,43 @@
             </td>
             <td class="font-weight-bold text-center text-white py-1 bg-secondary">
                 RELEASE BY:
+            </td>
+        </tr>
+        <tr>
+            <td class="border-left border-right border-bottom border-dark pt-3">
+                <p class="text-center mt-4">
+                    <span class="font-weight-bold">ISAAC LUFAMIA</span>
+                    <br>
+                    Project Support Officer
+                </p>
+            </td>
+            <td class="border-right border-left border-bottom border-dark pt-3">
+                <p class="text-center mt-4">
+                    <span class="font-weight-bold">Jesus Paulo Gonzales</span>
+                    <br>
+                    IT Admin and Support Officer
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="font-weight-bold text-center text-white py-1 bg-secondary">
+                RETURN SLIP OF COMPANY PROPERTY
+            </td>
+        </tr>
+        <tr>
+            <td class="border-left border-right border-bottom border-dark font-weight-bold p-2">Return Date:</td>
+            <td class="border-left border-right border-bottom border-dark font-weight-bold p-2">Condition:</td>
+        </tr>
+        <tr>
+            <td class="border-left border-right border-bottom border-dark font-weight-bold p-2">Received by:</td>
+            <td class="border-left border-right border-bottom border-dark font-weight-bold p-2">Course of Action:</td>
+        </tr>
+        <tr>
+            <td class="border-left border-right border-bottom border-dark font-weight-bold p-2">Clearance:</td>
+            <td class="border-left border-right border-bottom border-dark font-weight-bold p-2">Instructions:</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="pt-1">
             </td>
         </tr>
     </table>
