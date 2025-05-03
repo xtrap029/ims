@@ -22,7 +22,8 @@
                             <div class="col-md-9">
                                 <input type="hidden" value="{{ $id }}" name="id" id="id" />
                                 <p class="title-detail font-bold"> <span class="employeefullname"></span></p>
-                                <p class="employeedetail"><span class="employeeemail"></span></p>
+                                <p class="d-inline-block pr-2 employeeid"><span class="employeeid"></span></p>|
+                                <p class="d-inline-block pl-2 employeedetail"><span class="employeeemail"></span></p>
                             </div>
                             <div class="col-md-12">
                                 <div id="messagesuccess"  class="display-none alert alert-success"><?php echo trans('lang.data_added');?></div>
@@ -108,6 +109,15 @@
                                                         </td>
                                                         <td>
                                                             <p class="mb-0 employeeaddress"></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 font-bold"><?php echo trans('lang.forms');?>:
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0"><a href="{{ url('employeeslist/accountability/'.$id) }}" target="_blank"><?php echo trans('lang.accountability_form');?></a></p>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -291,6 +301,7 @@
         dataType: "JSON",
         success: function(data) {
             $(".employeefullname").html(data.message.fullname);
+            $(".employeeid").html(data.message.code);
             $(".employeeemail").html(data.message.email);
             $(".employeejobrole").html(data.message.jobrole);
             $(".employeedepartmentname").html(data.message.departmentname);

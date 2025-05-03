@@ -69,6 +69,7 @@ class Employees extends Controller
                 </button>
                 <div class="dropdown-menu actionmenu">
                 <a class="dropdown-item '.(count(app('userAccess')('EMPLOYEES_DETAIL')) > 0 ? '' : 'd-none').'" href="'.url('/').'/employeeslist/detail/'.$accountsingle->id.'"id="btndetail" customdata='.$accountsingle->id.'  ><i class="fa fa-file-text"></i> '. trans('lang.detail').'</a>
+                <a class="dropdown-item '.(count(app('userAccess')('EMPLOYEES_DETAIL')) > 0 ? '' : 'd-none').'" href="'.url('/').'/employeeslist/accountability/'.$accountsingle->id.'"id="btnaccountability" customdata='.$accountsingle->id.' target="_blank"><i class="fa fa-print"></i> '. trans('lang.accountability_form').'</a>
                 <a class="dropdown-item '.(count(app('userAccess')('EMPLOYEES_EDIT')) > 0 ? '' : 'd-none').'" href="#" id="btnedit" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i> '. trans('lang.edit').'</a>
                 <a class="dropdown-item '.(count(app('userAccess')('EMPLOYEES_DELETE')) > 0 ? '' : 'd-none').'" href="#" id="btndelete" customdata='.$accountsingle->id.'  data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> '. trans('lang.delete').'</a>
                 </div>
@@ -128,6 +129,7 @@ class Employees extends Controller
 	 */
     public function save(Request $request){
         $fullname       = $request->input( 'fullname' );
+        $code           = $request->input( 'code' );
         $email          = $request->input( 'email' );
         $department     = $request->input( 'department' );
         $jobrole        = $request->input( 'jobrole' );
@@ -149,6 +151,7 @@ class Employees extends Controller
       
           
                 $data       = array('fullname'=>$fullname, 
+                            'code'=>$code,
                             'email'=>$email,
                             'jobrole'=>$jobrole,
                             'departmentid'=>$department,
@@ -188,6 +191,7 @@ class Employees extends Controller
     public function update(Request $request){
         $id             = $request->input( 'id' );
         $fullname       = $request->input( 'fullname' );
+        $code           = $request->input( 'code' );
         $email          = $request->input( 'email' );
         $department     = $request->input( 'department' );
         $jobrole        = $request->input( 'jobrole' );
@@ -210,6 +214,7 @@ class Employees extends Controller
             $update = DB::table( 'employees' )->where( 'id', $id )
             ->update(
                 [
+                'code'              => $code,
                 'fullname'          => $fullname,
                 'email'             => $email,
                 'departmentid'      => $department,

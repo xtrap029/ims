@@ -26,6 +26,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th><?php echo trans('lang.employee_id');?></th>
                                         <th><?php echo trans('lang.fullname');?></th>
                                         <th><?php echo trans('lang.email');?></th>
                                         <th><?php echo trans('lang.jobrole');?></th>
@@ -37,6 +38,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
+                                        <th><?php echo trans('lang.employee_id');?></th>
                                         <th><?php echo trans('lang.fullname');?></th>
                                         <th><?php echo trans('lang.email');?></th>
                                         <th><?php echo trans('lang.jobrole');?></th>
@@ -67,6 +69,10 @@
                     </div>
                     <div class="modal-body">
                     <div  class="display-none messageexist alert alert-success"><?php echo trans('lang.data_exist');?></div>
+                        <div class="form-group">
+                            <label><?php echo trans('lang.employee_id');?></label>
+                            <input name="code" type="text" id="code" class=" form-control" required placeholder="<?php echo trans('lang.employee_id');?>"/>
+                        </div>
                         <div class="form-group">
                             <label><?php echo trans('lang.fullname');?></label>
                             <input name="fullname" type="text" id="fullname" class=" form-control" required placeholder="<?php echo trans('lang.fullname');?>"/>
@@ -131,7 +137,11 @@
                         </div>
                         <div class="modal-body">
                         <div  class="display-none messageexist alert alert-success"><?php echo trans('lang.data_exist');?></div>
-                        <div class="form-group">
+                            <div class="form-group">
+                                <label><?php echo trans('lang.employee_id');?></label>
+                                <input name="code" type="text" id="editcode" class=" form-control" required placeholder="<?php echo trans('lang.employee_id');?>"/>
+                            </div>
+                            <div class="form-group">
                                 <label><?php echo trans('lang.fullname');?></label>
                                 <input name="fullname" type="text" id="editfullname" class=" form-control" required placeholder="<?php echo trans('lang.fullname');?>"/>
                             </div>
@@ -231,7 +241,9 @@ function extractTextFromHTML(htmlString) {
                 searchable: false,
                 visible: true
             },
-            
+            {
+                data: 'code'
+            },
             {
                 data: 'fullname'
             },
@@ -262,7 +274,7 @@ function extractTextFromHTML(htmlString) {
                 className: 'btn btn-sm btn-fill btn-info ',
                 title: '<?php echo trans('lang.employees_list ');?>',
                 exportOptions: {
-                    columns: [1, 2, 3, 4 ,5]
+                    columns: [1, 2, 3, 4 ,5, 6]
                 }
             },
             {
@@ -271,7 +283,7 @@ function extractTextFromHTML(htmlString) {
                 className: 'btn btn-sm btn-fill btn-info ',
                 title: '<?php echo trans('lang.employees_list');?>',
                 exportOptions: {
-                    columns: [1, 2, 3, 4 ,5]
+                    columns: [1, 2, 3, 4 ,5, 6]
                 }
             },
             {
@@ -281,7 +293,7 @@ function extractTextFromHTML(htmlString) {
                 title: '<?php echo trans('lang.employees_list');?>',
                 orientation: 'landscape',
                 exportOptions: {
-                    columns: [1, 2, 3, 4 ,5]
+                    columns: [1, 2, 3, 4 ,5, 6]
                 },
                 customize: function(doc) {
                     doc.styles.tableHeader.alignment = 'left';
@@ -295,7 +307,7 @@ function extractTextFromHTML(htmlString) {
                 className: 'btn btn-sm btn-fill btn-info ',
                 text: 'Print <i class="fa fa-print"></i>',
                 exportOptions: {
-                    columns: [1, 2, 3, 4 ,5]
+                    columns: [1, 2, 3, 4 ,5, 6]
                 }
             }
         ],
@@ -427,6 +439,7 @@ $('#edit').on('show.bs.modal', function(e) {
 		dataType: "JSON",
 		success: function(data) {
 			$("#editid").val(id);
+            $("#editcode").val(data.message.code);
             $("#editfullname").val(data.message.fullname);
             $("#editdepartment").val(data.message.departmentid);
             $("#editemail").val(data.message.email);

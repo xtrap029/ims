@@ -24,7 +24,7 @@
                 <table>
                     <tr>
                         <td class="font-weight-bold" style="width: 150px;">Employee No:</td>
-                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Employee No."></td>
+                        <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Employee No." value="{{ $data->code }}"></td>
                     </tr>
                         <td class="font-weight-bold" style="width: 150px;">Employee Name:</td>
                         <td><input type="text" class="form-control border-0 pl-0 py-0 bg-transparent" placeholder="Enter Employee Name" value="{{ $data->fullname }}"></td>
