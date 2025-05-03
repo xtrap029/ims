@@ -412,6 +412,7 @@ class Asset extends Controller
         $brandid             = $request->input( 'brandid' );
         $assettag           = $request->input( 'assettag' );
         $name               = $request->input( 'name' );
+        $category           = $request->input( 'category' );
         $serial             = $request->input( 'serial' );
         $quantity           = $request->input( 'quantity' );
         $purchasedate       = $request->input( 'purchasedate' );
@@ -452,6 +453,7 @@ class Asset extends Controller
                             'quantity'=>$quantity,
                             'purchasedate'=>$purchasedate,
                             'checkstatus'=>0,
+                            'category'=>$category,
                             'cost'=>$cost,
                             'warranty'=>$warranty,
                             'status'=>$status,
@@ -475,6 +477,7 @@ class Asset extends Controller
                                 'purchasedate'=>$purchasedate,
                                 'cost'=>$cost,
                                 'checkstatus'=>0,
+                                'category'=>$category,
                                 'warranty'=>$warranty,
                                 'status'=>$status,
                                 'assetstatusid'=>$assetstatusid,
@@ -527,6 +530,7 @@ class Asset extends Controller
         $brandid        = $request->input( 'brandid' );
         $assettag       = $request->input( 'assettag' );
         $name           = $request->input( 'name' );
+        $category       = $request->input( 'category' );
         $serial         = $request->input( 'serial' );
         $quantity       = $request->input( 'quantity' );
         $purchasedate   = $request->input( 'purchasedate' );
@@ -558,6 +562,7 @@ class Asset extends Controller
 
                 $updatearr = [
                     'name'                => $name,
+                    'category'            => $category,
                     'locationid'          => $locationid,    
                     'supplierid'          => $supplierid,
                     'brandid'             => $brandid,
@@ -581,6 +586,7 @@ class Asset extends Controller
             }else{
                 $updatearr = [
                     'name'                => $name,
+                    'category'            => $category,
                     'locationid'          => $locationid,
                     'supplierid'          => $supplierid,
                     'brandid'             => $brandid,

@@ -86,11 +86,14 @@
                     <div class="modal-body">
                     <div  class="display-none messageexist alert alert-success"><?php echo trans('lang.tag_exist');?></div>
                         <div class="form-row">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label><?php echo trans('lang.name');?></label>
                                 <input name="name" type="text" id="name" class=" form-control" required placeholder="<?php echo trans('lang.name');?>"/>
                             </div>
-                            
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.category');?></label>
+                                <input name="category" type="text" id="category" class=" form-control" required placeholder="<?php echo trans('lang.category');?>"/>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -221,12 +224,15 @@
                     </div>
                     <div class="modal-body">
                     <div  class="messageexist alert alert-success display-none"><?php echo trans('lang.tag_exist');?></div>
-                    <div class="form-row">
-                            <div class="form-group col-md-12">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
                                 <label><?php echo trans('lang.name');?></label>
                                 <input name="name" type="text" id="editname" class=" form-control" required placeholder="<?php echo trans('lang.name');?>"/>
                             </div>
-                           
+                            <div class="form-group col-md-6">
+                                <label><?php echo trans('lang.category');?></label>
+                                <input name="category" type="text" id="editcategory" class=" form-control" required placeholder="<?php echo trans('lang.category');?>"/>
+                            </div>                           
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -803,6 +809,7 @@ $("#formadd").validate({
     submitHandler: function(form) {
         var form = new FormData();
         var name                = $("#name").val();
+        var category            = $("#category").val();
         var locationid          = $("#locationid").val();
 		var supplierid          = $("#supplierid").val();
 		var typeid              = $("#typeid").val();
@@ -820,6 +827,7 @@ $("#formadd").validate({
 		var picture             = $('#picture')[0].files[0];
 		
         form.append('name', name);
+        form.append('category', category);
         form.append('locationid', locationid);
 		form.append('supplierid', supplierid);
 		form.append('brandid', brandid);
@@ -870,6 +878,7 @@ $("#formedit").validate({
         var form = new FormData();
         var id                  = $("#editid").val();
         var name                = $("#editname").val();
+        var category            = $("#editcategory").val();
         var locationid            = $("#editlocationid").val();
 		var supplierid          = $("#editsupplierid").val();
 		var typeid              = $("#edittypeid").val();
@@ -889,6 +898,7 @@ $("#formedit").validate({
         
         form.append('id', id);
         form.append('name', name);
+        form.append('category', category);
         form.append('locationid', locationid);
 		form.append('supplierid', supplierid);
 		form.append('brandid', brandid);
@@ -958,6 +968,7 @@ $('#edit').on('show.bs.modal', function(e) {
 		success: function(data) {
 			$("#editid").val(id);
             $("#editname").val(data.message.assetname);
+            $("#editcategory").val(data.message.category);
             $("#editlocationid").val(data.message.locationid);
             $("#editsupplierid").val(data.message.supplierid);
             $("#editbrandid").val(data.message.brandid);

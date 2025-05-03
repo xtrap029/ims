@@ -36,7 +36,8 @@ class Employees extends Controller
     public function accountability($id){
         $data = DB::table('employees')->where('id', $id)->first();
         $data->departmentname = DB::table('department')->find($data->departmentid)->name;
-        $data->assets = DB::select("select asset_history.*, assets.name as assetname, assets.assettag as assettag, assets.serial as serial, asset_type.name as assettype
+        $data->assets = DB::select("select asset_history.*, assets.name as assetname, assets.assettag as assettag,
+            assets.serial as serial, assets.category as category, asset_type.name as assettype
             from asset_history left join assets  
             on asset_history.assetid = assets.id
             left join asset_type on assets.typeid = asset_type.id

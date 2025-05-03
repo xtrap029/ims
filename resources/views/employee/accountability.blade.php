@@ -78,9 +78,7 @@
                         @foreach ($data->assets as $asset)
                             <tr>
                                 <td class="text-center border-left border-right border-dark">{{ $asset->assettag }}</td>
-                                <td class="text-center border-left border-right border-dark">
-                                    <input type="text" class="form-control border-0 p-0 bg-transparent text-center" placeholder="Enter Category">
-                                </td>
+                                <td class="text-center border-left border-right border-dark">{{ $asset->category ?? 'N/A' }}</td>
                                 <td class="text-center border-left border-right border-dark">{{ $asset->assettype }}</td>
                                 <td class="text-center border-left border-right border-dark">{{ $asset->assetname }}</td>
                                 <td class="text-center border-left border-right border-dark">{{ $asset->serial }}</td>

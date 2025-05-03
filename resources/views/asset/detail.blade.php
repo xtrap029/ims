@@ -155,6 +155,14 @@
                                                     </tr>
                                                     <tr>
                                                         <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 font-bold"><?php echo trans('lang.category');?>:
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 assetcategory"></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
                                                             <p class="mb-0 font-bold"><?php echo trans('lang.brand');?>:
                                                             </p>
                                                         </td>
@@ -891,6 +899,7 @@
             $(".assetcreated").html(data.assetcreated_at);
             $(".assetupdated").html(data.assetupdated_at);
             $(".assetserial").html(data.message.serial);
+            $(".assetcategory").html(data.message.category);
             $(".assetlocation").html(data.message.location);
             $(".assetbarcode").html(data.assetbarcode);
             $(".assetbarcodemobile").html(data.assetbarcodemobile);
